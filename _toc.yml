@@ -1,0 +1,19 @@
+format: jb-book
+root: 00_Vorwort
+chapters:
+- file: 01_Regression
+- file: 02_Dimensionsreduktion
+- file: 03_Regularisierung
+- file: 04_Background_Removal_QR
+- file: 05_Klassifikation_mit_SVM
+- file: 06_Neuronale_Netze
+- file: 07_Topic_Extraction
+- file: 08_Grundlagen_Optimierung
+- file: 09_Konvexitaet
+- file: 10_Gradient_Descent
+- file: 11_Projected_Gradient_Descent
+- file: 12_Subgradient_Descent
+- file: 13_Proximal_Gradient_Descent
+- file: 14_Stochastic_Gradient_Descent
+- file: 15_Probabilistische_Lineare_Algebra
+- file: 99_Literatur
