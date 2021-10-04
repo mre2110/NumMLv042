@@ -1,0 +1,938 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stochastic Gradient Descent &#8212; Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="Probabilistische Lineare Algebra" href="15_Probabilistische_Lineare_Algebra.html" />
+    <link rel="prev" title="Proximal Gradient Descent" href="13_Proximal_Gradient_Descent.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Dieses Buch durchsuchen ..." aria-label="Dieses Buch durchsuchen ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_Vorwort.html">
+   Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Regression.html">
+   Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Dimensionsreduktion.html">
+   Dimensionsreduktion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_Regularisierung.html">
+   Regularisierung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_Background_Removal_QR.html">
+   Background Removal mit TSVD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_Klassifikation_mit_SVM.html">
+   Support-Vector Klassifikation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_Neuronale_Netze.html">
+   Neuronale Netze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_Topic_Extraction.html">
+   Topic Extraction, NMF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_Grundlagen_Optimierung.html">
+   Grundlagen der Optimierung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_Konvexitaet.html">
+   Konvexität
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_Gradient_Descent.html">
+   Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_Projected_Gradient_Descent.html">
+   Projected Gradient-Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_Subgradient_Descent.html">
+   Subgradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_Proximal_Gradient_Descent.html">
+   Proximal Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Stochastic Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15_Probabilistische_Lineare_Algebra.html">
+   Probabilistische Lineare Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="99_Literatur.html">
+   Weiterführende Links
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Navigation umschalten" aria-controls="site-navigation"
+                title="Navigation umschalten" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Laden Sie diese Seite herunter"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/14_Stochastic_Gradient_Descent.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Quelldatei herunterladen" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="In PDF drucken"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Vollbildmodus"
+        title="Vollbildmodus"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/14_Stochastic_Gradient_Descent.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Starten Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Inhalt
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#uberblick">
+   Überblick
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#voruberlegungen">
+   Vorüberlegungen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#konvergenz">
+   Konvergenz
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#zusammenfassung">
+   Zusammenfassung
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="stochastic-gradient-descent">
+<h1>Stochastic Gradient Descent<a class="headerlink" href="#stochastic-gradient-descent" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="section" id="uberblick">
+<h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">¶</a></h2>
+<p>In viele Anwendungen hat <span class="math notranslate nohighlight">\(f\)</span> die Struktur</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f(x) = \frac{1}{n} \sum_{i=1}^n f_i(x),
+  \quad
+  f_i \text{ differenzierbarbar},
+  \end{equation*}\]</div>
+<p>z.B. wenn <span class="math notranslate nohighlight">\(f_i\)</span> die Loss-Funktion zum <span class="math notranslate nohighlight">\(i\)</span>-ten Trainings-Datensatz ist.</p>
+<p>Bei einfachem Gradient-Descent muss in jedem Schritt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f'(x) = \frac{1}{n} \sum_{i=1}^n f'_i(x),
+  \end{equation*}\]</div>
+<p>berechnet werden.
+Dies wird nun wie folgt vereinfacht:</p>
+<ul>
+<li><p>wähle in jedem Schritt zufällig (gleichverteilt) ein <span class="math notranslate nohighlight">\(i_t\in\{1,\ldots,n\}\)</span> aus</p></li>
+<li><p>setze</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   x_{t+1} = x_t - \gamma_t f'_{i_t}(x_t)
+   \end{equation*}\]</div>
+</li>
+</ul>
+<p>Man bezeichnet</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   g_t = g(i_t, x_t) = f'_{i_t}(x_t)
+   \end{equation*}\]</div>
+<p>als <em>stochastischen Gradienten</em>.
+Der Aufwand pro Schritt wird im Vergleich zum einfachen Gradient-Descent-Verfahren um
+den Faktor <span class="math notranslate nohighlight">\(n\)</span> reduziert.</p>
+</div>
+<div class="section" id="voruberlegungen">
+<h2>Vorüberlegungen<a class="headerlink" href="#voruberlegungen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Eine direkte Übertragung der Konvergenzanalysen des Gradient-Descent-Verfahrens funktioniert zunächst nicht.</p>
+<p>Bei Gradient-Descent hatten wir aus der Konvexitätsbedingung</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f(y) \geq f(x) + f'(x)(y-x)
+  \end{equation*}\]</div>
+<p>die Ungleichung</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_t - f_\ast \leq f_t' (x_t - x_\ast)
+  \end{equation*}\]</div>
+<p>abgeleitet und die weiteren Untersuchungen darauf aufgebaut.</p>
+<p>Bei Stochastic-Gradient-Descent geht das nicht, da
+<span class="math notranslate nohighlight">\(g_t \neq f'(x_t)\)</span>.
+Wir können aber zeigen, dass die Ungleichung für Erwartungswerte
+gilt:</p>
+<ul>
+<li><p>ist <span class="math notranslate nohighlight">\(i_t\in\{1,\ldots,n\}\)</span> eine gleichverteilte Zufallsvariable, dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{P}(i_t=k) = \frac{1}{n} \quad \forall k\in\{1,\ldots,n\}
+  \end{equation*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+  \mathbb{E}_{i_t}(g_t)
+  &amp;= \sum_{k=1}^n f'_{i_t}(x_t)\mathbb{P}(i_t=k)\\
+  &amp;= \frac{1}{n}\sum_{k=1}^n f'_{i_t}(x_t)\\
+  &amp;= f'(x_t)
+  \end{align*}\]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(g_t\)</span> ist also ein erwartungstreuer Schätzer von <span class="math notranslate nohighlight">\(f'(x_t)\)</span></p></li>
+</ul>
+<p>Wir beginnen mit einer grundlegenden Abschätzung für Stochastic-Gradient-Descent</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  x_{t+1} = x_t - \gamma \underbrace{g(i_t, x_t)}_{g_t}.
+  \end{equation*}\]</div>
+<p><strong>Lemma:</strong> Ist <span class="math notranslate nohighlight">\(f'\)</span> Lipschitz-stetig mit Konstante <span class="math notranslate nohighlight">\(L\)</span>, dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}_{i_t}(f_{t+1}) - f_t
+    \leq
+  - \gamma f'_t \ \mathbb{E}_{i_t}(g_t) 
+  + \frac{1}{2} \gamma^2 L \ \mathbb{E}_{i_t}(\|g_t\|_2^2).
+  \end{equation*}\]</div>
+<p><strong>Beweis:</strong></p>
+<ul>
+<li><p>ist <span class="math notranslate nohighlight">\(f'\)</span> Lipschitz-stetig dann gilt (siehe Gradient-Descent)</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f(y) \leq f(x) + f'(x)(y-x) + \frac{1}{2} L \|y-x\|_2^2
+    \end{equation*}\]</div>
+</li>
+<li><p>mit <span class="math notranslate nohighlight">\(y=x_{t+1}\)</span>, <span class="math notranslate nohighlight">\(x=x_t\)</span> erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f_{t+1} - f_t \leq f'_t(x_{t+1}-x_t) + \frac{1}{2} L \|x_{t+1}-x_t\|_2^2
+    \end{equation*}\]</div>
+</li>
+<li><p>wegen <span class="math notranslate nohighlight">\(x_{t+1} - x_t = - \gamma g_t\)</span> ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f_{t+1} - f_t \leq -\gamma f'_t g_t + \frac{1}{2} \gamma^2 L   \|g_t\|_2^2
+    \end{equation*}\]</div>
+</li>
+<li><p>bilden wir auf beiden Seiten <span class="math notranslate nohighlight">\(\mathbb{E}_{i_t}\)</span> und beachten wir, dass
+<span class="math notranslate nohighlight">\(f_t\)</span>, <span class="math notranslate nohighlight">\(f'_t\)</span> nicht von <span class="math notranslate nohighlight">\(i_t\)</span> abhängen, dann folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \mathbb{E}_{i_t}(f_{t+1}) - f_t
+    \leq
+    - \gamma f'_t \ \mathbb{E}_{i_t}(g_t) 
+    + \frac{1}{2} \gamma^2 L \ \mathbb{E}_{i_t}(\|g_t\|_2^2)
+    \end{equation*}\]</div>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+<p><strong>Bemerkung:</strong></p>
+<ul>
+<li><p>der erwartete Abstieg ist beschränkt durch
+den Erwartunsgwert der Richtungsableitung von <span class="math notranslate nohighlight">\(f\)</span> in Richtung <span class="math notranslate nohighlight">\(g_t\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f'_t \ \mathbb{E}_{i_t}(g_t)
+    =
+    \mathbb{E}_{i_t}(g_t)^T f'_t 
+    \end{equation*}\]</div>
+<p>sowie</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \mathbb{E}_{i_t}(\|g_t\|_2^2)
+    \end{equation*}\]</div>
+</li>
+<li><p>wie man zu <span class="math notranslate nohighlight">\(x_t\)</span> gekommen ist, spielt keine Rolle (Markov-Eigenschaft)</p></li>
+<li><p>ist <span class="math notranslate nohighlight">\(g_t\)</span> ein erwartungstreuer Schätzer, d.h. <span class="math notranslate nohighlight">\(\mathbb{E}_{i_t}(g_t)=f'_t\)</span>,
+dann folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    \mathbb{E}_{i_t}(f_{t+1}) - f_t
+    &amp; \leq
+    - \gamma f'_t \ \mathbb{E}_{i_t}(g_t) 
+    + \frac{1}{2} \gamma^2 L \ \mathbb{E}_{i_t}(\|g_t\|_2^2) \\
+    &amp;\leq 
+    - \gamma \|f'_t\|_2^2
+    + \frac{1}{2} \gamma^2 L \ \mathbb{E}_{i_t}(\|g_t\|_2^2)
+    \end{align*}\]</div>
+</li>
+<li><p>kann <span class="math notranslate nohighlight">\(\mathbb{E}_{i_t}(\|g_t\|_2^2)\)</span> „deterministisch“ beschränkt werden, dann
+erhalten wir wieder einen hinreichenden Abstieg</p></li>
+</ul>
+<p><strong>Definition:</strong> Es sei</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{V}_{i_t} = \mathbb{E}_{i_t}(\|g_t\|_2^2) - \|\mathbb{E}_{i_t}(g_t) \|_2^2
+  \end{equation*}\]</div>
+<p>Für den Rest des Kapitels machen wir folgende Annahmen:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(x_t \in X\)</span>, <span class="math notranslate nohighlight">\(X\)</span> offen, <span class="math notranslate nohighlight">\(f|_X \geq \bar{f}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\exists c_G \geq c &gt; 0\)</span> so dass <span class="math notranslate nohighlight">\(\forall t\)</span> gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f_t \ \mathbb{E}_{i_t}(g_t) \geq c \| f'_t \|_2^2,
+    \quad
+    \| \mathbb{E}_{i_t}(g_t) \|_2 \leq c_G \| f'_t \|_2
+    \end{equation*}\]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\exists M,M_V \geq 0\)</span> mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \mathbb{V}_{i_t} \leq M + M_V \| f'_t \|_2^2
+    \end{equation*}\]</div>
+</li>
+</ul>
+<p><strong>Bemerkung:</strong> Ist <span class="math notranslate nohighlight">\(g_t\)</span> ein erwartungstreuer Schätzer von <span class="math notranslate nohighlight">\(f'_t\)</span>, dann
+ist <span class="math notranslate nohighlight">\(c=c_G=1\)</span>.</p>
+<p>Aus der Annahme folgt nun</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    \mathbb{E}_{i_t}(\|g_t\|_2^2)
+    &amp;  =   \mathbb{V}_{i_t} +  \| \mathbb{E}_{i_t}(g_t) \|_2^2\\
+    &amp;\leq  M + M_V \| f'_t \|_2^2 + c_G^2 \| f'_t \|_2^2 \\
+    &amp;\leq  M + \underbrace{(M_V + c_G^2)}_{M_G \geq 0} \| f'_t \|_2^2 .
+  \end{align*}\]</div>
+<p>Kombiniert mit dem letzten Lemma erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+  \mathbb{E}_{i_t}(f_{t+1}) - f_t
+  &amp;\leq
+    - \gamma f'_t \ \mathbb{E}_{i_t}(g_t) 
+    + \frac{1}{2} \gamma^2 L \ \mathbb{E}_{i_t}(\|g_t\|_2^2)\\
+  &amp;\leq -\gamma c \| f'_t \|_2^2 
+        +\frac{1}{2} \gamma^2 L \big(M + M_G \| f'_t \|_2^2 \big) \\
+  &amp;= -\gamma \big(c - \frac{\gamma L}{2} M_G \big) \| f'_t \|_2^2 
+     + \frac{1}{2} \gamma^2 L M,
+  \end{align*}\]</div>
+<p>und somit</p>
+<p><strong>Lemma:</strong></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}_{i_t}(f_{t+1}) - f_t 
+  \leq
+     -\gamma \big(c - \frac{\gamma L}{2} M_G \big) \|  f'_t \|_2^2 
+     + \frac{1}{2} \gamma^2 L M
+  \end{equation*}\]</div>
+<p><strong>Bemerkung:</strong></p>
+<ul class="simple">
+<li><p>die rechte Seite der Abschätzung ist deterministisch</p></li>
+<li><p>die Schranke für <span class="math notranslate nohighlight">\(\mathbb{E}_{i_t}(f_{t+1}) - f_t\)</span> hängt nur von <span class="math notranslate nohighlight">\(x_t\)</span> und <span class="math notranslate nohighlight">\(i_t\)</span>
+ab und <em>nicht</em> von früheren <span class="math notranslate nohighlight">\(x_s\)</span>, <span class="math notranslate nohighlight">\(s&lt;t\)</span></p></li>
+<li><p>ist <span class="math notranslate nohighlight">\(\gamma\)</span> klein genug, dann ist <span class="math notranslate nohighlight">\(\mathbb{E}_{i_t}(f_{t+1}) - f_t &lt; 0\)</span></p></li>
+</ul>
+</div>
+<div class="section" id="konvergenz">
+<h2>Konvergenz<a class="headerlink" href="#konvergenz" title="Link zu dieser Überschrift">¶</a></h2>
+<p><span class="math notranslate nohighlight">\(f\)</span> sei jetzt differenzierbar, <span class="math notranslate nohighlight">\(L\)</span>-glatt und <span class="math notranslate nohighlight">\(\mu\)</span>-konvex
+und zusätzlich soll <span class="math notranslate nohighlight">\(x_\ast\)</span> mit <span class="math notranslate nohighlight">\(f_\ast = f(x_\ast) = \inf_x f(x)\)</span> existieren.
+Wir werden nun zeigen, dass wir unter diesen Voraussetzungen bei konstanter
+Schrittweite <span class="math notranslate nohighlight">\(\gamma\)</span> zwar keine Konvergenz erhalten, aber zumindest in
+eine Umgebung von <span class="math notranslate nohighlight">\(x_\ast\)</span> gelangen, deren Größe asymptotisch proportional
+zu <span class="math notranslate nohighlight">\(\gamma\)</span> ist.</p>
+<p>Wir verwenden im Folgenden die Notation</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}(f_{t}) = \mathbb{E}_{i_{0}}\ldots\mathbb{E}_{i_{t-1}}(f_t)
+  \end{equation*}\]</div>
+<p><strong>Satz:</strong>
+Es sei <span class="math notranslate nohighlight">\(f\)</span> differenzierbar, <span class="math notranslate nohighlight">\(L\)</span>-glatt, <span class="math notranslate nohighlight">\(\mu\)</span>-konvex
+und es existiere
+<span class="math notranslate nohighlight">\(x_\ast\)</span> mit <span class="math notranslate nohighlight">\(f_\ast = f(x_\ast)= \inf_x f(x)\)</span>.
+Ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  0 &lt; \gamma \leq \frac{c}{L M_G}
+  \end{equation*}\]</div>
+<p>dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+  \mathbb{E}(f_{t} - f_\ast) 
+  &amp;\leq 
+  \frac{\gamma L M}{2 \mu c} 
+  + (1-\gamma \mu c)^{t-1} 
+    \big(\mathbb{E}(f_1 - f_\ast) - \frac{\gamma L M}{2 \mu c}\big)\\
+  &amp;\xrightarrow{t \to \infty} \frac{\gamma L M}{2 \mu c}.
+  \end{align*}\]</div>
+<p><strong>Beweis:</strong></p>
+<ul>
+<li><p>aus dem letzten Lemma im vorherigen Abschnitt wissen wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+   \mathbb{E}_{i_t}(f_{t+1} - f_t)
+   &amp;=
+   \mathbb{E}_{i_t}(f_{t+1}) - f_t 
+   \\
+   &amp;\leq
+      -\gamma \big(c - \frac{\gamma L}{2} M_G \big) \|  f'_t \|_2^2 
+      + \frac{1}{2} \gamma^2 L M
+   \end{align*}\]</div>
+</li>
+<li><p>wegen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  0 &lt; \gamma \leq \frac{c}{L M_G}
+  \end{equation*}\]</div>
+<p>ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \frac{\gamma L}{2}M_G  \leq \frac{c}{2},
+  \end{equation*}\]</div>
+<p>und deshalb</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}_{i_t}(f_{t+1}) - f_t 
+  \leq
+     - \frac{\gamma c}{2} \|  f'_t \|_2^2 
+     + \frac{1}{2} \gamma^2 L M
+  \end{equation*}\]</div>
+</li>
+<li><p>oben hatten wir gesehen, dass für <span class="math notranslate nohighlight">\(\mu\)</span>-konvexe Funktionen auf <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f(x) - f_\ast \leq \frac{1}{2\mu} \|f'(x)\|_2^2 
+  \end{equation*}\]</div>
+<p>gilt, also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \|  f'_t \|_2^2  \geq 2\mu(f_t - f_\ast)
+  \end{equation*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}_{i_t}(f_{t+1}- f_\ast) - (f_t - f_\ast)
+  \leq
+     -\gamma\mu c (f_t - f_\ast)
+     + \frac{1}{2} \gamma^2 L M
+  \end{equation*}\]</div>
+</li>
+<li><p>nun bilden wir auf beiden Seiten die Erwartungswerte
+<span class="math notranslate nohighlight">\(\mathbb{E}_{i_1} \ldots \mathbb{E}_{i_{t-1}}\)</span> und
+erhalten</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \mathbb{E}(f_{t+1}- f_\ast) - \mathbb{E}(f_t - f_\ast)
+    \leq
+      -\gamma\mu c \mathbb{E}(f_t - f_\ast)
+      + \frac{1}{2} \gamma^2 L M
+    \end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \mathbb{E}(f_{t+1}- f_\ast) 
+    \leq
+      (1 -\gamma\mu c) \mathbb{E}(f_t - f_\ast)
+      + \frac{1}{2} \gamma^2 L M
+    \end{equation*}\]</div>
+</li>
+<li><p>subtrahiert man <span class="math notranslate nohighlight">\(\frac{\gamma L M}{2 \mu c}\)</span>
+auf beiden Seiten, so ergibt sich</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    \mathbb{E}(f_{t+1}- f_\ast) - \frac{\gamma L M}{2 \mu c}
+    &amp; \leq
+     (1 -\gamma\mu c) \mathbb{E}(f_t - f_\ast)
+     + \frac{1}{2} \gamma^2 L M - \frac{\gamma L M}{2 \mu c} \\
+    &amp; = 
+     (1 -\gamma\mu c) 
+     \big(
+     \mathbb{E}(f_t - f_\ast) - \frac{\gamma L M}{2 \mu c}
+     \big)
+   \end{align*}\]</div>
+</li>
+<li><p>wegen <span class="math notranslate nohighlight">\(\mu \leq L\)</span> und <span class="math notranslate nohighlight">\(M_G \geq c_G^2 \geq c^2\)</span> ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    0 &lt; \gamma\mu c 
+      \leq \frac{\mu c^2}{L M_G}
+      \leq \frac{c^2}{M_G}
+      \leq 1
+    \end{equation*}\]</div>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+<p>Ohne „Rauschen“ ist <span class="math notranslate nohighlight">\(M=0\)</span> und</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}(f_{t} - f_\ast) 
+  \leq 
+  (1-\gamma \mu c)^{t-1} \mathbb{E}(f_1 - f_\ast)
+  \end{equation*}\]</div>
+<p>so dass wir eine Komplexität von <span class="math notranslate nohighlight">\(\mathcal{O}\big(\log(\frac{1}{\varepsilon})\big)\)</span>
+erhalten.</p>
+<p>Mt „Rauschen“ haben wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}(f_{t} - f_\ast) 
+  \leq 
+  \underbrace{\frac{\gamma L M}{2 \mu c}}_{\text{fix}}
+  + \underbrace{
+    (1-\gamma \mu c)^{t-1} 
+    \big(\mathbb{E}(f_1 - f_\ast) - \frac{\gamma L M}{2 \mu c}\big)
+    }_{\text{geometrische Reduktion}},
+  \end{equation*}\]</div>
+<p>d.h. wir erreichen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}(f_{t} - f_\ast) 
+  \leq \frac{\gamma L M}{2 \mu c} + \varepsilon
+  \end{equation*}\]</div>
+<p>in</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  t = \mathcal{O}\big(\log(\frac{1}{\varepsilon})\big)
+  \end{equation*}\]</div>
+<p>Schritten.</p>
+<p><span class="math notranslate nohighlight">\(\frac{\gamma L M}{2 \mu c}\)</span> wird klein, wenn <span class="math notranslate nohighlight">\(\gamma\)</span> klein wird, wobei
+dann aber <span class="math notranslate nohighlight">\(1 - \gamma\mu c\)</span> nahe bei <span class="math notranslate nohighlight">\(1\)</span> liegt, so dass die geometrische
+Reduktion nur sehr langsam ist.</p>
+<p>Dies führt auf die Idee des Restarts:</p>
+<ul>
+<li><p>starte mit einer Schrittweite <span class="math notranslate nohighlight">\(\gamma^{(1)}\)</span> und iteriere bis</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   \mathbb{E}(f_{t} - f_\ast) 
+   \leq \frac{\gamma^{(1)} L M}{2 \mu c} + \varepsilon^{(1)}
+   \end{equation*}\]</div>
+</li>
+<li><p>verkürze die Schrittweite auf <span class="math notranslate nohighlight">\(\gamma^{(2)} &lt; \gamma^{(1)}\)</span> und iteriere bis
+die rechte Seite hinreichend klein ist</p></li>
+</ul>
+<p>Das kann man soweit ausbauen, dass man in jedem Schritt die Schrittweite
+<span class="math notranslate nohighlight">\(\gamma\)</span> anpasst.</p>
+<p><strong>Satz:</strong>
+Es sei <span class="math notranslate nohighlight">\(f\)</span> differenzierbar, <span class="math notranslate nohighlight">\(L\)</span>-glatt, <span class="math notranslate nohighlight">\(\mu\)</span>-konvex.
+Es existiere ein <span class="math notranslate nohighlight">\(x_\ast\)</span> mit <span class="math notranslate nohighlight">\(f_\ast = f(x_\ast)=\inf_x f(x)\)</span> und
+es sei</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \gamma_t = \frac{\beta}{\gamma + t},
+  \quad
+  \beta &gt; \frac{1}{\mu c},
+  \quad
+  \gamma &gt; 0,
+  \quad
+  \gamma_1 &lt; \frac{c}{L M_G}.
+  \end{equation*}\]</div>
+<p>Dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \mathbb{E}(f_{t} - f_\ast) 
+  \leq 
+  \frac{\nu}{\gamma + t}
+  \end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+  \nu = \max
+  \Big(
+    \frac{\beta^2 L M}{2(\beta\mu c -1)},
+    (\gamma+1)\ \mathbb{E}(f_{1} - f_\ast)
+  \Big).
+  \end{equation*}\]</div>
+<p><strong>Beweis:</strong></p>
+<ul>
+<li><p>aus den Voraussetzungen folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   \gamma_t L M_G \leq \gamma_1 L M_G \leq c
+   \quad
+   \forall t
+   \end{equation*}\]</div>
+</li>
+<li><p>mit <span class="math notranslate nohighlight">\(\gamma = \gamma_t\)</span> folgt aus dem letzten Lemma</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+   \mathbb{E}_{i_t}(f_{t+1}) - f_t 
+   &amp;\leq
+     -\gamma_t \big(c - \frac{\gamma_t L}{2} M_G \big) \| f'_t \|_2^2 
+     + \frac{1}{2} \gamma_t^2 L M \\
+   &amp;=
+     \big( -\gamma_t c + \gamma_t \frac{\gamma_t L  M_G}{2} \big) \| f'_t \|_2^2 
+     + \frac{1}{2} \gamma_t^2 L M \\
+   &amp;\leq
+     - \frac{1}{2} \gamma_t c  \| f'_t \|_2^2   
+     + \frac{1}{2} \gamma_t^2 L M \\
+   \end{align*}\]</div>
+</li>
+<li><p>wegen der <span class="math notranslate nohighlight">\(\mu\)</span>-Konvexität von <span class="math notranslate nohighlight">\(f\)</span> auf <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> gilt wieder</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   \|  f'_t \|_2^2  \geq 2\mu(f_t - f_\ast)
+   \end{equation*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   \mathbb{E}_{i_t}(f_{t+1}) - f_t 
+   \leq
+     - \gamma_t \mu c  (f_t - f_\ast)   
+     + \frac{1}{2} \gamma_t^2 L M ,
+   \end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   \mathbb{E}_{i_t}(f_{t+1}) - f_\ast - (f_t - f_\ast)
+   \leq
+     - \gamma_t \mu c  (f_t - f_\ast)   
+     + \frac{1}{2} \gamma_t^2 L M
+   \end{equation*}\]</div>
+</li>
+<li><p>nun bilden wir auf beiden Seiten die Erwartungswerte
+<span class="math notranslate nohighlight">\(\mathbb{E}_{i_1} \ldots \mathbb{E}_{i_{t-1}}\)</span> und erhalten</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   \mathbb{E}(f_{t+1} - f_\ast)
+   \leq
+     (1- \gamma_t \mu c) \ \mathbb{E}(f_t - f_\ast)   
+     + \frac{1}{2} \gamma_t^2 L M   
+   \end{equation*}\]</div>
+</li>
+<li><p>per Induktion können wir nun die Aussage des Satzes beweisen</p></li>
+<li><p>für <span class="math notranslate nohighlight">\(t=1\)</span> folgt die Behauptung direkt aus der Definition von <span class="math notranslate nohighlight">\(\nu\)</span></p></li>
+<li><p>für den Schritt <span class="math notranslate nohighlight">\(t \to t+1\)</span> erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+   \mathbb{E}(f_{t+1} - f_\ast)
+   &amp; \leq  
+     (1- \gamma_t \mu c) \ \mathbb{E}(f_t - f_\ast)   
+     + \frac{1}{2} \gamma_t^2 L M \\
+   &amp; \leq  
+     \big(1- \frac{\beta}{\gamma + t}\mu c\big) \ \mathbb{E}(f_t - f_\ast)   
+     + \frac{1}{2} \frac{\beta^2}{(\gamma + t)^2} L M \\
+   &amp; \leq  
+     \big(1- \frac{\beta}{\gamma + t}\mu c\big) \ \frac{\nu}{\gamma + t}   
+     + \frac{1}{2} \frac{\beta^2}{(\gamma + t)^2} L M \\
+   &amp; =  
+     \frac{(\gamma + t - \beta\mu c)\nu}{(\gamma + t)^2}
+     + \frac{\beta^2 L M}{2 (\gamma + t)^2}  \\
+   &amp; =  
+     \frac{\gamma + t - 1}{(\gamma + t)^2}\nu
+     - \frac{\beta\mu c-1}{(\gamma + t)^2}\nu
+     + \frac{\beta^2 L M}{2 (\gamma + t)^2}
+     \\
+   &amp; =  
+     \frac{\gamma + t - 1}{(\gamma + t)^2}\nu
+     +
+     %\underbrace{
+     \frac{\beta^2 L M - 2(\beta\mu c-1)\nu}{2 (\gamma + t)^2}
+     %}_{\leq 0 \ \text{nach Definition von}\ \nu} 
+   \end{align*}\]</div>
+</li>
+<li><p>nach Definition von <span class="math notranslate nohighlight">\(\nu\)</span> gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   \nu \geq \frac{\beta^2 L M}{2(\beta\mu c -1)}
+   \end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   \beta^2 L M - 2(\beta\mu c-1)\nu \leq 0
+   \end{equation*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+   \mathbb{E}(f_{t+1} - f_\ast) 
+   &amp;\leq \frac{\gamma + t - 1}{(\gamma + t)^2}\nu \\
+   &amp;\leq \frac{(\gamma + t - 1)(\gamma + t + 1)}{(\gamma + t)^2}
+         \frac{\nu}{\gamma + t + 1} \\
+   &amp;= \frac{(\gamma + t)^2 - 1}{(\gamma + t)^2}
+         \frac{\nu}{\gamma + t + 1} \\
+   &amp;\leq \frac{\nu}{\gamma + t + 1}
+   \end{align*}\]</div>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+</div>
+<div class="section" id="zusammenfassung">
+<h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Ist <span class="math notranslate nohighlight">\(f: \mathbb{R}^d \to  \mathbb{R}\)</span> differenzierbar, <span class="math notranslate nohighlight">\(L\)</span>-glatt und <span class="math notranslate nohighlight">\(\mu\)</span>-konvex
+mit <span class="math notranslate nohighlight">\(f_\ast = f(x_\ast) = \inf_x f(x)\)</span> dann haben wir für Stochastic-Gradient-Descent</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+   x_{t+1} = x_t - \gamma_t f'_{i_t}(x_t)
+   \end{equation*}\]</div>
+<p>folgende Ergebnisse gezeigt:</p>
+<ul>
+<li><p>ist <span class="math notranslate nohighlight">\(\gamma\)</span> konstant, dann ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+     \mathbb{E}(f_t) - f_\ast \leq c(\gamma) + \varepsilon
+     \end{equation*}\]</div>
+<p>in <span class="math notranslate nohighlight">\(\mathcal{O}(\log\frac{1}{\varepsilon})\)</span> Schritten</p>
+</li>
+<li><p>ist <span class="math notranslate nohighlight">\(\gamma \sim \frac{1}{t}\)</span>, dann ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+     \mathbb{E}(f_t) - f_\ast \leq  \varepsilon
+     \end{equation*}\]</div>
+<p>mit <span class="math notranslate nohighlight">\(t = \mathcal{O}(\frac{1}{\varepsilon})\)</span></p>
+</li>
+<li><p>Gradient-Descent liefert für <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(L\)</span>-glatt und <span class="math notranslate nohighlight">\(\mu\)</span>-konvex <span class="math notranslate nohighlight">\(, 0 &lt; \gamma \leq \frac{1}{L}\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f_{t}-f_\ast \leq \varepsilon
+    \end{equation*}\]</div>
+<p>in <span class="math notranslate nohighlight">\(t = \mathcal{O}\Big( \log\big(\frac{1}{\varepsilon}\big) \Big)\)</span> Schritten</p>
+</li>
+</ul>
+<p>Bei Stochastic-Gradient-Descent benötigen wir also deutlich mehr Schritte,
+wobei jeder einzelne Schritt wegen der vereinfachten Gradientenberechnung <span class="math notranslate nohighlight">\(f'_{i_t}\)</span>
+sehr viel weniger Aufwand verursacht.</p>
+<p>Proximal- bzw. Subgradienten-Verfahren können analog „umgebaut“ werden.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="13_Proximal_Gradient_Descent.html" title="zurück Seite">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">zurück</p>
+                <p class="prevnext-title">Proximal Gradient Descent</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="15_Probabilistische_Lineare_Algebra.html" title="weiter Seite">
+            <div class="prevnext-info">
+                <p class="prevnext-label">weiter</p>
+                <p class="prevnext-title">Probabilistische Lineare Algebra</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          Durch Martin Reißel<br/>
+        
+            &copy; Urheberrechte © 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
