@@ -7,7 +7,7 @@
 # Book settings
 title: "Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)"
 author: "Martin Reißel"
-copyright: "2021"
+#copyright: "2021"
 #logo: logo.png
 
 bibtex_bibfiles:
