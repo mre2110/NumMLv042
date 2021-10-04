@@ -1,0 +1,1572 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Support-Vector Klassifikation &#8212; Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="Neuronale Netze" href="06_Neuronale_Netze.html" />
+    <link rel="prev" title="Background Removal mit TSVD" href="04_Background_Removal_QR.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Dieses Buch durchsuchen ..." aria-label="Dieses Buch durchsuchen ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_Vorwort.html">
+   Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Regression.html">
+   Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Dimensionsreduktion.html">
+   Dimensionsreduktion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_Regularisierung.html">
+   Regularisierung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_Background_Removal_QR.html">
+   Background Removal mit TSVD
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Support-Vector Klassifikation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_Neuronale_Netze.html">
+   Neuronale Netze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_Topic_Extraction.html">
+   Topic Extraction, NMF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_Grundlagen_Optimierung.html">
+   Grundlagen der Optimierung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_Konvexitaet.html">
+   Konvexität
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_Gradient_Descent.html">
+   Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_Projected_Gradient_Descent.html">
+   Projected Gradient-Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_Subgradient_Descent.html">
+   Subgradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_Proximal_Gradient_Descent.html">
+   Proximal Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14_Stochastic_Gradient_Descent.html">
+   Stochastic Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15_Probabilistische_Lineare_Algebra.html">
+   Probabilistische Lineare Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="99_Literatur.html">
+   Weiterführende Links
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Navigation umschalten" aria-controls="site-navigation"
+                title="Navigation umschalten" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Laden Sie diese Seite herunter"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/05_Klassifikation_mit_SVM.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Quelldatei herunterladen" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="In PDF drucken"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Vollbildmodus"
+        title="Vollbildmodus"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/mre2110/NumMLv042/master?urlpath=tree/05_Klassifikation_mit_SVM.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Starten Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Inhalt
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#uberblick">
+   Überblick
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grundlagen">
+   Grundlagen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#voruberlegungen">
+   Vorüberlegungen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hyperebenen">
+   Hyperebenen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#optimal-trennende-hyperebenen">
+   Optimal trennende Hyperebenen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#umformulierung-des-optimierungsproblems">
+   Umformulierung des Optimierungsproblems
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#restringierte-optimierung">
+   Restringierte Optimierung
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#beispiel">
+   Beispiel
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#uberlappende-cluster">
+   Überlappende Cluster
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#dimensionserhohung-kernel-trick">
+   Dimensionserhöhung, Kernel-Trick
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Grundlagen
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mathematische-formulierung">
+     Mathematische Formulierung
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#svc-mit-kernel">
+     SVC mit Kernel
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#verallgemeinerung-auf-mehrere-klassen">
+   Verallgemeinerung auf mehrere Klassen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#zusammenfassung">
+   Zusammenfassung
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="support-vector-klassifikation">
+<h1>Support-Vector Klassifikation<a class="headerlink" href="#support-vector-klassifikation" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="section" id="uberblick">
+<h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Wir versuchen Datensätze durch Hyperebenen in Cluster einzuteilen.
+Die Aufgabenstellung führt zu konvexen Optimierungsproblemen mit
+Ungleichheitsnebenbedingungen.</p>
+<p>Anschließend wird der Ansatz so erweitert (Kernel-Trick), dass
+komplexere trennende Hyperflächen benutzt werden können.</p>
+</div>
+<div class="section" id="grundlagen">
+<h2>Grundlagen<a class="headerlink" href="#grundlagen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Gegeben sind Daten <span class="math notranslate nohighlight">\(x_i \in \mathbb{R}^m\)</span>, <span class="math notranslate nohighlight">\(y_i\in \{-1,1\}\)</span>,
+<span class="math notranslate nohighlight">\(i=1,\ldots,n\)</span>. Die Daten setzen sich aus zwei Gruppen zusammen, die durch ihre
+diskreten <span class="math notranslate nohighlight">\(y_i\)</span>-Werte unterschieden werden.
+Ohne Einschränkung nehmen wir <span class="math notranslate nohighlight">\(y_i = \pm 1\)</span> an.</p>
+<p>Gesucht ist eine Hyperebene <span class="math notranslate nohighlight">\(H\)</span>, die die beiden Gruppen trennt,
+d.h. alle Punkte mit <span class="math notranslate nohighlight">\(y_i=-1\)</span> liegen auf der einen Seite von <span class="math notranslate nohighlight">\(H\)</span>,
+alle mit <span class="math notranslate nohighlight">\(y_i=1\)</span> liegen auf der anderen Seite.
+Diese Hyperebene wird dann zur Vorhersage der Gruppenzugehörigkeit eines neuen Wertes <span class="math notranslate nohighlight">\(x\)</span> benutzt.
+Je nachdem auf welcher Seite der Hyperebene (d.h. in welchem Halbraum) der Wert <span class="math notranslate nohighlight">\(x\)</span> liegt, wird <span class="math notranslate nohighlight">\(y=-1\)</span> bzw. <span class="math notranslate nohighlight">\(y=1\)</span> als Vorhersage geliefert.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">svm</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">make_blobs</span>
+
+<span class="k">def</span> <span class="nf">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="n">equal</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">*</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="n">marker</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">equal</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">plotf</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">nh</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">umgebung</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">):</span>
+    <span class="c1"># Gitter für contourf</span>
+    <span class="n">Xmin</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">Xmax</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">Xm</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">Xmin</span> <span class="o">+</span> <span class="n">Xmax</span><span class="p">)</span>
+    <span class="n">Xmin</span> <span class="o">=</span> <span class="n">Xm</span> <span class="o">-</span> <span class="n">umgebung</span> <span class="o">*</span><span class="p">(</span><span class="n">Xm</span> <span class="o">-</span> <span class="n">Xmin</span><span class="p">)</span>
+    <span class="n">Xmax</span> <span class="o">=</span> <span class="n">Xm</span> <span class="o">+</span> <span class="n">umgebung</span> <span class="o">*</span><span class="p">(</span><span class="n">Xmax</span> <span class="o">-</span> <span class="n">Xm</span><span class="p">)</span>
+    
+    <span class="n">hx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">Xmin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">Xmax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">nh</span><span class="p">)</span>
+    <span class="n">hy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">Xmin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">Xmax</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">nh</span><span class="p">)</span>
+
+    <span class="n">yy</span><span class="p">,</span> <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">hy</span><span class="p">,</span> <span class="n">hx</span><span class="p">)</span>
+    
+    <span class="c1"># Konturplot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">nc</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Pastel2</span><span class="p">)</span>
+   
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">plotH</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">nh</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">umgebung</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">):</span>
+    <span class="c1"># SVM</span>
+    <span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">kernel</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+    <span class="n">svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    
+    <span class="c1"># Ebene</span>
+    <span class="n">plotf</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">nh</span><span class="p">,</span> <span class="n">nc</span><span class="p">,</span> <span class="n">umgebung</span><span class="p">)</span>
+    <span class="c1"># Datenpunkte</span>
+    <span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
+<span class="n">X</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="n">plotH</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_5_0.png" src="_images/05_Klassifikation_mit_SVM_5_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="voruberlegungen">
+<h2>Vorüberlegungen<a class="headerlink" href="#voruberlegungen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Bei zwei Datenpunkten mit <span class="math notranslate nohighlight">\(y_1=-1\)</span> und <span class="math notranslate nohighlight">\(y_2=1\)</span> kann man als Hyperebene
+<span class="math notranslate nohighlight">\(H\)</span> z.B. die Ebene wählen, die senkrecht auf der Verbindungslinie
+der beiden Punkte steht.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">31415</span><span class="p">)</span>
+<span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">plotH</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_8_0.png" src="_images/05_Klassifikation_mit_SVM_8_0.png" />
+</div>
+</div>
+<p>Offensichtlich ist das nicht die einzige trennende Hyperebene, allerdings besitzt sie eine Extremaleigenschaft.
+Unter allen trennenden Hyperbenen ist sie diejenige, die den größten (Minimal)Abstand zu den beiden Datenpunkten hat.
+Andererseits gibt es einfache Situationen, in denen die optimale Hyperebene
+nicht die Mittelsenkrechte zwischen Datenpunkten ist bzw. gar keine
+trennende Hyperebene existiert, wie die folgenden beiden Beispiele zeigen.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Xnomi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">ynomi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plotH</span><span class="p">(</span><span class="n">Xnomi</span><span class="p">,</span> <span class="n">ynomi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_10_0.png" src="_images/05_Klassifikation_mit_SVM_10_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Xno</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">yno</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">plotXy</span><span class="p">(</span><span class="n">Xno</span><span class="p">,</span> <span class="n">yno</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_11_0.png" src="_images/05_Klassifikation_mit_SVM_11_0.png" />
+</div>
+</div>
+<p>Diesen Fall werden wir später gesondert behandeln.</p>
+<p>Wir nehmen zunächst an, dass für unseren Datensatz immer (mindestens) eine trennende Hyperebene existiert.
+Auch wenn der Datensatz mehr als einen Punkt pro Klasse enthält
+kann es natürlich viele verschiedene trennende Hyperebenen geben.
+Wir suchen wieder diejenige aus, die zu den Datenpunkten beider
+Klassen den größten Minimalabstand hat.</p>
+</div>
+<div class="section" id="hyperebenen">
+<h2>Hyperebenen<a class="headerlink" href="#hyperebenen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Mathematisch kann man eine Hyperebene in <span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span> durch</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+H(w) = \{ x \ |\ x\in \mathbb{R}^m, \ g(x, w) = 0\},
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+g(x, w) &amp;= v^T x - v_0, \\
+w &amp;= (v, v_0), \\
+v &amp;\in\mathbb{R}^m \setminus \{0\},\\
+v_0 &amp;\in \mathbb{R}
+\end{align*}\]</div>
+<p>beschreiben (<em>Normalform</em>).
+Die Parameter <span class="math notranslate nohighlight">\(v\)</span>, <span class="math notranslate nohighlight">\(v_0\)</span> haben eine geometrische Bedeutung:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v\)</span> ist ein Vektor, der senkrecht auf <span class="math notranslate nohighlight">\(H(w)\)</span> steht</p></li>
+<li><p>ist zusätzlich <span class="math notranslate nohighlight">\(\|v\|_2=1\)</span> dann gilt:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(|v_0|\)</span> ist der Abstand von <span class="math notranslate nohighlight">\(H(w)\)</span> zum Ursprung.</p></li>
+<li><p>für <span class="math notranslate nohighlight">\(x \in \mathbb{R}^m\)</span> gibt <span class="math notranslate nohighlight">\(g(x,w)\)</span> den vorzeichenbehafteten Abstand des Punktes <span class="math notranslate nohighlight">\(x\)</span> zu <span class="math notranslate nohighlight">\(H(w)\)</span> an.</p></li>
+<li><p>bei positiven Werten für <span class="math notranslate nohighlight">\(g(x,w)\)</span> liegt <span class="math notranslate nohighlight">\(x\)</span> auf der Seite
+von <span class="math notranslate nohighlight">\(H(w)\)</span> in die <span class="math notranslate nohighlight">\(v\)</span> zeigt, bei negativen Werten von <span class="math notranslate nohighlight">\(g(x,w)\)</span> auf der anderen.</p></li>
+</ul>
+</li>
+</ul>
+<p>Die selbe Hyperebene kann durch verschiedene Parameter beschrieben werden, denn</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+H(w) = H(\tilde{w}) \quad\Leftrightarrow\quad w = \lambda \tilde{w},
+\quad  \lambda\in\mathbb{R}\setminus\{0\}.
+\end{equation*}\]</div>
+<p>Man kann also die Parameter immer so wählen, dass <span class="math notranslate nohighlight">\(\|v\|_2=1\)</span>, womit <span class="math notranslate nohighlight">\(v, v_0\)</span>
+bis auf das Vorzeichen eindeutig festgelegt sind.
+Außerdem kann man für beliebiges <span class="math notranslate nohighlight">\(\mathbb{R} \ni M &gt; 0\)</span>
+für jede Hyperebene <span class="math notranslate nohighlight">\(H\)</span> Parameter <span class="math notranslate nohighlight">\(v\)</span>, <span class="math notranslate nohighlight">\(v_0\)</span>
+finden mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+H = H(w), \quad w = (v, v_0), \quad M\, \|v\|_2 = 1.
+\end{equation*}\]</div>
+</div>
+<div class="section" id="optimal-trennende-hyperebenen">
+<h2>Optimal trennende Hyperebenen<a class="headerlink" href="#optimal-trennende-hyperebenen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Für unseren Datensatz nehmen wir an, dass es trennende Hyperebenen gibt, d.h. es gibt ein <span class="math notranslate nohighlight">\(w\)</span> so dass für</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+H(w) &amp;= \{ x \ |\ x\in \mathbb{R}^m, \ g(x,w) = 0\},
+\\
+g(x,w) &amp;= v^T x + v_0,
+\\
+w &amp;= (v, v_0),
+\end{align*}\]</div>
+<p>alle Daten <span class="math notranslate nohighlight">\(x_i\)</span> mit <span class="math notranslate nohighlight">\(y = -1\)</span> auf der einen und alle  mit <span class="math notranslate nohighlight">\(y = 1\)</span> auf der anderen Seite liegen.
+Daraus folgt, dass</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+g(x_i, w) &gt; 0 \text{ für } y_i = 1,
+\quad
+g(x_i, w) &lt; 0 \text{ für } y_i = -1
+\end{equation*}\]</div>
+<p>und somit gibt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+d_i = y_i \, g(x_i, w)
+\end{equation*}\]</div>
+<p>den positiven Abstand des Datenpunkts <span class="math notranslate nohighlight">\(x_i\)</span> zur Hyperebene an.
+Ist nun</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+d_i = y_i \: g(x_i, w) \geq M &gt; 0 \quad \forall i,
+\end{equation*}\]</div>
+<p>dann haben alle Datenpunkte einen Mindestabstand <span class="math notranslate nohighlight">\(M&gt;0\)</span> von
+<span class="math notranslate nohighlight">\(H(w)\)</span>.</p>
+<p>Jede Hyperebene <span class="math notranslate nohighlight">\(H\)</span> mit <span class="math notranslate nohighlight">\(y_ig(x_i, w) \geq M &gt; 0\)</span> <span class="math notranslate nohighlight">\(\forall i\)</span>
+ist eine trennende, denn <span class="math notranslate nohighlight">\(g(x_i, w)\)</span> nimmt für <span class="math notranslate nohighlight">\(y_i = \pm 1\)</span> positive bzw. negative Werte an, d.h. die entsprechenden <span class="math notranslate nohighlight">\(x_i\)</span> liegen auf verschiedenen Seiten von <span class="math notranslate nohighlight">\(H\)</span>.</p>
+<p>Die optimal trennende Hyperebene ist also diejenige Hyperebene,
+für die für <span class="math notranslate nohighlight">\(M\)</span> der größte Wert benutzt werden kann.
+Insgesamt erhalten wir also folgendes Optimierungsproblem:</p>
+<p>Bestimme <span class="math notranslate nohighlight">\(w=(v,v_0)\)</span>, <span class="math notranslate nohighlight">\(v\in\mathbb{R}^m\)</span> mit <span class="math notranslate nohighlight">\(\|v\|_2=1\)</span>, <span class="math notranslate nohighlight">\(v_0 \in \mathbb{R}\)</span> so, dass</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+y_i g(x_i, w) = y_i (v^T x_i + v_0) \geq M, \quad i = 1,\ldots,n
+\end{equation*}\]</div>
+<p>für möglichst großes <span class="math notranslate nohighlight">\(M&gt;0\)</span>, also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\max_{w=(v,v_0),\|v\|_2=1} M(w)
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+y_i(v^T x_i + v_0) \geq M(w) &gt; 0, 
+\quad i = 1,\ldots,n.
+\end{equation*}\]</div>
+<p>Es handelt sich also um ein Optimierungsproblem mit Ungleichheitsnebenbedingungen.
+Hat man dieses Problem gelöst, so können neue Datenpunkte <span class="math notranslate nohighlight">\(X\)</span> durch</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+y 
+= \text{sign}\big(g(x,w)\big) 
+= \text{sign}\big(v^T x + v_0\big)
+\end{equation*}\]</div>
+<p>einem der beiden durch die optimale
+Hyperebene separierten Cluster (also <span class="math notranslate nohighlight">\(y = \pm1\)</span>)
+zugeordnet werden.</p>
+</div>
+<div class="section" id="umformulierung-des-optimierungsproblems">
+<h2>Umformulierung des Optimierungsproblems<a class="headerlink" href="#umformulierung-des-optimierungsproblems" title="Link zu dieser Überschrift">¶</a></h2>
+<p>In der bisherigen Form ist das Optimierungsproblem sehr unübersichtlich.
+Deswegen werden wir es in eine neue Form bringen.</p>
+<p>Die Nebenbedingung <span class="math notranslate nohighlight">\(\|v\|_2=1\)</span> kann relativ einfach beseitigt werden.
+Hat die optimale Hyperbene die Parameter <span class="math notranslate nohighlight">\(\hat{v}\)</span>, <span class="math notranslate nohighlight">\(\hat{v}_0\)</span>,
+<span class="math notranslate nohighlight">\(\|\hat{v}\|_2=1\)</span>, mit zugehörigem Minimalabstand <span class="math notranslate nohighlight">\(\hat{M}\)</span>, dann definiert
+der Parametersatz <span class="math notranslate nohighlight">\(w = \lambda\hat{w}\)</span> für
+alle <span class="math notranslate nohighlight">\(\lambda \neq 0\)</span> die selbe Hyperebene.</p>
+<p>Ist nun <span class="math notranslate nohighlight">\(v\neq 0\)</span>, <span class="math notranslate nohighlight">\(v_0\)</span> ein beliebiger Parametersatz mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\frac{1}{\|v\|_2} y_i(v^T x_i + v_0) \geq \hat{M}, \quad i = 1,\ldots,n,
+\end{equation*}\]</div>
+<p>dann ist <span class="math notranslate nohighlight">\(\frac{1}{\|v\|_2} v\)</span>, <span class="math notranslate nohighlight">\(\frac{1}{\|v\|_2} v_0\)</span>
+Lösung unseres Optimierungsproblems.
+Damit können wir das Optimierungsproblem umschreiben:</p>
+<p>Bestimme <span class="math notranslate nohighlight">\(w = (v,v_0)\)</span>, <span class="math notranslate nohighlight">\(0\neq v\in\mathbb{R}^m\)</span>, <span class="math notranslate nohighlight">\(v_0 \in \mathbb{R}\)</span> mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\max_{v\neq 0, v_0} M(w),
+\quad
+y_i(v^T x_i + v_0) \geq M(w) \ \|v\|_2, \quad i = 1,\ldots,n.
+\end{equation*}\]</div>
+<p>Da wir die Länge des Koeffizientenvektors <span class="math notranslate nohighlight">\(v\)</span> beliebig skalieren können, können wir
+die Skalierung so wählen, dass</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+M(w) \ \|v\|_2 = 1
+\end{equation*}\]</div>
+<p>ist, d.h. insbesondere ist dann</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+M(w) = \frac{1}{\|v\|_2}.
+\end{equation*}\]</div>
+<p>Somit erhalten wir als neues Problem:</p>
+<p>Bestimme <span class="math notranslate nohighlight">\(w = (v,v_0)\)</span>,  <span class="math notranslate nohighlight">\(0\neq v\in\mathbb{R}^m\)</span>, <span class="math notranslate nohighlight">\(v_0 \in \mathbb{R}\)</span> mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\max_{v\neq 0, v_0} \frac{1}{\|v\|_2}
+\quad\text{mit}\quad
+y_i(v^T x_i + v_0) \geq 1, \quad i = 1,\ldots,n.
+\end{equation*}\]</div>
+<p>Benutzt man jetzt noch, dass die Maximalstellen von <span class="math notranslate nohighlight">\(\frac{1}{\|v\|_2}\)</span> identisch sind mit den
+Minimalstellen von <span class="math notranslate nohighlight">\(\frac{1}{2}\|v\|_2^2\)</span>, dann erhalten wir die finale Form unseres Problems:</p>
+<p>Bestimme <span class="math notranslate nohighlight">\(w = (v,v_0)\)</span>, <span class="math notranslate nohighlight">\(0\neq v\in\mathbb{R}^m\)</span>, <span class="math notranslate nohighlight">\(v_0 \in \mathbb{R}\)</span> mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\min_{v\neq 0, v_0} \frac{1}{2}\|v\|_2^2
+\quad\text{mit}\quad
+y_i(v^T x_i + v_0) - 1 \geq 0, \quad i = 1,\ldots,n.
+\end{equation*}\]</div>
+<p>Dies ist ein konvexes Optimierungsproblem mit Ungleichheitsnebenbedingungen.</p>
+</div>
+<div class="section" id="restringierte-optimierung">
+<h2>Restringierte Optimierung<a class="headerlink" href="#restringierte-optimierung" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Zur Bestimmung der optimal trennenden Hyperebene müssen wir die konvexe Funktion
+<span class="math notranslate nohighlight">\(\frac{1}{2}\|v\|_2^2\)</span> über dem konvexen Gebiet, das in <span class="math notranslate nohighlight">\(\mathbb{R}^{n+1}\)</span>
+durch die Ungleichheitsnebenbedingungen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+y_i(v^T x_i + v_0) - 1 \geq 0, \quad i = 1,\ldots,n
+\end{equation*}\]</div>
+<p>festgelegt wird, minimieren.</p>
+<p>Probleme dieser Art führt man mit Hilfe der Lagrange-Funktion
+auf nicht restringierte Probleme zurück.
+Die Lagrange-Funktion ist in unserem Fall gegeben durch</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+L(v,v_0, \alpha) = \frac{1}{2}\|v\|_2^2 - \sum_{i=1}^n \alpha_i \big(y_i(v^T x_i + v_0) - 1 \big).
+\end{equation*}\]</div>
+<p><span class="math notranslate nohighlight">\(\mathbb{R}\ni\alpha_i\)</span> sind die sogenannten Lagrange-Multiplikatoren. Wir „hängen“ also die Nebenbedingungen einfach über die Lagrange-Multiplikatoren an die zu minimierende Zielfunktion <span class="math notranslate nohighlight">\(\frac{1}{2}\|v\|_2^2\)</span> an.</p>
+<p>Ein Ergebnis aus der Analysis (<a class="reference external" href="https://de.wikipedia.org/wiki/Karush-Kuhn-Tucker-Bedingungen">Karush-Kuhn-Tucker-Bedingungen</a>, KKT) besagt, dass (unter gewissen Regularitätsvoraussetzungen)
+für ein Minimum <span class="math notranslate nohighlight">\(\hat{v}, \hat{v}_0\)</span> Parameter
+<span class="math notranslate nohighlight">\(\hat{\alpha}_i\geq 0\)</span> existieren, so dass
+folgende notwendigen Bedingungen gelten:</p>
+<ul>
+<li><p>für die partiellen Ableitungen von <span class="math notranslate nohighlight">\(L\)</span> nach den
+Komponenten von <span class="math notranslate nohighlight">\(v\)</span> und nach <span class="math notranslate nohighlight">\(v_0\)</span> ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \partial_{v_k} L(\hat{v},\hat{v}_0, \hat{\alpha}) = 0, \quad k=0,\ldots,m.
+  \end{equation*}\]</div>
+</li>
+<li><p>die Nebenbedingungen sind erfüllt sein:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  y_i(\hat{v}^T x_i + \hat{v}_0) - 1 \geq 0, \quad i=1,\ldots,n.
+  \end{equation*}\]</div>
+</li>
+<li><p>Komplemetaritätsbedingung:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \hat{\alpha}_i\big(y_i(\hat{v}^T x_i + \hat{v}_0) - 1\big) = 0, \quad i=1,\ldots,n.
+  \end{equation*}\]</div>
+</li>
+</ul>
+<p>Wegen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+L(v,v_0, \alpha) 
+= \frac{1}{2} \sum_{i=1}^m v_i^2 - \sum_{i=1}^n \alpha_i  \Big(y_i \big(\sum_{j=1}^m v_j x_{ij} + v_0 \big) - 1 \Big)
+\end{equation*}\]</div>
+<p>erhält man für die partiellen Ableitungen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\partial_{v_0} L(v,v_0, \alpha)
+&amp;= - \sum_{i=1}^n \alpha_i y_i \\
+\partial_{v_k} L(v,v_0, \alpha)
+&amp;= 
+v_k
+- \sum_{i=1}^n \alpha_i y_i x_{ik},
+\quad k = 1,\ldots,n.
+\end{align*}\]</div>
+<p>Für die optimalen Parameter <span class="math notranslate nohighlight">\(\hat{v}, \hat{v}_0\)</span> muss also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+0
+&amp;=
+\sum_{i=1}^n \hat{\alpha}_i y_i, 
+\\
+\hat{v} &amp;= \sum_{i=1}^n \hat{\alpha}_i y_i x_i
+\end{align*}\]</div>
+<p>gelten, sowie</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\hat{\alpha}_i 
+&amp;\geq 0,
+\\
+y_i(\hat{v}^T x_i + \hat{v}_0) - 1 
+&amp;\geq 0,
+\\ 
+\hat{\alpha}_i\big(y_i(\hat{v}^T x_i + \hat{v}_0) - 1\big) 
+&amp;= 0
+\end{align*}\]</div>
+<p>für alle <span class="math notranslate nohighlight">\(i=1,\ldots,n\)</span>.</p>
+<p>Daraus können wir nun schlussfolgern:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\hat{v}\)</span> ist eine Linearkombination der Produkte <span class="math notranslate nohighlight">\(y_ix_i\)</span> aus den Input-Daten, d.h. ist <span class="math notranslate nohighlight">\(\hat{\alpha}_i=0\)</span>
+dann hat <span class="math notranslate nohighlight">\(x_i, y_i\)</span> keinen Einfluss auf <span class="math notranslate nohighlight">\(\hat{v}\)</span>.</p></li>
+<li><p>ist <span class="math notranslate nohighlight">\(\hat{\alpha}_i &gt; 0\)</span> dann muss wegen der letzten Bedingung</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  y_i(\hat{v}^T x_i + \hat{v}_0) - 1 = 0
+  \end{equation*}\]</div>
+<p>sein, d.h. der Datenpunkt <span class="math notranslate nohighlight">\(x_i\)</span> hat den minimalen Abstand zur Hyperebene, er liegt
+also damit auf der „Front“ seines Clusters.</p>
+</li>
+<li><p>ist <span class="math notranslate nohighlight">\(y_i(\hat{v}^T x_i + \hat{v}_0) - 1 &gt; 0\)</span>, d.h.
+der Abstand von <span class="math notranslate nohighlight">\(x_i\)</span> zur Hyperebene ist nicht minimal,
+so muss wegen der letzten Bedingung <span class="math notranslate nohighlight">\(\hat{\alpha}_i = 0\)</span> sein,
+somit hat der Datenpunkt <span class="math notranslate nohighlight">\(x_i, y_i\)</span> keinen Einfluss auf den
+optimalen Parameter <span class="math notranslate nohighlight">\(\hat{v}\)</span>.</p></li>
+<li><p>da <span class="math notranslate nohighlight">\(\hat{v} \neq 0\)</span> ist, muss es mindestens einen
+Index <span class="math notranslate nohighlight">\(\hat{i}\)</span> mit <span class="math notranslate nohighlight">\(\hat{\alpha}_{\hat{i}}&gt;0\)</span> geben.</p></li>
+<li><p>aus der letzten Bedingung von oben folgt dann aber</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  y_{\hat{i}}(\hat{v}^T x_{\hat{i}} + \hat{v}_0) - 1 = 0
+  \end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \hat{v}_0 
+  = \frac{1}{y_{\hat{i}}} - \hat{v}^T x_{\hat{i}}
+  = y_{\hat{i}} - \hat{v}^T x_{\hat{i}} 
+  \end{equation*}\]</div>
+<p>und somit ist auch <span class="math notranslate nohighlight">\(\hat{v}_0\)</span> unabhängig von
+Punkten <span class="math notranslate nohighlight">\(x_i, y_i\)</span>, für die <span class="math notranslate nohighlight">\(\hat{\alpha}_i = 0\)</span>
+ist, also insbesondere für die,
+die keinen Minimalabstand zur Hyperebene haben.</p>
+</li>
+<li><p>für die Vorhersage der Clusterzugehörigkeit von neuen
+Input-Daten <span class="math notranslate nohighlight">\(x\)</span> benutzen wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  y = \text{sign}(\hat{f}(x)),
+  \quad
+  \hat{f}(x) = \hat{v}^T x + \hat{v}_0
+  \end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \hat{f}(x) 
+  = \hat{v}^T x + y_{\hat{i}} - \hat{v}^T x_{\hat{i}} 
+  = y_{\hat{i}} + \hat{v}^T \big( x - x_{\hat{i}} \big)
+  \end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \hat{v} = \sum_{\hat{\alpha}_i&gt;0} \hat{\alpha}_i y_i x_i,
+  \end{equation*}\]</div>
+<p>d.h. das Modell wird ausschließlich durch die Datenpunkte <span class="math notranslate nohighlight">\(x_i,y_i\)</span>
+bestimmt, die minimalen Abstand zur optimalen Hyperebene haben.</p>
+</li>
+</ul>
+<p>Die Datenpunkte <span class="math notranslate nohighlight">\(x_i\)</span> die auf der „Front“ beider Cluster
+liegen (<span class="math notranslate nohighlight">\(\hat{\alpha}_i &gt; 0\)</span>) werden <strong>Support Punkte</strong> genannt,
+das zugehörige Klassifikationsverfahren bezeichnet
+man als <strong>Support Vector Classification</strong>.</p>
+<p>Da für die Vorhersage nur Support Points benutzt werden, ist diese
+auch bei großen Datensätzen mit wenig Aufwand verbunden.</p>
+</div>
+<div class="section" id="beispiel">
+<h2>Beispiel<a class="headerlink" href="#beispiel" title="Link zu dieser Überschrift">¶</a></h2>
+<p>In Scikit-Learn kann man trennende Hyperebenen
+mit Objekten der Klasse <code class="docutils literal notranslate"><span class="pre">SVC</span></code> (mit Parameter <code class="docutils literal notranslate"><span class="pre">C</span> <span class="pre">=</span> <span class="pre">np.finfo(float).max</span></code>,
+<code class="docutils literal notranslate"><span class="pre">kernel</span> <span class="pre">=</span> <span class="pre">'linear'</span></code>) erzeugen. Wir benutzen den Datensatz von oben und fitten unser Modell.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
+<span class="n">X</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">kernel</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">plotf</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_30_0.png" src="_images/05_Klassifikation_mit_SVM_30_0.png" />
+</div>
+</div>
+<p>Mit <code class="docutils literal notranslate"><span class="pre">svc.score</span></code> können wir zunächst überprüfen, ob
+wirklich eine trennende Hyperebene für unseren Datensatz
+gefunden wurde (score = 1).</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Für diesen Datensatz ist also alles in Ordnung.</p>
+<p>Mit <code class="docutils literal notranslate"><span class="pre">svc.n_support_</span></code> kann abgefragt werden, wie viele Support Punkte pro Klasse existieren.
+Der erste Wert gibt die Anzahl der Support Punkte in der Klasse
+<span class="math notranslate nohighlight">\(y=-1\)</span>, der zweite Wert die Anzahl der Support Punkte in der Klasse
+<span class="math notranslate nohighlight">\(y=1\)</span> an.</p>
+<p><code class="docutils literal notranslate"><span class="pre">svc.support_</span></code> liefert die Indizes der Support Punkte bezogen auf den Input-Datensatz.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svc</span><span class="o">.</span><span class="n">n_support_</span><span class="p">,</span> <span class="n">svc</span><span class="o">.</span><span class="n">support_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([1, 2], dtype=int32), array([78, 27, 74], dtype=int32))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Die Parameter <span class="math notranslate nohighlight">\(\hat{v}\)</span>, <span class="math notranslate nohighlight">\(\hat{v}_0\)</span> sind in
+<code class="docutils literal notranslate"><span class="pre">svc.coef_</span></code> bzw. <code class="docutils literal notranslate"><span class="pre">svc.intercept_</span></code> zu finden</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svc</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">svc</span><span class="o">.</span><span class="n">intercept_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([[-0.44426779, -0.08195204]]), array([-2.44497832]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Die Werte <span class="math notranslate nohighlight">\(\alpha_iy_i \neq 0\)</span>, die in</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\hat{v} = \sum_{\hat{\alpha}_i&gt;0} \hat{\alpha}_i y_i x_i,
+\end{equation*}\]</div>
+<p>eingehen, sind in <code class="docutils literal notranslate"><span class="pre">svc.dual_coef_</span></code> abgelegt.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svc</span><span class="o">.</span><span class="n">dual_coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.10200703,  0.06731152,  0.03469552]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Mit <code class="docutils literal notranslate"><span class="pre">svc.decision_function</span></code> kann man schließlich den Abstand eines Input-Wertes von der trennenden
+Hyperebene ermitteln. Für die Support Punkte erhalten wir</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">svc</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">svc</span><span class="o">.</span><span class="n">support_</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.00049625,  1.0002484 ,  1.00024794])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Die Werte sind nicht identisch, liegen aber innerhalb der von SVC vorgegebenen Standardtoleranz (1e-3).</p>
+</div>
+<div class="section" id="uberlappende-cluster">
+<h2>Überlappende Cluster<a class="headerlink" href="#uberlappende-cluster" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Bisher sind wir davon ausgegangen, dass die Daten <span class="math notranslate nohighlight">\(x,y\)</span> so strukturiert sind,
+dass eine trennende Hyperebene existiert. In der Praxis wird das selten der Fall sein.
+Deshalb wollen wir den Zugang aus dem letzten Abschnitt auf „überlappende“ Daten erweitern.
+Dazu betrachten wir folgenden Datensatz.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cluster_std</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
+<span class="n">X</span><span class="p">[:,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_44_0.png" src="_images/05_Klassifikation_mit_SVM_44_0.png" />
+</div>
+</div>
+<p>Für nicht überlappende Cluster hatten wir die optimal trennende Hyperebene durch Lösen von</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\min_{v\neq 0, v_0} \frac{1}{2}\|v\|_2^2 \quad\text{mit}\quad
+y_i(v^T x_i + v_0) - 1 \geq 0, \quad i = 1,\ldots,n
+\end{equation*}\]</div>
+<p>bestimmt. Die über die Lösung <span class="math notranslate nohighlight">\(\hat{v}, \hat{v}_0\)</span> definierte Hyperebene hatte
+dann von allen Punkten <em>beider</em> Cluster einen Mindestabstand von</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\hat{M} = \frac{1}{\|\hat{v}\|_2},
+\end{equation*}\]</div>
+<p>d.h.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\hat{d}_i 
+= y_i 
+\big( 
+\frac{\hat{v}^T}{\|\hat{v}\|_2} x_i 
++ \frac{\hat{v}_0}{\|\hat{v}\|_2}
+\big) 
+\geq \hat{M}, 
+\quad i = 1,\ldots,n.
+\end{equation*}\]</div>
+<p>Für überlappende Cluster kann man diese Nebenbedingung nicht einhalten.
+Um trotzdem eine „pseudo-trennende“ Hyperebene zu definieren, müssen wir Fehler zulassen,
+d.h. wir müssen die Nebenbedingung abschwächen zu</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+d_i 
+= y_i \frac{1}{\|v\|_2}(v^T x_i + v_0) 
+\geq M (1 - \xi_i), 
+\quad 
+i = 1,\ldots,n
+.
+\end{equation*}\]</div>
+<p>Dabei stellt <span class="math notranslate nohighlight">\(\xi_i \geq 0\)</span> den „relativen Fehler“ für den Datenpunkt <span class="math notranslate nohighlight">\(x_i\)</span> dar.</p>
+<p>Für <span class="math notranslate nohighlight">\(0 &lt; \xi_i &lt; 1\)</span> liegt <span class="math notranslate nohighlight">\(x_i\)</span> zwar auf der richtigen Seite der Hyperebene, hat aber einen Abstand
+kleiner <span class="math notranslate nohighlight">\(M\)</span>.</p>
+<p>Für <span class="math notranslate nohighlight">\(\xi_i &gt; 1\)</span> liegt <span class="math notranslate nohighlight">\(x_i\)</span> auf der „falschen“ Seite der Hyperebene, d.h. <span class="math notranslate nohighlight">\(x_i\)</span>
+würde bei der Vorhersage dem falschen Cluster zugeordnet (<strong>Missclassification</strong>).</p>
+<p>Durch die Zusatzbedingung</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\sum_{i=1}^n \xi_i \leq K
+\end{equation*}\]</div>
+<p>kann man somit die maximale Anzahl an Missklassifikationen auf maximal <span class="math notranslate nohighlight">\(K \in \mathbb{N}\)</span> beschränken.</p>
+<p>Analog zu oben formuliert man das
+<a class="reference external" href="http://docs.w3cub.com/scikit_learn/modules/svm/#svm-mathematical-formulation">Optimierungsproblem</a>
+um zu</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\min_{v\neq 0, v_0,\xi}
+\Big(
+\frac{1}{2}\|v\|_2^2
++ C \sum_{i=1}^n \xi_i
+\Big)
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\xi_i\geq 0,
+\quad
+y_i(v^T x_i + v_0)  \geq 1 - \xi_i, \quad i = 1,\ldots,n.
+\end{equation*}\]</div>
+<p>Statt die maximale Anzahl <span class="math notranslate nohighlight">\(K\)</span> an Missklassifikationen zu benutzen
+gewichtet man die Fehlersumme hier mit <span class="math notranslate nohighlight">\(C&gt;0\)</span>.</p>
+<p>Für <span class="math notranslate nohighlight">\(C\to\infty\)</span> muss dann die Summe der Fehler verschwinden,
+d.h. man erhält (wenn das Problem dann überhaupt lösbar ist)
+den Fall der optimal separierenden Hyperebene.</p>
+<p>Für <span class="math notranslate nohighlight">\(C\to 0\)</span> dürfen die Fehler beliebig groß werden,
+so dass sicher eine Lösung des Problems existiert.</p>
+<p>Für die Lagrange-Funktion erhalten wir jetzt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+L(v, v_0, \xi, \alpha, \beta) 
+= &amp;\Big(
+\frac{1}{2}\|v\|_2^2
++ C \sum_{i=1}^n \xi_i
+\Big)
+\\
+&amp;- \sum_{i=1}^n \alpha_i  \Big(y_i \big(\sum_{j=1}^m v_j x_{ij} + v_0 \big) - 1 + \xi_i \Big)\\
+&amp;- \sum_{i=1}^n\beta_i \xi_i
+\end{align*}\]</div>
+<p>mit den partiellen Ableitungen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\partial_{v_0} L(v, v_0, \xi, \alpha, \beta) 
+&amp;= - \sum_{i=1}^n \alpha_i y_i, \\
+\partial_{v_k} L(v, v_0, \xi, \alpha, \beta) 
+&amp;= 
+v_k
+- \sum_{i=1}^n \alpha_i y_i x_{ik},
+\quad k = 1,\ldots,m.
+\\
+\partial_{\xi_i} L(v, v_0, \xi, \alpha, \beta) 
+&amp;= 
+C - \alpha_i - \beta_i,
+\quad i = 1,\ldots,n.
+\end{align*}\]</div>
+<p>Für die optimalen Parameter <span class="math notranslate nohighlight">\(\hat{v}, \hat{v}_0, \hat{\xi}\)</span> muss also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+0
+&amp;=
+\sum_{i=1}^n \hat{\alpha}_i y_i, 
+\\
+\hat{v} &amp;= \sum_{i=1}^n \hat{\alpha}_i y_i x_i\\
+\hat{\alpha}_i &amp;= C - \hat{\beta}_i
+\end{align*}\]</div>
+<p>gelten, sowie</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\hat{\alpha}_i 
+&amp;\geq 0,
+\\
+y_i(\hat{v}^T x_i + \hat{v}_0) - 1 + \hat{\xi}_i
+&amp;\geq 0,
+\\ 
+\hat{\alpha}_i\big(y_i(\hat{v}^T x_i + \hat{v}_0) - 1 + \hat{\xi}_i \big) 
+&amp;= 0\\
+\hat{\beta}_i 
+&amp;\geq 0,
+\\
+\hat{\xi}_i
+&amp;\geq 0,
+\\ 
+\hat{\beta}_i \hat{\xi}_i 
+&amp;= 0
+\end{align*}\]</div>
+<p>für alle <span class="math notranslate nohighlight">\(i=1,\ldots,n\)</span>.</p>
+<p>Daraus können wir nun wieder schlussfolgern, dass nur Support Punkte mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+y_i(\hat{v}^T x_i + \hat{v}_0) - (1 - \hat{\xi}_i) = 0
+\end{equation*}\]</div>
+<p>in das Modell einfließen.</p>
+<p>Wir berechnen nun für unseren Beispieldatensatz von oben für verschiedene Werte von <span class="math notranslate nohighlight">\(C\)</span> die Hyperebene und
+die zugehörigen Support Punkte.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">C</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">]:</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">C</span> <span class="o">=</span> <span class="n">C</span><span class="p">,</span> <span class="n">kernel</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+    <span class="n">svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">plotf</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+    <span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">svc</span><span class="o">.</span><span class="n">support_vectors_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">);</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;C = </span><span class="si">{}</span><span class="s2">   score = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">svc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_52_0.png" src="_images/05_Klassifikation_mit_SVM_52_0.png" />
+<img alt="_images/05_Klassifikation_mit_SVM_52_1.png" src="_images/05_Klassifikation_mit_SVM_52_1.png" />
+<img alt="_images/05_Klassifikation_mit_SVM_52_2.png" src="_images/05_Klassifikation_mit_SVM_52_2.png" />
+<img alt="_images/05_Klassifikation_mit_SVM_52_3.png" src="_images/05_Klassifikation_mit_SVM_52_3.png" />
+</div>
+</div>
+</div>
+<div class="section" id="dimensionserhohung-kernel-trick">
+<h2>Dimensionserhöhung, Kernel-Trick<a class="headerlink" href="#dimensionserhohung-kernel-trick" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="section" id="id1">
+<h3>Grundlagen<a class="headerlink" href="#id1" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Wir betrachten den folgenden Datensatz aus dem sklearn Fundus.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">make_moons</span>
+
+<span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_56_0.png" src="_images/05_Klassifikation_mit_SVM_56_0.png" />
+</div>
+</div>
+<p>Die beiden Cluster sind ineinander verschränkt, so dass
+eine Trennung durch eine Hyperebene keine guten Ergebnisse
+liefern wird. Mit dem Standard SVC Zugang erhalten wir das folgende Resultat.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">metrics</span> 
+
+<span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+
+<span class="n">svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">plotf</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Score = </span><span class="si">{}</span><span class="s1">   Anzahl Support-Punkte = </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">svc</span><span class="o">.</span><span class="n">n_support_</span><span class="p">))</span>
+<span class="n">ypred</span> <span class="o">=</span> <span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ypred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Score = 0.845   Anzahl Support-Punkte = [177 177]
+
+              precision    recall  f1-score   support
+
+           0       0.84      0.85      0.85       500
+           1       0.85      0.84      0.84       500
+
+    accuracy                           0.84      1000
+   macro avg       0.85      0.84      0.84      1000
+weighted avg       0.85      0.84      0.84      1000
+</pre></div>
+</div>
+<img alt="_images/05_Klassifikation_mit_SVM_58_1.png" src="_images/05_Klassifikation_mit_SVM_58_1.png" />
+</div>
+</div>
+<p>Transformieren wir die Daten vom <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span> in
+<span class="math notranslate nohighlight">\(\mathbb{R}^m\)</span> mit <span class="math notranslate nohighlight">\(m&gt;2\)</span>, dann lassen sie
+sich dort (eventuell) besser mit einer Hyperbenen trennen.</p>
+<p>Wir betrachten hier den Fall <span class="math notranslate nohighlight">\(m=3\)</span> und transformieren
+die <span class="math notranslate nohighlight">\(x\)</span>-Werte durch eine Funktion</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\phi : \mathbb{R}^2 \to \mathbb{R}^3,
+\quad 
+\tilde{x} = \phi(x),
+\quad 
+\phi(x) =
+\frac{\|x\|_2}{1 + \|x\|_2^2}
+\begin{pmatrix}
+x_1 \\ x_2 \\ 1
+\end{pmatrix}
+\end{equation*}\]</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">phis</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span> <span class="o">*</span>  <span class="n">s</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">s</span><span class="o">*</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">phi</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">phis</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">phis</span><span class="p">,</span> <span class="n">x</span><span class="p">))))</span>
+
+<span class="n">Xt</span> <span class="o">=</span> <span class="n">phi</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1">#%matplotlib notebook</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="k">import</span> <span class="n">Axes3D</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">plotXy</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="n">equal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">250</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_60_0.png" src="_images/05_Klassifikation_mit_SVM_60_0.png" />
+</div>
+</div>
+<p>Wenden wir nun Standard SVC auf den transformierten Datensatz an,
+dann erhalten wir einen deutlich verbesserten Score Wert.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+
+<span class="n">svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Score = </span><span class="si">{}</span><span class="s1">   Anzahl Support-Punkte = </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">svc</span><span class="o">.</span><span class="n">n_support_</span><span class="p">))</span>
+<span class="n">ypred</span> <span class="o">=</span> <span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ypred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Score = 0.906   Anzahl Support-Punkte = [159 159]
+
+              precision    recall  f1-score   support
+
+           0       0.93      0.88      0.90       500
+           1       0.88      0.93      0.91       500
+
+    accuracy                           0.91      1000
+   macro avg       0.91      0.91      0.91      1000
+weighted avg       0.91      0.91      0.91      1000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Um eine Vorhersage für neue <span class="math notranslate nohighlight">\(x\)</span>-Werte zu erzeugen
+berechnen wir einfach <span class="math notranslate nohighlight">\(\tilde{x} = \phi(x)\)</span> und bestimmen
+anhand der Hyperebene im höherdimensionalen Raum
+die Klassenzugehörigkeit.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%matplotlib notebook</span>
+
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d.art3d</span> <span class="k">import</span> <span class="n">Poly3DCollection</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axes</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="n">plotXy</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="n">equal</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="c1"># Support Punkte</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">svc</span><span class="o">.</span><span class="n">support_vectors_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s1">&#39;r.&#39;</span><span class="p">);</span>
+
+<span class="c1"># Hyperebene</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">svc</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">beta0</span> <span class="o">=</span> <span class="n">svc</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">v0</span> <span class="o">=</span> <span class="o">-</span><span class="n">beta0</span> <span class="o">/</span> <span class="n">beta</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">beta</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">beta</span><span class="p">)</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">beta</span><span class="p">)</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">v2</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ecken</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="o">-</span><span class="n">v1</span><span class="o">-</span><span class="n">v2</span><span class="p">,</span> <span class="n">v1</span><span class="o">-</span><span class="n">v2</span><span class="p">,</span> <span class="n">v1</span><span class="o">+</span><span class="n">v2</span><span class="p">,</span> <span class="o">-</span><span class="n">v1</span><span class="o">+</span><span class="n">v2</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">v0</span><span class="p">]</span>
+
+<span class="c1"># Workaround wegen alpha-Bug</span>
+<span class="n">poly</span> <span class="o">=</span> <span class="n">Poly3DCollection</span><span class="p">([</span><span class="n">ecken</span><span class="o">.</span><span class="n">T</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">facecolor</span> <span class="o">=</span> <span class="s2">&quot;g&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_collection3d</span><span class="p">(</span><span class="n">poly</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">view_init</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span><span class="mi">250</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_64_0.png" src="_images/05_Klassifikation_mit_SVM_64_0.png" />
+</div>
+</div>
+<p>Damit ergibt sich für die Klassenaufteilung im ursprünglichen <span class="math notranslate nohighlight">\(x\)</span>-Parameterraum folgendes Bild.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="k">def</span> <span class="nf">pred</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">phi</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
+
+<span class="n">plotf</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_66_0.png" src="_images/05_Klassifikation_mit_SVM_66_0.png" />
+</div>
+</div>
+<p>Die Trennlinie der beiden Bereiche ist keine einfache
+Gerade mehr, obwohl im höherdimensionalen Raum die Punkte
+durch eine Hyperebene getrennt werden.
+Dies ist ein Effekt der nichtlinearen Transformation <span class="math notranslate nohighlight">\(\phi\)</span>.</p>
+</div>
+<div class="section" id="mathematische-formulierung">
+<h3>Mathematische Formulierung<a class="headerlink" href="#mathematische-formulierung" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Der oben beschriebene Zugang kann so in SVC implementiert werden,
+dass eine explizite Berechnung von <span class="math notranslate nohighlight">\(\tilde{x} = \phi(x)\)</span> nicht
+nötig ist.</p>
+<p>Dazu betrachten wir das restringierte <a class="reference external" href="http://docs.w3cub.com/scikit_learn/modules/svm/#svm-mathematical-formulation">Optimierungsproblem</a>, das für SVC gelöst wird:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\min_{v\neq 0, v_0,\xi}
+\Big(
+\frac{1}{2}\|v\|_2^2
++ C \sum_{i=1}^n \xi_i
+\Big)
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\xi_i\geq 0,
+\quad
+y_i(v^T x_i + v_0)  \geq 1 - \xi_i, \quad i = 1,\ldots,n.
+\end{equation*}\]</div>
+<p>Die Lösungskomponente <span class="math notranslate nohighlight">\(\hat{w}=(\hat{v},\hat{v}_0)\)</span> hatte folgende Form</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\hat{v} = \sum_{\hat{\alpha}_i&gt;0} \hat{\alpha}_i y_i x_i,
+\quad
+\hat{v}_0 
+= y_{\hat{i}} - \hat{v}^T x_{\hat{i}} 
+\end{equation*}\]</div>
+<p>wobei die <span class="math notranslate nohighlight">\(\hat{\alpha}_i\)</span> die Lagrange-Multiplikatoren
+und <span class="math notranslate nohighlight">\(\hat{i}\)</span> ein entsprechend gewählter Index aus
+<span class="math notranslate nohighlight">\(\{1,\ldots,n\}\)</span> ist.</p>
+<p>Für die Vorhersage der Clusterzugehörigkeit von neuen
+Input-Daten <span class="math notranslate nohighlight">\(x\)</span> benutzen wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+y = \text{sign}\big(g(x, \hat{w})\big),
+\quad
+g(x, \hat{w}) = \hat{v}^T x + \hat{v}_0
+\end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+g(x, \hat{w}) 
+= y_{\hat{i}} + \hat{v}^T \big( x - x_{\hat{i}} \big)
+= y_{\hat{i}} + \sum_{\hat{\alpha}_i&gt;0} \hat{\alpha}_i y_i x_i^T \big( x - x_{\hat{i}} \big).
+\end{equation*}\]</div>
+<p>Man kann zeigen, dass die <span class="math notranslate nohighlight">\(\hat{\alpha}_i\)</span> Lösung des
+folgenden <em>dualen Problems</em></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\min_{\alpha}
+\Big(
+\frac{1}{2}\alpha^T Q \alpha - e^T \alpha 
+\Big)
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+Q = \big( y_i x_i^T x_jy_j \big)_{i,j = 1,\ldots,n}
+\end{equation*}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+y^T \alpha = 0,
+\quad
+0\leq \alpha_i \leq C,
+\quad i = 1,\ldots,n
+\end{equation*}\]</div>
+<p>und <span class="math notranslate nohighlight">\(e = (1,\ldots,1)^T\)</span> sind (Details siehe Kapitel
+„Grundlagen der Optimierun“).
+Die Input-Daten <span class="math notranslate nohighlight">\(x_i,x\)</span> tauchen also sowohl bei der Berechnung
+der <span class="math notranslate nohighlight">\(\hat{\alpha}_i\)</span> als auch bei der Vorhersage immer nur in Form von Skalaprodukten</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+x_i^T x_j, \quad x_i^T x
+\end{equation*}\]</div>
+<p>auf.</p>
+<p>Wenden wir also nun SVC auf die transformierten
+Daten <span class="math notranslate nohighlight">\(\tilde{x}_i = \phi(x_i)\)</span>, <span class="math notranslate nohighlight">\(\tilde{x} = \phi(x)\)</span> an,
+so erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+g\big(\phi(x), \hat{w}\big) 
+= y_{\hat{i}} + \sum_{\hat{\alpha}_i&gt;0} \hat{\alpha}_i y_i 
+\big( \phi(x_i)^T  \phi(x) - \phi(x_i)^T \phi(x_{\hat{i}}) \big)
+\end{equation*}\]</div>
+<p>wobei <span class="math notranslate nohighlight">\(\hat{\alpha}\)</span> die Lösung von</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\min_{\alpha}
+\Big(
+\frac{1}{2}\alpha^T Q \alpha - e^T \alpha 
+\Big)
+\end{equation*}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+Q = \big( y_i \phi(x_i)^T \phi(x_j)y_j \big)_{i,j = 1,\ldots,n}
+\end{equation*}\]</div>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+y^T \alpha = 0,
+\quad
+0\leq \alpha_i \leq C,
+\quad i = 1,\ldots,n
+\end{equation*}\]</div>
+<p>ist.
+Die Transformation <span class="math notranslate nohighlight">\(\phi\)</span> geht als nur in Termen der
+Form</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+K(x,z) = \phi(x)^T \phi(z)
+\end{equation*}\]</div>
+<p>in die Anpassung des Modells und in die Vorhersage ein.
+Deshalb gibt man nicht <span class="math notranslate nohighlight">\(\phi\)</span> sondern den <em>Kernel</em> <span class="math notranslate nohighlight">\(K(x, z)\)</span> vor.</p>
+<p><span class="math notranslate nohighlight">\(K\)</span> kann natürlich nicht beliebig gewählt werden, offensichtlich muss <span class="math notranslate nohighlight">\(K(x,z) = K(z,x)\)</span> und
+<span class="math notranslate nohighlight">\(K(x,x)\geq 0\)</span> gelten.
+Detailliertere Aussagen dazu liefert der
+<a class="reference external" href="https://en.wikipedia.org/wiki/Mercer%27s_theorem#Mercer%27s_condition">Satz von Mercer</a>,
+der auch den Fall abdeckt, dass <span class="math notranslate nohighlight">\(\phi\)</span>
+in einen unendlichdimensionalen Vektorraum
+abbildet.</p>
+</div>
+<div class="section" id="svc-mit-kernel">
+<h3>SVC mit Kernel<a class="headerlink" href="#svc-mit-kernel" title="Link zu dieser Überschrift">¶</a></h3>
+<p>SVC ist in Scikit-Learn wie im letzten Abschnitt beschrieben
+implementiert.
+Damit können wir das Beispiel von oben mit der Transformation
+von <span class="math notranslate nohighlight">\(\mathbb{R}^2\)</span> in <span class="math notranslate nohighlight">\(\mathbb{R}^3\)</span> über den zugehörigen
+Kernel ganz einfach reproduzieren.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">K</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">phi</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">phi</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+
+<span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span> <span class="o">=</span> <span class="n">K</span><span class="p">)</span>
+<span class="n">svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">plotf</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">X</span><span class="p">)</span>
+<span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Score = </span><span class="si">{}</span><span class="s1">   Anzahl Support-Punkte = </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">svc</span><span class="o">.</span><span class="n">n_support_</span><span class="p">))</span>
+
+<span class="n">ypred</span> <span class="o">=</span> <span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ypred</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Score = 0.906   Anzahl Support-Punkte = [159 159]
+
+              precision    recall  f1-score   support
+
+           0       0.93      0.88      0.90       500
+           1       0.88      0.93      0.91       500
+
+    accuracy                           0.91      1000
+   macro avg       0.91      0.91      0.91      1000
+weighted avg       0.91      0.91      0.91      1000
+</pre></div>
+</div>
+<img alt="_images/05_Klassifikation_mit_SVM_76_1.png" src="_images/05_Klassifikation_mit_SVM_76_1.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="verallgemeinerung-auf-mehrere-klassen">
+<h2>Verallgemeinerung auf mehrere Klassen<a class="headerlink" href="#verallgemeinerung-auf-mehrere-klassen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Der oben beschriebene Zugang kann natürlich auf auf mehrere Klassen verallgemeinert werden.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nblob</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">X</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="n">nblob</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
+
+<span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/05_Klassifikation_mit_SVM_79_0.png" src="_images/05_Klassifikation_mit_SVM_79_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">svc</span> <span class="o">=</span> <span class="n">svm</span><span class="o">.</span><span class="n">SVC</span><span class="p">(</span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">finfo</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">kernel</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">plotf</span><span class="p">(</span><span class="n">svc</span><span class="o">.</span><span class="n">predict</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">svc</span><span class="o">.</span><span class="n">n_support_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plotXy</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">*</span><span class="n">svc</span><span class="o">.</span><span class="n">support_vectors_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">);</span>
+
+<span class="n">svc</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+</pre></div>
+</div>
+<img alt="_images/05_Klassifikation_mit_SVM_80_1.png" src="_images/05_Klassifikation_mit_SVM_80_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="zusammenfassung">
+<h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">¶</a></h2>
+<ul class="simple">
+<li><p>SVC führt auf ein konvexes Optimierungsproblem mit Ungleichheitsnebenbedingungen.</p></li>
+<li><p>der Kernel-Trick ist prinzipiell eine Dimensionserhöhung um komplexere Trennflächen zu erzeugen.</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="04_Background_Removal_QR.html" title="zurück Seite">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">zurück</p>
+                <p class="prevnext-title">Background Removal mit TSVD</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="06_Neuronale_Netze.html" title="weiter Seite">
+            <div class="prevnext-info">
+                <p class="prevnext-label">weiter</p>
+                <p class="prevnext-title">Neuronale Netze</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          Durch Martin Reißel<br/>
+        
+            &copy; Urheberrechte © 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

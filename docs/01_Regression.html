@@ -1,0 +1,1605 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Regression &#8212; Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="Dimensionsreduktion" href="02_Dimensionsreduktion.html" />
+    <link rel="prev" title="Numerische Algorithmen für Maschinelles Lernen (Version 0.42)" href="00_Vorwort.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Dieses Buch durchsuchen ..." aria-label="Dieses Buch durchsuchen ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_Vorwort.html">
+   Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Dimensionsreduktion.html">
+   Dimensionsreduktion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_Regularisierung.html">
+   Regularisierung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_Background_Removal_QR.html">
+   Background Removal mit TSVD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_Klassifikation_mit_SVM.html">
+   Support-Vector Klassifikation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_Neuronale_Netze.html">
+   Neuronale Netze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_Topic_Extraction.html">
+   Topic Extraction, NMF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_Grundlagen_Optimierung.html">
+   Grundlagen der Optimierung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_Konvexitaet.html">
+   Konvexität
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_Gradient_Descent.html">
+   Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_Projected_Gradient_Descent.html">
+   Projected Gradient-Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_Subgradient_Descent.html">
+   Subgradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_Proximal_Gradient_Descent.html">
+   Proximal Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14_Stochastic_Gradient_Descent.html">
+   Stochastic Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15_Probabilistische_Lineare_Algebra.html">
+   Probabilistische Lineare Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="99_Literatur.html">
+   Weiterführende Links
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Navigation umschalten" aria-controls="site-navigation"
+                title="Navigation umschalten" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Laden Sie diese Seite herunter"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/01_Regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Quelldatei herunterladen" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="In PDF drucken"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Vollbildmodus"
+        title="Vollbildmodus"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/mre2110/NumMLv042/master?urlpath=tree/01_Regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Starten Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Inhalt
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#uberblick">
+   Überblick
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#grundlagen">
+   Grundlagen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lineare-regression">
+   Lineare Regression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numerische-verfahren">
+   Numerische Verfahren
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#testproblem">
+     Testproblem
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optimierungsverfahren">
+     Optimierungsverfahren
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gradientenverfahren-gradient-descent-gd">
+       Gradientenverfahren (Gradient-Descent, GD)
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#newton-verfahren">
+       Newton-Verfahren
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#loser-fur-das-normalgleichungssystem">
+     Löser für das Normalgleichungssystem
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#direkte-loser">
+       Direkte Löser
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#cholesky">
+         Cholesky
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#qr-zerlegung">
+         QR-Zerlegung
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#iterative-loser">
+       Iterative Löser
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#cg-cgls">
+         CG, CGLS
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#herleitung-uber-gradienten-verfahren">
+         Herleitung über Gradienten-Verfahren
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#herleitung-als-projektionsverfahren">
+         Herleitung als Projektionsverfahren
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#interpretation">
+         Interpretation
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scikit-learn">
+   Scikit-Learn
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#zusammenfassung">
+   Zusammenfassung
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="regression">
+<h1>Regression<a class="headerlink" href="#regression" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="section" id="uberblick">
+<h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">¶</a></h2>
+<p>In diesem Abschnitt werden einfache Regressionsprobleme vorgestellt.
+Für lineare Modellfunktionen führt dies auf nicht restringierte
+konvexe quadratische Optimierungsprobleme, die mit verschiedenen
+numerischen Verfahren gelöst werden können.
+Die wichtigsten Algorithmen werden kurz erläutert und verschiedene
+Interpretationsmöglichkeiten ihrer Arbeitsweisen erklärt.</p>
+</div>
+<div class="section" id="grundlagen">
+<h2>Grundlagen<a class="headerlink" href="#grundlagen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Viele Anwendungen im Data-Science Bereich führen zur folgenden Aufgabenstellung:</p>
+<ul>
+<li><p>gegeben sind Daten-Paare</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  (x_i, y_i), \quad i=1,\ldots,m,
+  \end{equation*}\]</div>
+<p>sowie eine <strong>Modellfunktion</strong> <span class="math notranslate nohighlight">\(g\)</span> mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  y = g(x,w)
+  \end{equation*}\]</div>
+<p>die bei geeigneter Wahl des
+Parameters <span class="math notranslate nohighlight">\(w\in\mathbb{R}^n\)</span> den Zusammenhang
+zwischen <span class="math notranslate nohighlight">\(x_i\)</span> und <span class="math notranslate nohighlight">\(y_i\)</span> näherungsweise beschreiben soll</p>
+</li>
+<li><p>hat man <span class="math notranslate nohighlight">\(w\)</span> bestimmt, so bewertet man mit einer geeigneten Funktion
+<span class="math notranslate nohighlight">\(l(w)\)</span> (<strong>Loss</strong>), wie gut das Modell die Daten approximiert</p></li>
+<li><p>in der Regel geht man davon aus, dass die Anzahl der Messpunkte größer gleich der Anzahl der Parameter ist,
+also <span class="math notranslate nohighlight">\(m \ge n\)</span></p></li>
+<li><p>der Modellfehler an der Stelle <span class="math notranslate nohighlight">\(x_i\)</span> wird mit einer Funktion</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  l_i(w)
+  \end{equation*}\]</div>
+<p>gemessen, z.B.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  l_i(w) = \frac{1}{2}\|g(x_i, w) - y_i\|
+  \end{equation*}\]</div>
+<p>mit einer geeigneten Norm <span class="math notranslate nohighlight">\(\|\cdot\|\)</span></p>
+</li>
+<li><p>Ziel ist es, <span class="math notranslate nohighlight">\(w\)</span> so zu bestimmen, dass</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}  
+  l(w) = \frac{1}{2m}\sum_{i=1}^m l_i(w) 
+  \end{equation*}\]</div>
+<p>möglichst klein wird</p>
+</li>
+</ul>
+<p>Wir erhalten also ein <strong>nicht restringiertes Optimierungsproblem</strong></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+w^* = \text{argmin}_{w\in\mathbb{R}^n} l(w).
+\end{equation*}\]</div>
+<p>Benutzt man als Loss</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+l_i(x) 
+&amp;= \frac{1}{2} \|g(x_i,w) - y_i\|_2^2\\
+&amp;= \frac{1}{2} \big( g(x_i,w) - y_i, g(x_i,w) - y_i \big)_2
+\end{align*}\]</div>
+<p>so erhält man</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l(w) 
+= \frac{1}{2m}\sum_{i=1}^m l_i(w) 
+= \frac{1}{2m} L^T(w) L(w)
+= \frac{1}{2m} \|L(w)\|_2^2
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+L(w) =
+\begin{pmatrix}
+g(x_1,w) - y_1 \\
+\vdots \\
+g(x_m,w) - y_m
+\end{pmatrix}.
+\end{equation*}\]</div>
+<p>Somit ist das nicht restringierte Optimierungsproblem</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+w^* = \text{argmin}_{w\in\mathbb{R}^n} l(w)
+\end{equation*}\]</div>
+<p>ein (nichtlineares) Least-Square Problem.</p>
+</div>
+<div class="section" id="lineare-regression">
+<h2>Lineare Regression<a class="headerlink" href="#lineare-regression" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Ist die Modellfunktion <span class="math notranslate nohighlight">\(g\)</span> linear affin in <span class="math notranslate nohighlight">\(w\)</span>, d.h.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+g(x, w) = G(x)\, w + c(x)
+\end{equation*}\]</div>
+<p>und benutzen wir als Loss wieder</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l(w) 
+= \frac{1}{2m} \|L(w)\|_2^2
+\end{equation*}\]</div>
+<p>so erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+L(w) 
+&amp;=
+\begin{pmatrix}
+G(x_1)\, w + c(x_1) - y_1 \\
+\vdots \\
+G(x_m)\, w + c(x_m) - y_m
+\end{pmatrix}
+\\
+&amp;=
+\begin{pmatrix}
+G(x_1) \\
+\vdots \\
+G(x_m)
+\end{pmatrix}
+\,w 
+-
+\begin{pmatrix}
+y_1 - c(x_1) \\
+\vdots \\
+y_m - c(x_m)
+\end{pmatrix}
+\end{align*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l(w)
+= \frac{1}{2m} \|Aw - b\|_2^2
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+A = \begin{pmatrix}
+G(x_1) \\
+\vdots \\
+G(x_m)
+\end{pmatrix},
+\quad
+b = \begin{pmatrix}
+y_1 - c(x_1) \\
+\vdots \\
+y_m - c(x_m)
+\end{pmatrix}
+\end{equation*}\]</div>
+<p>und somit ein lineares Ausgleichproblem.</p>
+<p>Wir lösen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+w^* = \text{argmin}_{w\in\mathbb{R}^n} l(w).
+\end{equation*}\]</div>
+<p>mit den üblichen Methoden aus der Analysis.</p>
+<p>Wegen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+l(w) 
+&amp;= \frac{1}{2m} \|Aw - b\|_2^2 \\
+&amp;= \frac{1}{2m} (Aw - b, Aw - b)_2 \\
+&amp;= \frac{1}{2m} (w^T A^T A w - 2 w^T A^T b + b^T b)
+\end{align*}\]</div>
+<p>ist <span class="math notranslate nohighlight">\(l\)</span> quadratisch (und damit differenzierbar),
+so dass dies besonders einfach ist.</p>
+<p>Für die Ableitungen
+von <span class="math notranslate nohighlight">\(l\)</span> im Punkt <span class="math notranslate nohighlight">\(w\)</span> angewandt auf <span class="math notranslate nohighlight">\(u\)</span> (Ableitungen sind lineare Operatoren, Jacobi-Matrizen) erhalten wir nach der Produktregel für beliebiges <span class="math notranslate nohighlight">\(u\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+l'(w)(u)
+&amp;= \frac{1}{2m} (u^T A^T A w + w^T A^T A u - 2 u^T A^T b )\\
+&amp;= \frac{1}{m} u^T (A^T A w - A^T b )
+\end{align*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l'(w) = \frac{1}{m} A^T(A w - b).
+\end{equation*}\]</div>
+<p>Für die zweite Ableitung von <span class="math notranslate nohighlight">\(l\)</span> an <span class="math notranslate nohighlight">\(w\)</span> erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l''(w)(u)(v) = \frac{1}{m} u^T A^T A v
+\quad
+\forall u,v
+\end{equation*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l''(w) = \frac{1}{m} A^T A.
+\end{equation*}\]</div>
+<p>Die Bedingung <span class="math notranslate nohighlight">\(l'(w)=0\)</span> ist also äquivalent zum <strong>Normalgleichungssystem</strong></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+A^TA w = A^Tb.
+\end{equation*}\]</div>
+<p>Da die zweite Ableitung</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l''(w) = \frac{1}{m} A^T A
+\end{equation*}\]</div>
+<p>positiv semidefinit ist, ist jede Lösung des Normalgleichungssystem ein
+lokales Minimum. Zusätzlich ist <span class="math notranslate nohighlight">\(l\)</span> konvex, so dass lokale Minima immer auch globale
+sind.</p>
+<p>Bleibt noch die Frage zu klären, ob das Normalgleichungssystem auch immer eine Lösung besitzt.</p>
+<p>Aus der linearen Algebra wissen wir, dass <span class="math notranslate nohighlight">\(Bw=c\)</span> genau dann lösbar ist, wenn <span class="math notranslate nohighlight">\(c\in N(B^T)^\bot\)</span>. Hat man eine Lösung <span class="math notranslate nohighlight">\(\tilde{w}\)</span> bestimmt, so erhält man alle Lösungen durch <span class="math notranslate nohighlight">\(w = \tilde{w} + N(B)\)</span>.</p>
+<p>In unserem Fall ist <span class="math notranslate nohighlight">\(B=A^TA\)</span>, <span class="math notranslate nohighlight">\(B^T=B\)</span>, also auch <span class="math notranslate nohighlight">\(N(B^T)=N(B)\)</span>.
+Für beliebiges <span class="math notranslate nohighlight">\(z\in N(B)\)</span> gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+0 = Bz = A^TAz
+\quad \Rightarrow \quad
+0 = z^TA^TAz = \|Az\|_2
+\quad \Rightarrow \quad
+Az = 0
+\end{equation*}\]</div>
+<p>und somit gilt <span class="math notranslate nohighlight">\(N(B)\subset N(A)\)</span>. Da offensichtlich auch
+<span class="math notranslate nohighlight">\(N(A)\subset N(A^TA) = N(B)\)</span> gilt, ist <span class="math notranslate nohighlight">\(N(B)=N(B^T) = N(A)\)</span>.</p>
+<p>Für <span class="math notranslate nohighlight">\(c=A^Ty\)</span> und <span class="math notranslate nohighlight">\(z\in N(B^T) = N(A)\)</span> beliebig folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+c^T z = (A^Ty)^Tz = y^T A z = 0 \quad \forall z\in N(B^T),
+\end{equation*}\]</div>
+<p>also <em>hat das Normalgleichungssystem immer (mindestens) eine Lösung</em>.</p>
+<p>Damit haben wir gezeigt, dass das lineare Regressionsproblem</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+w^* = \text{argmin}_{w\in\mathbb{R}^n} l(w),
+\quad
+l(w)  = \frac{1}{2m} \|Aw - b\|_2^2 
+\end{equation*}\]</div>
+<p>äquivalent ist zum Lösen des Normalgleichungssystems</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+A^TA w =A^Tb.
+\end{equation*}\]</div>
+<p>Deshalb haben wir die folgenden Möglichkeiten, diese Aufgabe
+numerisch zu behandeln:</p>
+<ul class="simple">
+<li><p>durch numerische Optimierungsverfahren, die auf <span class="math notranslate nohighlight">\(l(w)\)</span> angewandt werden</p></li>
+<li><p>durch Verfahren der numerischen linearen Algebra, die <span class="math notranslate nohighlight">\(A^TA w = A^Tb\)</span> lösen</p></li>
+</ul>
+</div>
+<div class="section" id="numerische-verfahren">
+<h2>Numerische Verfahren<a class="headerlink" href="#numerische-verfahren" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="section" id="testproblem">
+<h3>Testproblem<a class="headerlink" href="#testproblem" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Für <span class="math notranslate nohighlight">\(x_i, y_i \in \mathbb{R}\)</span> betrachten wir nun eine einfache lineare Regression, d.h. die Modellfunktion ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+g(x,w) = w_1 + w_2 \, x,
+\end{equation*}\]</div>
+<p>also linear in <span class="math notranslate nohighlight">\(w\)</span>. Die <span class="math notranslate nohighlight">\(l_i\)</span> haben alle identische Struktur, nämlich</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l_i(w) = \frac{1}{2} \big( g(x_i,w) - y_i \big)^2 = \frac{1}{2} \big( w_1 + w_2 \, x_i - y_i \big)^2,
+\end{equation*}\]</div>
+<p>d.h. man misst den quadratischen Abstand zwischen der Vorhersage <span class="math notranslate nohighlight">\(g(x_i,w)\)</span> des Modells und dem Messpunkt <span class="math notranslate nohighlight">\(y_i\)</span>.
+Als Zielfunktion erhalten wir damit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}  
+l(w) 
+= \frac{1}{m}\sum_{i=1}^m \frac{1}{2} \big( w_1 + w_2 \, x_i - y_i \big)^2
+= \frac{1}{2m} \|Xw - y\|_2^2
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+X = 
+\begin{pmatrix}
+1 &amp; x_1 \\
+\vdots &amp; \vdots \\
+1 &amp; x_m
+\end{pmatrix},
+\quad
+w = 
+\begin{pmatrix}
+w_1 \\
+w_2
+\end{pmatrix},
+\quad
+y = 
+\begin{pmatrix}
+y_1 \\
+\vdots \\
+y_m
+\end{pmatrix}.
+\end{equation*}\]</div>
+<p>Wir benutzen in unserem Testproblem den folgenden Datensatz</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">autograd.numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">autograd</span> <span class="k">import</span> <span class="n">jacobian</span>
+
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sy</span>
+
+<span class="n">seed</span> <span class="o">=</span> <span class="mi">17</span>
+
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">Math</span>
+<span class="o">%</span><span class="k">precision</span> 5
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="n">delta</span> <span class="o">=</span> <span class="mf">1e-1</span>
+
+<span class="n">h</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="mi">5</span> <span class="o">-</span> <span class="mi">7</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">h</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">delta</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/01_Regression_15_0.png" src="_images/01_Regression_15_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="optimierungsverfahren">
+<h3>Optimierungsverfahren<a class="headerlink" href="#optimierungsverfahren" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Numerische Standardverfahren zum Lösen nicht restringierter, konvexer Optimierungsprobleme sind Abstiegs-Verfahren
+wie z.B. das Gradienten- und das Newton-Verfahren.</p>
+<div class="section" id="gradientenverfahren-gradient-descent-gd">
+<h4>Gradientenverfahren (Gradient-Descent, GD)<a class="headerlink" href="#gradientenverfahren-gradient-descent-gd" title="Link zu dieser Überschrift">¶</a></h4>
+<p>Das Gradientenverfahren (Gradient Descent, GD) ist das einfachste Abstiegs-Verfahren für differenzierbare Zielfunktionen <span class="math notranslate nohighlight">\(l(w)\)</span>.
+Die Iterationsvorschrift lautet</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+w^{(k+1)} = w^{(k)} - \gamma^{(k)} l'\big( w^{(k)} \big), 
+\quad 
+\gamma^{(k)} \ge 0.
+\end{equation*}\]</div>
+<p>Dabei ist die Abstiegsrichtung <span class="math notranslate nohighlight">\(-l'\big( w^{(k)} \big)\)</span> der negative Gradient
+von <span class="math notranslate nohighlight">\(l\)</span> am Punkt <span class="math notranslate nohighlight">\(w^{(k)}\)</span> (Richtung des lokal steilsten Abstiegs) und
+<span class="math notranslate nohighlight">\(\gamma^{(k)}\)</span> die Schrittlänge (learning-rate), die üblicherweise konstant ist oder über
+eine <strong>Liniensuche</strong> (Armijo, Wolfe etc.) bestimmt wird.</p>
+<p>Wie wir oben gesehen habe, erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l'(w) = \frac{1}{m}X^T(X w - y).
+\end{equation*}\]</div>
+<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die fogenden Ergebnisse</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span><span class="n">x</span>
+
+<span class="k">def</span> <span class="nf">l</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">((</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">l1</span> <span class="o">=</span> <span class="n">jacobian</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">GD</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">nit</span> <span class="o">=</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">ww</span> <span class="o">=</span> <span class="p">[</span><span class="n">w0</span><span class="p">]</span>
+    <span class="n">w</span>  <span class="o">=</span> <span class="n">w0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nit</span><span class="p">):</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">l1</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        <span class="n">ww</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">ww</span>
+
+
+<span class="k">def</span> <span class="nf">eval2d</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># Fit</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">);</span>
+    <span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">g</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">w</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="s1">&#39;r&#39;</span><span class="p">);</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$y$&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># Konvergenzgeschwindigkeit</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">semilogy</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">w</span><span class="p">)))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$k$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$l(w^{(k)})$&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    
+    <span class="c1"># Pfad</span>
+    <span class="k">def</span> <span class="nf">kontur</span><span class="p">(</span><span class="n">ww</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">ng</span> <span class="o">=</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ww</span><span class="p">)</span>
+        <span class="n">xymin</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">xymax</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">xyr</span>   <span class="o">=</span> <span class="n">xymax</span> <span class="o">-</span> <span class="n">xymin</span>
+        <span class="n">sk</span>    <span class="o">=</span> <span class="mf">0.1</span>
+        <span class="n">xymin</span> <span class="o">-=</span> <span class="n">sk</span> <span class="o">*</span> <span class="n">xyr</span>
+        <span class="n">xymax</span> <span class="o">+=</span> <span class="n">sk</span> <span class="o">*</span> <span class="n">xyr</span>
+        
+        <span class="n">xlim</span> <span class="o">=</span> <span class="p">(</span><span class="n">xymin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xymax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">ylim</span> <span class="o">=</span> <span class="p">(</span><span class="n">xymin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">xymax</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="n">xyr</span><span class="p">)</span>
+        
+        <span class="n">yy</span><span class="p">,</span><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">*</span><span class="n">ylim</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">ng</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">*</span><span class="n">xlim</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">ng</span><span class="p">))</span>
+        <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">flatten</span><span class="p">())))))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        
+        <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="n">zz</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">zz</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">nc</span><span class="p">)</span>
+        
+        <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+    
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">w</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">w</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;ro-&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+    
+
+    <span class="n">kontur</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$w_1$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$w_2$&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    
+<span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">GD</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">l1</span><span class="p">)</span>
+<span class="n">eval2d</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/01_Regression_20_0.png" src="_images/01_Regression_20_0.png" />
+<img alt="_images/01_Regression_20_1.png" src="_images/01_Regression_20_1.png" />
+<img alt="_images/01_Regression_20_2.png" src="_images/01_Regression_20_2.png" />
+</div>
+</div>
+<p>Wir beobachten folgendes:</p>
+<ul class="simple">
+<li><p>der Fit sieht „ganz gut“ aus</p></li>
+<li><p>die Zielfunktion <span class="math notranslate nohighlight">\(l\)</span> wird in den ersten paar Iterationen recht schnell reduziert, dann geht es aber
+nur langsam vorwärts (siehe Konturplot: man kommt relativ schnell ins Flache, dort werden die Schritte dann
+aber sehr klein)</p></li>
+<li><p>mit der vorgegebenen Anzahl an Iterationsschritten wird das (globale) Minimum noch nicht erreicht</p></li>
+</ul>
+</div>
+<div class="section" id="newton-verfahren">
+<h4>Newton-Verfahren<a class="headerlink" href="#newton-verfahren" title="Link zu dieser Überschrift">¶</a></h4>
+<p>Um <span class="math notranslate nohighlight">\(l\)</span> zu minimieren, suchen wir mit dem Newton-Verfahren Nullstellen des Gradienten <span class="math notranslate nohighlight">\(l'\)</span>. Das ist zunächst nur
+eine hinreichende Bedingung (wir könnten statt eines Minimums auch ein Maximum, einen Sattelpunkt etc. gefunden
+haben).
+Da unser Zielfunktion <span class="math notranslate nohighlight">\(l\)</span> aber konvex ist, wissen wir, dass jede Nullstelle des Gradienten ein lokales
+und somit auch globales Minimum ist.</p>
+<p>Die Iterationsvorschrift für das einfache Newton-Verfahren lautet</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+w^{(k+1)} = w^{(k)} -  l''\big( w^{(k)} \big)^{-1} l'\big( w^{(k)} \big),
+\end{equation*}\]</div>
+<p>d.h. wir brauchen alle zweiten Ableitungen, da wir in jedem Schritt die Hesse-Matrix <span class="math notranslate nohighlight">\(l''\)</span> auswerten müssen.
+Nach oben ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l'(w) = \frac{1}{m}(X^TX w - X^T y)
+\end{equation*}\]</div>
+<p>und damit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l''(w) = \frac{1}{m}X^TX.
+\end{equation*}\]</div>
+<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die fogenden Ergebnisse</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l2</span> <span class="o">=</span> <span class="n">jacobian</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">Newton</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">nit</span> <span class="o">=</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">ww</span> <span class="o">=</span> <span class="p">[</span><span class="n">w0</span><span class="p">]</span>
+    <span class="n">w</span>  <span class="o">=</span> <span class="n">w0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nit</span><span class="p">):</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="n">w</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">l2</span><span class="p">(</span><span class="n">w</span><span class="p">),</span> <span class="n">l1</span><span class="p">(</span><span class="n">w</span><span class="p">))</span>
+        <span class="n">ww</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">ww</span>
+
+
+<span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">Newton</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">)</span>
+<span class="n">eval2d</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/01_Regression_24_0.png" src="_images/01_Regression_24_0.png" />
+<img alt="_images/01_Regression_24_1.png" src="_images/01_Regression_24_1.png" />
+<img alt="_images/01_Regression_24_2.png" src="_images/01_Regression_24_2.png" />
+</div>
+</div>
+<p>Wir beobachten folgendes:</p>
+<ul>
+<li><p>Newton findet die Lösung in einem Schritt, denn aus</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+    w^{(1)} 
+    &amp;= w^{(0)} -  l''\big( w^{(0)} \big)^{-1} l'\big( w^{(0)} \big)\\
+    &amp;= w^{(0)} - (X^T X)^{-1} \big(X^TX w^{(0)} - X^T y\big)\\
+    &amp;= (X^T X)^{-1}X^T y
+    \end{align*}\]</div>
+<p>folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    X^T X w^{(1)} = X^T y,
+    \end{equation*}\]</div>
+<p>d.h. es wird gerade das Normalgleichungssystem gelöst</p>
+</li>
+<li><p>Newton benutzt eine quadratische Approximation der Zielfunktion</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+    l(w) \approx 
+    l(w^{(k)}) 
+    &amp;+ l'(w^{(k)})(w-w^{(k)}) \\
+    &amp;+  \frac{1}{2}(w-w^{(k)})^T l''(w^{(k)})(w-w^{(k)})
+    \end{align*}\]</div>
+<p>und minimiert diese <em>exakt</em> durch Lösen des zugehörigen Normalgleichungssystems.
+Da in unserem Beispiel die Zielfunktion selbst quadratisch ist, ist die quadratische Approximation
+identisch mit der Zielfunktion und ein Schritt mit Newton liefert bereits das gesuchte Minimum.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="loser-fur-das-normalgleichungssystem">
+<h3>Löser für das Normalgleichungssystem<a class="headerlink" href="#loser-fur-das-normalgleichungssystem" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Das Normalgleichungssysstem für unser Beispiel hat die Form</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}  
+X^T X w = X^T y
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+X = 
+\begin{pmatrix}
+1 &amp; x_1 \\
+\vdots &amp; \vdots \\
+1 &amp; x_m
+\end{pmatrix},
+\quad
+w = 
+\begin{pmatrix}
+w_1 \\
+w_2
+\end{pmatrix},
+\quad
+y = 
+\begin{pmatrix}
+y_1 \\
+\vdots \\
+y_m
+\end{pmatrix}.
+\end{equation*}\]</div>
+<p>Ist <span class="math notranslate nohighlight">\(m \ge 2\)</span> und sind die <span class="math notranslate nohighlight">\(x_i\)</span> nicht alle identisch, so ist die Matrix <span class="math notranslate nohighlight">\(X^TX\)</span> spd, so dass
+wir genau eine Lösung des Gleichungssystems erhalten.</p>
+<div class="section" id="direkte-loser">
+<h4>Direkte Löser<a class="headerlink" href="#direkte-loser" title="Link zu dieser Überschrift">¶</a></h4>
+<div class="section" id="cholesky">
+<h5>Cholesky<a class="headerlink" href="#cholesky" title="Link zu dieser Überschrift">¶</a></h5>
+<p>Die Matrix <span class="math notranslate nohighlight">\(A\)</span> des Normalgleichungssystem</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+Aw = X^TX w =X^Ty = b
+\end{equation*}\]</div>
+<p>ist spd weshalb das System mit Cholesky-Zerlegung</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+A = L^TL, \quad L^T z = b, \quad Lw = z 
+\end{equation*}\]</div>
+<p>lösbar ist. Da <span class="math notranslate nohighlight">\(L\)</span> eine obere Dreiecksmatrix ist, kann man <span class="math notranslate nohighlight">\(L^T z = b\)</span> und <span class="math notranslate nohighlight">\(Lw = z\)</span>
+einfach durch Vorwärts- bzw. Rückwärtseinsetzen bestimmen.</p>
+<p>Nachteile:</p>
+<ul class="simple">
+<li><p>die Komplexität des Algorithmus für <span class="math notranslate nohighlight">\(X\in\mathbb{R}^{m\times n}\)</span>
+ist <span class="math notranslate nohighlight">\(\mathcal{O}(m n^2)\)</span> für die Matrixmultiplikation <span class="math notranslate nohighlight">\(X^T X\)</span> und
+<span class="math notranslate nohighlight">\(\mathcal{O}(n^3)\)</span> für die Zerlegung</p></li>
+<li><p>wegen <span class="math notranslate nohighlight">\(\kappa (A) = \kappa (X)^2\)</span> kann die Kondition sehr groß sein
+und somit zu starken (Rundungs-)Fehlereinflüssen in der berechneten
+Lösung <span class="math notranslate nohighlight">\(w\)</span> führen</p></li>
+<li><p>ist <span class="math notranslate nohighlight">\(X\)</span> sparse (dünn besetzt), dann ist <span class="math notranslate nohighlight">\(A\)</span> oft nicht mehr sparse</p></li>
+<li><p>wenn <span class="math notranslate nohighlight">\(A\)</span> sparse ist, so entstehen in der Regel beim Zerlegen von <span class="math notranslate nohighlight">\(A\)</span>
+sehr viele Fill-Ins, so dass <span class="math notranslate nohighlight">\(L\)</span> sehr viel dichter besetzt ist als <span class="math notranslate nohighlight">\(A\)</span> bzw. <span class="math notranslate nohighlight">\(X\)</span></p></li>
+</ul>
+</div>
+<div class="section" id="qr-zerlegung">
+<h5>QR-Zerlegung<a class="headerlink" href="#qr-zerlegung" title="Link zu dieser Überschrift">¶</a></h5>
+<p>Wir können jede Matrix <span class="math notranslate nohighlight">\(X\in\mathbb{R}^{m\times n}\)</span>, <span class="math notranslate nohighlight">\(m\ge n\)</span>, (z.B. mit Householder oder Givens) zerlegen in</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+X 
+= QR 
+= Q
+\begin{pmatrix}
+\tilde{R} \\ 0
+\end{pmatrix},
+\quad
+Q \in\mathbb{R}^{m\times m}, 
+\quad 
+R \in\mathbb{R}^{m\times n},
+\quad 
+\tilde{R} \in\mathbb{R}^{n\times n},
+\end{equation*}\]</div>
+<p>wobei <span class="math notranslate nohighlight">\(Q\)</span> orthonormal und <span class="math notranslate nohighlight">\(\tilde{R}\)</span> eine quadratische obere Dreiecksmatrix ist.</p>
+<p>Setzen wir diese Zerlegung in das Normalgleichungsystem ein, so erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+X^T X w
+&amp;= \big(\tilde{R}^T, 0\big) \, Q^T Q 
+\begin{pmatrix}
+\tilde{R} \\ 0
+\end{pmatrix}
+w\\
+&amp;= \big(\tilde{R}^T, 0\big)
+\begin{pmatrix}
+\tilde{R} \\ 0
+\end{pmatrix}
+w\\
+&amp;= \tilde{R}^T \tilde{R} w\\
+&amp;= X^Ty.
+\end{align*}\]</div>
+<p>Das Normalgleichungssystem ist damit äquivalent zu</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\tilde{A}w = \tilde{R}^T \tilde{R} w = X^Ty
+\end{equation*}\]</div>
+<p>und <span class="math notranslate nohighlight">\(\tilde{R}^T \tilde{R}\)</span> ist eine Cholesky-Zerlegung von <span class="math notranslate nohighlight">\(\tilde{A}w\)</span>,
+so dass <span class="math notranslate nohighlight">\(w\)</span> jetzt wieder einfach durch Vorwärts- bzw. Rückwärtseinsetzen
+berechnet werden kann.</p>
+<p>Alternativ kann man die QR-Zerlegung auch wie folgt einsetzen.
+Da für orthonormale Matrizen <span class="math notranslate nohighlight">\(\|Qx\|_2 = \|x\|_2\)</span> <span class="math notranslate nohighlight">\(\forall x\)</span>
+gilt, ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+l(w) 
+&amp;= \frac{1}{2m} \|Xw - y\|_2^2\\
+&amp;= \frac{1}{2m} \|QRw - y\|_2^2\\
+&amp;= \frac{1}{2m} \|Q^T(QRw - y)\|_2^2\\
+&amp;= \frac{1}{2m} \big\|
+\begin{pmatrix}
+\tilde{R} \\ 0
+\end{pmatrix}
+w - Q^Ty \big\|_2^2
+\end{align*}\]</div>
+<p>und mit <span class="math notranslate nohighlight">\((c, d)^T := Q^T y\)</span> folgt schließlich</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+l(w) 
+&amp;= \frac{1}{2m} \big\|
+\begin{pmatrix}
+\tilde{R} \\ 0
+\end{pmatrix}
+w 
+- 
+\begin{pmatrix}
+c \\ d
+\end{pmatrix}
+\big\|_2^2\\
+&amp;=
+\frac{1}{2m} \big(
+\| \tilde{R} w - c\|_2^2
++
+\|d\|_2^2
+\big).
+\end{align*}\]</div>
+<p><span class="math notranslate nohighlight">\(w\)</span> minimiert <span class="math notranslate nohighlight">\(l\)</span> also genau dann, wenn <span class="math notranslate nohighlight">\(\tilde{R} w = c\)</span> ist, d.h. man kann
+<span class="math notranslate nohighlight">\(w\)</span> durch Rückwärtseinsetzen bestimmen.</p>
+<p>Vorteil:</p>
+<ul class="simple">
+<li><p>weniger Probleme mit der Kondition, da auf <span class="math notranslate nohighlight">\(X\)</span> und nicht auf <span class="math notranslate nohighlight">\(A = X^TX\)</span> gearbeitet wird</p></li>
+</ul>
+<p>Nachteile:</p>
+<ul class="simple">
+<li><p>die Komplexität des Algorithmus ist für <span class="math notranslate nohighlight">\(X\in\mathbb{R}^{m\times n}\)</span> auch
+<span class="math notranslate nohighlight">\(\mathcal{O}(mn^2)\)</span></p></li>
+<li><p>ungünstig bei  <span class="math notranslate nohighlight">\(X\)</span> sparse (Fill-In)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="iterative-loser">
+<h4>Iterative Löser<a class="headerlink" href="#iterative-loser" title="Link zu dieser Überschrift">¶</a></h4>
+<div class="section" id="cg-cgls">
+<h5>CG, CGLS<a class="headerlink" href="#cg-cgls" title="Link zu dieser Überschrift">¶</a></h5>
+<p>Ein geeignetes iteratives Verfahren zum Lösen der Normalgleichungen ist CGLS.
+Für <span class="math notranslate nohighlight">\(w^{(0)}\)</span> gegeben,  <span class="math notranslate nohighlight">\(s^{(0)}=y-Xw^{(0)}\)</span>, <span class="math notranslate nohighlight">\(p^{(0)} = r^{(0)} = X^Ts^{(0)}\)</span>, lautet die Iterationsvorschrift</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+w^{(k+1)} &amp;= w^{(k)} + \gamma^{(k)} p^{(k)} &amp;  &amp; \\
+s^{(k+1)} &amp;= s^{(k)} - \gamma^{(k)} X p^{(k)} &amp; \gamma^{(k)} &amp;= \frac{(r^{(k)}, r^{(k)})_2}{(Xp^{(k)}, Xp^{(k)})_2}\\
+r^{(k+1)} &amp;= X^Ts^{(k+1)} \\
+p^{(k+1)} &amp;= r^{(k+1)} + \beta^{(k)} p^{(k)} &amp; \beta^{(k)} &amp;= \frac{(r^{(k+1)}, r^{(k+1)})_2}{(r^{(k)}, r^{(k)})_2}
+\end{align*}\]</div>
+<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die fogenden Ergebnisse</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">CGLS</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">nit</span> <span class="o">=</span> <span class="mi">20</span><span class="p">):</span>
+    <span class="n">ww</span> <span class="o">=</span> <span class="p">[</span><span class="n">w0</span><span class="p">]</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">w0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    
+    <span class="n">rr</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nit</span><span class="p">):</span>
+        <span class="n">Xp</span>  <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">al</span>  <span class="o">=</span> <span class="n">rr</span> <span class="o">/</span> <span class="n">Xp</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Xp</span><span class="p">)</span>
+        <span class="n">w</span>   <span class="o">=</span> <span class="n">w</span> <span class="o">+</span> <span class="n">al</span> <span class="o">*</span> <span class="n">p</span>
+        <span class="n">s</span>   <span class="o">=</span> <span class="n">s</span> <span class="o">-</span> <span class="n">al</span> <span class="o">*</span> <span class="n">Xp</span>
+        <span class="n">r</span>   <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="n">rrn</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">be</span>  <span class="o">=</span> <span class="n">rrn</span> <span class="o">/</span> <span class="n">rr</span>
+        <span class="n">p</span>   <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">be</span> <span class="o">*</span> <span class="n">p</span>
+        
+        <span class="n">rr</span> <span class="o">=</span> <span class="n">rrn</span>
+        <span class="n">ww</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+        
+    <span class="k">return</span><span class="p">(</span><span class="n">ww</span><span class="p">)</span>
+
+
+<span class="n">npar</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">wX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">npar</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">wX</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npar</span><span class="p">)])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">npar</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">CGLS</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">eval2d</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/01_Regression_39_0.png" src="_images/01_Regression_39_0.png" />
+<img alt="_images/01_Regression_39_1.png" src="_images/01_Regression_39_1.png" />
+<img alt="_images/01_Regression_39_2.png" src="_images/01_Regression_39_2.png" />
+</div>
+</div>
+<p>CGLS erreicht bereits im zweiten Schritt die exakte Lösung.
+Wie wir gleich sehen werden, ist dies kein Zufall.</p>
+<p>CGLS ist eine einfache Anpassung  des CG Verfahrens zur Lösung von spd Gleichungssystemen auf die Normalgleichungen.</p>
+<p>Für <span class="math notranslate nohighlight">\(Aw = b\)</span>, <span class="math notranslate nohighlight">\(A\)</span> spd, startet man CG mit <span class="math notranslate nohighlight">\(w^{(0)}\)</span> gegeben,  <span class="math notranslate nohighlight">\(p^{(0)} = r^{(0)} = b - Aw^{(0)}\)</span> und
+wiederholt für <span class="math notranslate nohighlight">\(k \ge 0\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+w^{(k+1)} &amp;= w^{(k)} + \gamma^{(k)} p^{(k)} &amp;  &amp; \\
+r^{(k+1)} &amp;= r^{(k)} - \gamma^{(k)} Ap^{(k)} &amp;  \gamma^{(k)} &amp;= \frac{(r^{(k)}, r^{(k)})_2}{(p^{(k)}, Ap^{(k)})_2}\\
+p^{(k+1)} &amp;= r^{(k+1)} + \beta^{(k)} p^{(k)} &amp; \beta^{(k)} &amp;= \frac{(r^{(k+1)}, r^{(k+1)})_2}{(r^{(k)}, r^{(k)})_2}\\
+\end{align*}\]</div>
+<p>Das Verfahren kann man auf zwei unterschiedlichen Wegen herleiten.</p>
+</div>
+<div class="section" id="herleitung-uber-gradienten-verfahren">
+<h5>Herleitung über Gradienten-Verfahren<a class="headerlink" href="#herleitung-uber-gradienten-verfahren" title="Link zu dieser Überschrift">¶</a></h5>
+<p>Wir betrachten für <span class="math notranslate nohighlight">\(A\)</span> spd die quadratische Zielfunktion</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l(w) = \frac{1}{2}w^TAw - w^Tb.
+\end{equation*}\]</div>
+<p>Es gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+l'(w) = Aw - b,
+\quad
+l'(w) = A
+\end{equation*}\]</div>
+<p>so dass die Lösung von <span class="math notranslate nohighlight">\(Aw=b\)</span> das eindeutige lokale (und globale) Minimum von <span class="math notranslate nohighlight">\(l\)</span> ist.</p>
+<p>Wenden wir auf <span class="math notranslate nohighlight">\(l\)</span> das Gradienten-Verfahren, so erhält man</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+w^{(k+1)} = w^{(k)} + \gamma^{(k)} r^{(k)}, \quad r^{(k)} = b - Aw^{(k)}.
+\end{equation*}\]</div>
+<p>Den Parameter <span class="math notranslate nohighlight">\(\gamma^{(k)}\)</span> kann man einfach mit Hilfe einer exakten Liniensuche
+berechnen. Dazu bestimmen wir das Minimum von</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+\varphi(\gamma) 
+&amp;= l\big( w^{(k)} + \gamma r^{(k)} \big)\\
+&amp;= \frac{1}{2}\big( w^{(k)} + \gamma r^{(k)} \big)^TA\big( w^{(k)} + \gamma r^{(k)} \big) - \big( w^{(k)} + \gamma r^{(k)} \big)^Tb
+\end{align*}\]</div>
+<p>für <span class="math notranslate nohighlight">\(\gamma &gt; 0\)</span>. <span class="math notranslate nohighlight">\(\varphi\)</span> ist differenzierbar mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\varphi'(\gamma) 
+&amp;= 
+  \frac{1}{2} {r^{(k)}}^T A  \big( w^{(k)} + \gamma r^{(k)} \big) 
++ \frac{1}{2} \big( w^{(k)} + \gamma r^{(k)} \big)^TA r^{(k)}
+- {r^{(k)}}^T b \\
+&amp;= 
+  \frac{1}{2} {r^{(k)}}^T A  \big( w^{(k)} + \gamma r^{(k)} \big) 
++ \frac{1}{2} {r^{(k)}}^T A^T \big( w^{(k)} + \gamma r^{(k)} \big)
+- {r^{(k)}}^T b.
+\end{align*}\]</div>
+<p>Wegen <span class="math notranslate nohighlight">\(A^T=A\)</span> folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+\varphi'(\gamma)
+&amp;=
+{r^{(k)}}^T \Big( A  \big( w^{(k)} + \gamma r^{(k)} \big) -  b \Big)\\
+&amp;=
+{r^{(k)}}^T \Big(  \gamma Ar^{(k)} - \big(b - A w^{(k)} \big)\Big)
+\end{align*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\varphi'(\gamma) = {r^{(k)}}^T \big(\gamma Ar^{(k)} - r^{(k)}\big),
+\quad
+\varphi''(\gamma) = {r^{(k)}}^T A r^{(k)}.
+\end{equation*}\]</div>
+<p>Wegen <span class="math notranslate nohighlight">\(A\)</span> spd ist <span class="math notranslate nohighlight">\(\varphi''(\gamma)\ge 0\)</span> <span class="math notranslate nohighlight">\(\forall\gamma\)</span>
+so dass wir aus <span class="math notranslate nohighlight">\(\varphi'(\gamma)=0\)</span> für das Minimum</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\gamma^{(k)}= \frac{(r^{(k)}, r^{(k)})_2}{(r^{(k)}, Ar^{(k)})_2} &gt; 0
+\end{equation*}\]</div>
+<p>erhalten.</p>
+<p>Die exakte Liniensuche stellt also die exakte Lösung einer eindimensionale Optimierungsaufgabe in jedem Schritt entlang einer Geraden in Richtung <span class="math notranslate nohighlight">\(r^{(k)}\)</span> dar.</p>
+<p>Würde man pro Schritt nicht nur entlang dieser Geraden sondern in einem zweidimensionalen Unterraum suchen der diese
+Gerade enthält, so würden die Ergebnisse auf jeden Fall nicht schlechter ausfallen.
+Optimieren über einen zweidimensionalen Unterraum bedeutet dann natürlich, dass in jedem Schritt nach zwei skalaren Parametern
+optimiert werden muss.</p>
+<p>CG erhält man nun, indem man den zweidimensionalen Unterraum betrachtet, der von dem aktuellen negativen Gradienten
+<span class="math notranslate nohighlight">\(-l'(w^{(k)}) = r^{(k)}\)</span> und der vorherigen Suchrichtung <span class="math notranslate nohighlight">\(p^{(k-1)}\)</span> aufgespannt wird.</p>
+<p>Das Optimierungsproblem
+wird wieder exakt gelöst, was implizit in der Rekursionsvorschrift steckt (deshalb auch
+zwei Koeffizienten <span class="math notranslate nohighlight">\(\gamma^{(k)},\beta^{(k)}\)</span> und Dreiterm-Rekursionen).</p>
+</div>
+<div class="section" id="herleitung-als-projektionsverfahren">
+<h5>Herleitung als Projektionsverfahren<a class="headerlink" href="#herleitung-als-projektionsverfahren" title="Link zu dieser Überschrift">¶</a></h5>
+<p>Wir wollen Näherungen für die Lösung eines spd Systems <span class="math notranslate nohighlight">\(Aw=b\)</span>, <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>, berechnen.
+Dazu betrachten wir einen Unterraum</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+V_k \subset \mathbb{R}^n,
+\quad
+\dim V_k = n_k \le n.
+\end{equation*}\]</div>
+<p>Sei jetzt <span class="math notranslate nohighlight">\(v_1,\ldots,v_{n_k}\)</span> eine Basis von <span class="math notranslate nohighlight">\(V_k\)</span>,
+und</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+Q_k = (v_1,\ldots,v_{n_k}) \in \mathbb{R}^{n \times n_k}.
+\end{equation*}\]</div>
+<p>Wir projizieren jetzt <span class="math notranslate nohighlight">\(Aw=b\)</span>
+in <span class="math notranslate nohighlight">\(V_k\)</span> indem wir es zunächst in ein Variationsproblem</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\text{finde } w \in \mathbb{R}^n \text{ mit}
+\quad
+(Aw, v)_2 = (b,v)_2 \quad \forall v \in  \mathbb{R}^n
+\end{equation*}\]</div>
+<p>umwandeln
+und dann <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> durch <span class="math notranslate nohighlight">\(V_k\)</span> ersetzen, d.h.
+statt <span class="math notranslate nohighlight">\(w,v\)</span> haben wir dann</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+w^{(k)} = Q_k \tilde{w},
+\quad
+v^{(k)} = Q_k \tilde{v},
+\quad
+\tilde{w}, \tilde{v} \in  \mathbb{R}^{n_k}.
+\end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\text{finde } \tilde{w} \in \mathbb{R}^{n_k} \text{ mit}
+\quad
+\big(A Q_k \tilde{w},  Q_k \tilde{v}\big)_2 = \big(b, Q_k \tilde{v}\big)_2 \quad \forall \tilde{v} \in \mathbb{R}^{n_k}
+\end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+Q_k^T A Q_k \tilde{w} = Q_k^T b,
+\end{equation*}\]</div>
+<p>und somit ein spd System der Dimension <span class="math notranslate nohighlight">\(n_k\times n_k\)</span>.</p>
+<p>Ein Iterationsverfahren könnte nun wie folgt aussehen:</p>
+<ul class="simple">
+<li><p>betrachte Unterräume <span class="math notranslate nohighlight">\(V_k\)</span> mit <span class="math notranslate nohighlight">\(\dim V_k = k\)</span></p></li>
+<li><p>löse das projizierte <span class="math notranslate nohighlight">\(k\times k\)</span> System <span class="math notranslate nohighlight">\(Q_k^T A Q_k \tilde{w} = Q_k^T b\)</span></p></li>
+<li><p>benutze <span class="math notranslate nohighlight">\(w^{(k)} = Q_k \tilde{w}\)</span> als Näherung für <span class="math notranslate nohighlight">\(w\)</span></p></li>
+</ul>
+<p>Zur Umsetzung müssen folgende Punkte noch geklärt werden:</p>
+<ul class="simple">
+<li><p>welche Unterräume <span class="math notranslate nohighlight">\(V_k\)</span> sind nützlich?</p></li>
+<li><p>wie implementiert man das ganze möglichst geschickt?</p></li>
+</ul>
+<p>Zu <span class="math notranslate nohighlight">\(r^{(0)} = b - Aw^{(0)}\)</span>, <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>, betrachten wir
+die <strong>Krylov-Räume</strong></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+K_k(A, r^{(0)}) = \text{span}(r^{(0)}, Ar^{(0)}, A^2r^{(0)},\ldots,A^{k-1}r^{(0)} ),
+\quad k=1,2,\ldots.
+\end{equation*}\]</div>
+<p>Sie haben folgende Eigenschaften:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\dim K_k(A, r^{(0)}) = n_k \leq k\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(K_k(A, r^{(0)}) \subset K_{k+1}(A, r^{(0)})\)</span></p></li>
+<li><p>ist <span class="math notranslate nohighlight">\(k_b\)</span> der kleinste Index <span class="math notranslate nohighlight">\(k\)</span> mit
+<span class="math notranslate nohighlight">\(\dim K_k(A, r^{(0)}) = k = \dim K_{k+1}(A, r^{(0)})\)</span>,
+dann ist die Lösung
+<span class="math notranslate nohighlight">\(w^{(k_b)}\)</span> des in <span class="math notranslate nohighlight">\(K_{k_b}(A, r^{(0)})\)</span> projizierten Systems</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \quad Q_{k_b}^T A Q_{k_b} \tilde{w} = Q_{k_b}^T b,\quad   
+  w^{({k_b})} = Q_{k_b} \tilde{w}
+  \end{equation*}\]</div>
+<p>die <em>exakte Lösung</em> von <span class="math notranslate nohighlight">\(Aw=b\)</span></p>
+</li>
+<li><p><span class="math notranslate nohighlight">\(k\)</span> hängt über <span class="math notranslate nohighlight">\(r^{(0)}\)</span> von <span class="math notranslate nohighlight">\(b\)</span> ab</p></li>
+</ul>
+<p>Wegen <span class="math notranslate nohighlight">\(k \leq n\)</span> erhalten wir nach spätestens <span class="math notranslate nohighlight">\(n\)</span> Schritten die exakte Lösung.
+Oft ist aber <span class="math notranslate nohighlight">\(k \ll n\)</span>.</p>
+<p>Das CG-Verfahren führt genau diese Berechnungen Schritt für Schritt durch.</p>
+</div>
+<div class="section" id="interpretation">
+<h5>Interpretation<a class="headerlink" href="#interpretation" title="Link zu dieser Überschrift">¶</a></h5>
+<p>CG als verbessertes Gradienten-Verfahren:</p>
+<ul>
+<li><p>CG wird auf jeden Fall nicht langsamer
+als das Gradienten-Verfahren sein</p></li>
+<li><p>da CG im Schritt <span class="math notranslate nohighlight">\(k\)</span> auf die vorherige Suchrichtung</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  p^{(k-1)} = \frac{w^{(k)} - w^{(k-1)} }{\gamma^{(k-1)}}
+  \end{equation*}\]</div>
+<p>zugreift, gehen in die Berechnung von <span class="math notranslate nohighlight">\(w^{(k)}\)</span> sowohl <span class="math notranslate nohighlight">\(w^{(k)}\)</span> als auch <span class="math notranslate nohighlight">\(w^{(k-1)}\)</span> direkt ein</p>
+</li>
+<li><p>damit ist CG im Gegensatz zum Gradienten-Verfahren keine stationäre Iteration mehr</p></li>
+</ul>
+<p>CG als Projektionsverfahren:</p>
+<ul class="simple">
+<li><p>wir ersetzen das Originalsystem <span class="math notranslate nohighlight">\(Aw=b\)</span> durch eine Folge kleinerer Systeme, die wir dann exakt lösen</p></li>
+<li><p>wir wenden also sukzessive Modellvereinfachung bzw. Dimensionsreduktion an</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="scikit-learn">
+<h2>Scikit-Learn<a class="headerlink" href="#scikit-learn" title="Link zu dieser Überschrift">¶</a></h2>
+<p>In diesem Abschnitt betrachten wir noch einmal unser einfaches Testproblem und bearbeiten es mit den Werkzeugen aus <a class="reference external" href="https://scikit-learn.org/stable/">Scikit-Learn</a>.</p>
+<p>Lineare Modelle findet man im Subpackage
+<code class="docutils literal notranslate"><span class="pre">linear_model</span></code>. Zunächst erstellt man ein Objekt der gewünschten Modellklasse und passt dann mit der <code class="docutils literal notranslate"><span class="pre">fit</span></code>-Methode die Modellparameter
+an die gegebenen Daten an.</p>
+<p>Die Werte für <span class="math notranslate nohighlight">\(w_0\)</span> und <span class="math notranslate nohighlight">\(w_1\)</span> sind</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LinearRegression</span>
+
+<span class="n">modell</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+
+<span class="n">modell</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">);</span>
+
+<span class="n">modell</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">modell</span><span class="o">.</span><span class="n">coef_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4.5507183461173195, array([-4.04888]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>Mit der <code class="docutils literal notranslate"><span class="pre">predict</span></code>-Methode kann das angepasste Modell nun für Vorhersagen benutzt werden</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
+
+<span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">modell</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="s1">&#39;r&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/01_Regression_55_0.png" src="_images/01_Regression_55_0.png" />
+</div>
+</div>
+<p>Rein optisch sieht das ganz gut aus.</p>
+<p>Zur ersten Beurteilung der Modellqualität wird beim Fit direkt
+der Score-Wert</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+R^2 = 1 - \frac{u}{v}
+\end{equation*}\]</div>
+<p>berechnet, mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+u = \sum_{i=1}^n (y_i - \hat{y}_i)^2,
+\quad 
+v = \sum_{i=1}^n (y_i - \bar{y})^2
+\end{equation*}\]</div>
+<p>und</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\hat{y}_i = g(x_i, w),
+\quad
+\bar{y} = \frac{1}{n} \sum_{i=1}^n \hat{y}_i
+\end{equation*}\]</div>
+<p>Der bestmögliche Wert ist 1 (dann ist <span class="math notranslate nohighlight">\(y_i = \hat{y}_i\)</span> <span class="math notranslate nohighlight">\(\forall i\)</span>).
+In unserem Fall erhalten wir</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;score = </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modell</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score = 0.962713
+</pre></div>
+</div>
+</div>
+</div>
+<p>Der Wert liegt nahe bei 1, suggeriert also eine gute Anpassung. Auch zahlreiche andere Metriken zeigen zunächst passable Resultate</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">explained_variance_score</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">median_absolute_error</span>
+
+<span class="n">yd</span> <span class="o">=</span> <span class="n">modell</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="n">explained_variance_score</span><span class="p">,</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">median_absolute_error</span>
+<span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:24s}</span><span class="s1"> = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">method</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">yd</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>explained_variance_score = 0.9627130236560455
+mean_squared_error       = 0.05592004195258661
+mean_absolute_error      = 0.1983349567301628
+median_absolute_error    = 0.19529572037977538
+</pre></div>
+</div>
+</div>
+</div>
+<p>Betrachten wir allerdings die Residuen genauer, so finden wir einige Auffälligkeiten</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">modell</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;res_mean = </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">mean</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>res_mean = 0.000000
+</pre></div>
+</div>
+<img alt="_images/01_Regression_61_1.png" src="_images/01_Regression_61_1.png" />
+</div>
+</div>
+<p>Wenn die Daten wirklich mit einem linearen Modell der obigen Form erzeugt wurden, dann geben die Residuen den Messfehler in <span class="math notranslate nohighlight">\(y\)</span> wieder.
+Für reine Messfehler (ohne systematische Verzerrung) kann man
+erwarten, dass diese unabhängig und normalverteilt mit Erwartungswert <span class="math notranslate nohighlight">\(0\)</span> sind.
+Um das zu untersuchen kann man die Residuen mit dem Shapiro-Wilks-Test auf Normalverteilung bzw. mit dem t-Test auf Erwartungswert 0
+überprüfen.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">shapiro</span><span class="p">,</span> <span class="n">ttest_1samp</span>
+
+<span class="n">_</span><span class="p">,</span><span class="n">pshapiro</span> <span class="o">=</span> <span class="n">shapiro</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">pttest</span> <span class="o">=</span> <span class="n">ttest_1samp</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p_shapiro = </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pshapiro</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p_ttest   = </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pttest</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p_shapiro = 0.022932
+p_ttest   = 1.000000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Beim t-Test ist der p-Wert sehr groß, so dass die Hypothese
+eines verschwindenden Erwartungswerts nicht verworfen wird.
+Shapiro-Wilks liefert einen sehr kleinen p-Wert, so dass die Residuen
+wahrscheinlich nicht normalverteilt sind.</p>
+<p>Somit passt unsere Modellannahme mit hoher Wahrscheinlichkeit
+nicht zu den gegebenen Daten. Deshalb passen wir das Modell
+wie folgt an</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+g(x,w) = w_1 + w_2 \, x + w_3 \, x^2
+\end{equation*}\]</div>
+<p>und wiederholen die Schritte von oben.</p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="k">import</span> <span class="n">make_pipeline</span>
+
+<span class="n">modell2</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span> <span class="o">=</span> <span class="mi">2</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">())</span>
+
+<span class="n">modell2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;b.&#39;</span><span class="p">)</span>
+
+<span class="n">xp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xp</span><span class="p">,</span> <span class="n">modell2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">xp</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)),</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;score = </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modell2</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>score = 0.993122
+</pre></div>
+</div>
+<img alt="_images/01_Regression_66_1.png" src="_images/01_Regression_66_1.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">modell2</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/01_Regression_67_0.png" src="_images/01_Regression_67_0.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span><span class="n">pshapiro</span> <span class="o">=</span> <span class="n">shapiro</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+<span class="n">pttest</span> <span class="o">=</span> <span class="n">ttest_1samp</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p_shapiro = </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pshapiro</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;p_ttest   = </span><span class="si">{:f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pttest</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>p_shapiro = 0.950543
+p_ttest   = 1.000000
+</pre></div>
+</div>
+</div>
+</div>
+<p>Die p-Werte bei beiden Test sind groß, das Modell kann akzeptiert werden.</p>
+</div>
+<div class="section" id="zusammenfassung">
+<h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">¶</a></h2>
+<ul class="simple">
+<li><p>Regressionsaufgaben führen zu nichtlinearen Optimierungsproblemen</p></li>
+<li><p>typische Optimierungsverfahren bei differenzierbrarer Zielfunktion
+sind Abstiegs-Verfahren (Gradient-Descent, Newton-artige)</p></li>
+<li><p>ist die Zielfunktion <span class="math notranslate nohighlight">\(l\)</span> quadratisch und konvex, dann kann die
+Optimierungsaufgabe auch mit Methoden der Numerischen Linearen
+Algebra gelöst werden</p></li>
+<li><p>in diesem Fall bestehen zahlreiche Interpretationsmöglichkeiten
+für die Arbeitsweise der Algorithmen</p></li>
+</ul>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="00_Vorwort.html" title="zurück Seite">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">zurück</p>
+                <p class="prevnext-title">Numerische Algorithmen für Maschinelles Lernen (Version 0.42)</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="02_Dimensionsreduktion.html" title="weiter Seite">
+            <div class="prevnext-info">
+                <p class="prevnext-label">weiter</p>
+                <p class="prevnext-title">Dimensionsreduktion</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          Durch Martin Reißel<br/>
+        
+            &copy; Urheberrechte © 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
