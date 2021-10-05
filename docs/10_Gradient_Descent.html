@@ -1,0 +1,1636 @@
+
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gradient Descent &#8212; Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/translations.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="Projected Gradient-Descent" href="11_Projected_Gradient_Descent.html" />
+    <link rel="prev" title="Konvexität" href="09_Konvexitaet.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Dieses Buch durchsuchen ..." aria-label="Dieses Buch durchsuchen ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_Vorwort.html">
+   Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Regression.html">
+   Regression
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_Dimensionsreduktion.html">
+   Dimensionsreduktion
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_Regularisierung.html">
+   Regularisierung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_Background_Removal_QR.html">
+   Background Removal mit TSVD
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_Klassifikation_mit_SVM.html">
+   Support-Vector Klassifikation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="06_Neuronale_Netze.html">
+   Neuronale Netze
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="07_Topic_Extraction.html">
+   Topic Extraction, NMF
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_Grundlagen_Optimierung.html">
+   Grundlagen der Optimierung
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_Konvexitaet.html">
+   Konvexität
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_Projected_Gradient_Descent.html">
+   Projected Gradient-Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="12_Subgradient_Descent.html">
+   Subgradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="13_Proximal_Gradient_Descent.html">
+   Proximal Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="14_Stochastic_Gradient_Descent.html">
+   Stochastic Gradient Descent
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="15_Probabilistische_Lineare_Algebra.html">
+   Probabilistische Lineare Algebra
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="99_Literatur.html">
+   Weiterführende Links
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Navigation umschalten" aria-controls="site-navigation"
+                title="Navigation umschalten" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Laden Sie diese Seite herunter"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/10_Gradient_Descent.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Quelldatei herunterladen" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="In PDF drucken"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Vollbildmodus"
+        title="Vollbildmodus"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/mre2110/NumMLv042/master?urlpath=tree/10_Gradient_Descent.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Starten Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Inhalt
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#uberblick">
+   Überblick
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#voruberlegungen">
+   Vorüberlegungen
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#lipschitz-stetigkeit">
+   Lipschitz-Stetigkeit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#l-glattheit">
+   <span class="math notranslate nohighlight">
+    \(L\)
+   </span>
+   -Glattheit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mu-konvexitat">
+   <span class="math notranslate nohighlight">
+    \(\mu\)
+   </span>
+   -Konvexität
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#zusammenfassung">
+   Zusammenfassung
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="gradient-descent">
+<h1>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="section" id="uberblick">
+<h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Wir betrachten das Gradient-Descent Verfahren</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*}
+x_{t+1} = x_t - \gamma_t f'_t,
+\end{equation*}\]</div>
+<p>untersuchen Konvergenz, d.h.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+f_t - f_\ast \xrightarrow{t\to\infty} 0
+\end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\|x_t - x_\ast\| \xrightarrow{t\to\infty} 0
+\end{equation*}\]</div>
+<p>und versuchen das asymptotische Verhalten genauer zu analysieren.</p>
+<p>Für den Rest des Kapitels setzen wir <span class="math notranslate nohighlight">\(f\in C^1(\mathbb{R}^d)\)</span> konvex und <span class="math notranslate nohighlight">\(\gamma_t = \gamma\)</span> konstant voraus.</p>
+</div>
+<div class="section" id="voruberlegungen">
+<h2>Vorüberlegungen<a class="headerlink" href="#voruberlegungen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Ist
+<span class="math notranslate nohighlight">\(f\in C^1(\mathbb{R}^d)\)</span>,
+<span class="math notranslate nohighlight">\(x_\ast = \mathrm{argmin}_{x\in\mathbb{R}}f(x)\)</span>,
+<span class="math notranslate nohighlight">\(x_{t+1} = x_t - \gamma f'_t\)</span>, dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \begin{aligned}
+  \|x_{t+1}-x_{*}\|_{2}^{2} 
+  &amp;=\|x_{t}-x_{*}-\gamma f_{t}^{\prime}\|_{2}^{2} \\
+  &amp;=\|x_{t}-x_{*}\|_{2}^{2}+\gamma^{2}\|f_{t}^{\prime}\|_{2}^{2}-2
+  \gamma f_{t}^{\prime}(x_{t}-x_{*})
+  \end{aligned}
+  \end{equation*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f'_{t}(x_{t}-x_{*}) 
+  =\frac{1}{2 \gamma}\big(\gamma^{2}\|f_{t}^{\prime}\|_{2}^{2}
+  +\|x_{t}-x_{*}\|_{2}^{2}-\|x_{t+1}-x_{*}\|_{2}^{2}\big).
+  \end{equation*}\]</div>
+<p>Für konvexes <span class="math notranslate nohighlight">\(f\)</span>  ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f(y) \geq f(x) + f'(x)(y-x)
+  \end{equation*}\]</div>
+<p>und mit <span class="math notranslate nohighlight">\(y=x_\ast\)</span>, <span class="math notranslate nohighlight">\(x=x_t\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_\ast \geq f_t + f'_t (x_\ast-x_t)
+  \end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+  0 
+  \leq f_t - f_\ast
+  &amp;\leq f'_t(x_t - x_\ast)\\
+  &amp;= \frac{1}{2 \gamma}\big(\gamma^{2}\|f_{t}^{\prime}\|_{2}^{2}
++\|x_{t}-x_{*}\|_{2}^{2}-\|x_{t+1}-x_{*}\|_{2}^{2}\big).
+  \end{align*}\]</div>
+<p>Aufsummiert erhält man</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+\sum_{t=0}^{T-1} (f_t - f_\ast)
+&amp; \leq \sum_{t=0}^{T-1} f'_t(x_t - x_\ast)\\
+&amp;   =   \frac{1}{2 \gamma}
+        \ \sum_{t=0}^{T-1} 
+         \big( \gamma^{2}\|f_{t}^{\prime}\|_{2}^{2}
+                +\|x_{0}-x_\ast\|_{2}^{2}
+                -\|x_{t+1}-x_{*}\|_{2}^{2}
+          \big)
+\end{align*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+\underbrace{\frac{1}{T}\sum_{t=0}^{T-1} (f_t - f_\ast)}_{\text{''mittlere Abweichung von } f_\ast  \text{''}}
+&amp; \leq 
+  \frac{\gamma}{2}
+  \underbrace{\frac{\sum_{t=0}^{T-1} \|f_{t}^{\prime}\|_{2}^{2}}{T}}_\text{''mittlerer Gradient''} 
+\\
+&amp; \quad +
+  \frac{1}{2 \gamma}
+  \underbrace{\frac{\|x_{0}-x_\ast\|_{2}^{2}-\left\|x_{T}-x_{*}\right\|_{2}^{2}}{T}}_{\leq \frac{\|x_{0}-x_\ast\|_{2}^{2}}{T} = \mathcal{O}(\frac{1}{T})\ \text{''Startfehler''}}.
+\end{align*}\]</div>
+<p>Mit <span class="math notranslate nohighlight">\(\hat{t} = \mathrm{argmin}_{t\in\{0,\ldots,T-1\}}(f_t - f_\ast)\)</span> (<span class="math notranslate nohighlight">\(\hat{t}\)</span> nicht notwendig gleich <span class="math notranslate nohighlight">\(T-1\)</span>) folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_{\hat{t}} - f_\ast \leq \frac{1}{T}\sum_{t=0}^{T-1} (f_t - f_\ast).
+  \end{equation*}\]</div>
+<p>Der Anteil</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \frac{1}{2 \gamma}\frac{\|x_{0}-x_\ast\|_{2}^{2}-\|x_{T}-x_{*}\|_{2}^{2}}{T}
+  \end{equation*}\]</div>
+<p>war zu erwarten.
+Das Ziel ist es nun</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \frac{\gamma}{2T} \sum_{t=0}^{T-1} \|f_{t}^{\prime}\|_{2}^{2}
+  \end{equation*}\]</div>
+<p>zu kontrollieren.
+Dazu muss <span class="math notranslate nohighlight">\(f\)</span> zusätzliche Voraussetzungen erfüllen.</p>
+</div>
+<div class="section" id="lipschitz-stetigkeit">
+<h2>Lipschitz-Stetigkeit<a class="headerlink" href="#lipschitz-stetigkeit" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Im letzten Abschnitt haben wir  <span class="math notranslate nohighlight">\(f\in C^1(\mathbb{R}^d)\)</span> konvex vorausgesetzt.
+Jetzt fordern wir zusätzlich Lipschitz-Stetigkeit von <span class="math notranslate nohighlight">\(f\)</span>, d.h.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+|f(y) - f(x)| \leq L_f \|y - x\| \quad \forall x,y\in\mathbb{R}^d.
+\end{equation*}\]</div>
+<p>Dies ist äquivalent zur Beschränkheit des Gradienten, wie das folgende
+Ergebnis aus der Analysis zeigt.</p>
+<p><strong>Lemma:</strong> <span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \rightarrow \mathbb{R}\)</span> differenzierbar
+(nicht notwendig konvex), <span class="math notranslate nohighlight">\(X\subset\mathrm{dom}(f)\)</span> offen, konvex.
+Dann ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+|f(x) -f(y)| \leq L_f \|x-y\| \quad \forall x,y\in X
+\end{equation*}\]</div>
+<p>äquivalent zu</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\|f'(x)\| \leq L_f \quad \forall x\in X,
+\end{equation*}\]</div>
+<p>wobei bei <span class="math notranslate nohighlight">\(f'\)</span> die induzierte Operatornorm benutzt wird.</p>
+<p><strong>Beweis:</strong></p>
+<p>„<span class="math notranslate nohighlight">\(\Rightarrow\)</span>“</p>
+<ul>
+<li><p>für <span class="math notranslate nohighlight">\(f\)</span> gelte</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    |f(x) -f(y)| \leq L_f \|x-y\| \quad \forall x,y\in X
+    \end{equation*}\]</div>
+</li>
+<li><p>da <span class="math notranslate nohighlight">\(X\)</span> offen ist gibt es für jedes <span class="math notranslate nohighlight">\(x\in X\)</span> eine Kugel
+<span class="math notranslate nohighlight">\(B_r(x)\)</span> mit <span class="math notranslate nohighlight">\({B}_r(x)\subset X\)</span></p></li>
+<li><p>für beliebiges <span class="math notranslate nohighlight">\(v\in\mathbb{R}^d\)</span> mit <span class="math notranslate nohighlight">\(\|v\|=1\)</span> ist deshalb die Funktion</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g(t) = f(x + tv), \quad t \in (-r,r)
+    \end{equation*}\]</div>
+<p>wohldefiniert</p>
+</li>
+<li><p>mit <span class="math notranslate nohighlight">\(f\)</span> ist auch <span class="math notranslate nohighlight">\(g\)</span> differenzierbar mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g'(t) = f'(x + tv)v
+    \end{equation*}\]</div>
+<p>und somit gilt für alle <span class="math notranslate nohighlight">\(v\in\mathbb{R}^d\)</span> mit <span class="math notranslate nohighlight">\(\|v\|=1\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    \|f'(x)v\|
+    &amp;= |g'(0)| \\
+    &amp;= \big| \lim_{t\to 0} \frac{g(t) - g(0)}{t}  \big| \\
+    &amp;= \lim_{t\to 0}  \big| \frac{f(x + tv) - f(x)}{t}  \big| \\
+    &amp;\leq L_f \lim_{t\to 0}  \big\| \frac{x + tv - x}{t}  \big\| \\
+    &amp; = L_f \|v\|,
+    \end{align*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \|f'(x)\| \leq L_f 
+    \end{equation*}\]</div>
+</li>
+</ul>
+<p>„<span class="math notranslate nohighlight">\(\Leftarrow\)</span>“</p>
+<ul>
+<li><p>für <span class="math notranslate nohighlight">\(f\)</span> gelte</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \|f'(x)\| \leq L_f \quad \forall x\in X
+    \end{equation*}\]</div>
+</li>
+<li><p>da <span class="math notranslate nohighlight">\(X\)</span> konvex ist, ist für alle <span class="math notranslate nohighlight">\(x,y\in X\)</span> und <span class="math notranslate nohighlight">\(t\in[0,1]\)</span> die Funktion</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g(t) = f\big(x+ t(y-x)\big)
+    \end{equation*}\]</div>
+<p>wohldefiniert und es gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g(0) = f(x),
+    \quad
+    g(1) = f(y)
+    \end{equation*}\]</div>
+</li>
+<li><p>mit <span class="math notranslate nohighlight">\(f\)</span> ist auch <span class="math notranslate nohighlight">\(g\)</span> differenzierbar mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g'(t) = f'\big(x+ t(y-x)\big)(y-x)
+    \end{equation*}\]</div>
+</li>
+<li><p>durch Anwendung des Mittelwertsatzes folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    |f(x) - f(y)| 
+    &amp; = |g(1) - g(0)| \\
+    &amp; = |g'(\tau)|\\
+    &amp; = |f'\big(\underbrace{x+ \tau (y-x)}_{\xi}\big)(y-x)| \\
+    &amp; \leq \|f'(\xi)\| \ \|y-x\| \\
+    &amp; \leq L_f \|x-y\| 
+    \end{align*}\]</div>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+<p>Setzen wir dies in die summierte Abschätzung von oben ein, so erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+  \sum_{t=0}^{T-1} (f_t - f_\ast)
+  &amp;\leq \sum_{t=0}^{T-1}f'_t(x_t - x_\ast)\\
+  &amp; = \frac{1}{2 \gamma}
+      \ \sum_{t=0}^{T-1} 
+   \big(\gamma^{2}\|f_{t}^{\prime}\|_{2}^{2}+\|x_{0}-x_\ast\|_{2}^{2}-\|x_{t+1}-x_{*}\|_{2}^{2}\big)\\
+  &amp; \leq \frac{\gamma}{2}T L_f^2 
+  + \frac{1}{2\gamma} 
+  \big( 
+  \underbrace{\|x_{0}-x_{*}\|_{2}^{2}}_{e_0^2}
+  -
+  \underbrace{\|x_{T}-x_{*}\|_{2}^{2}}_{\geq 0}
+  \big)\\
+  &amp;\leq \frac{\gamma T L_f^2}{2} + \frac{e_0^2}{2\gamma},\\
+  \end{align*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+  \min_{t=0,\ldots,T-1}(f_t - f_\ast)
+  \leq \frac{1}{T} \sum_{t=0}^{T-1} (f_t - f_\ast)
+  \leq \frac{\gamma L_f^2}{2} + \frac{e_0^2}{2\gamma T}.
+  \end{align*}\]</div>
+<p>Wann verschwindet die rechte Seite für <span class="math notranslate nohighlight">\(T\to\infty\)</span> ?
+Beide Summanden auf der rechten Seite sind <span class="math notranslate nohighlight">\(\geq 0\)</span>, so dass</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \frac{\gamma L_f^2}{2}\xrightarrow{T\to\infty}0,
+  \quad
+  \frac{e_0^2}{2\gamma T}\xrightarrow{T\to\infty}0
+  \end{equation*}\]</div>
+<p>gelten muss, also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \gamma \xrightarrow{T\to\infty}0, \quad \gamma T \xrightarrow{T\to\infty}\infty.
+  \end{equation*}\]</div>
+<p>Mit dem Ansatz</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \gamma = \frac{c}{T^\omega}, \quad c,\omega &gt; 0
+  \end{equation*}\]</div>
+<p>gilt immer <span class="math notranslate nohighlight">\(\gamma \xrightarrow{T\to\infty}0\)</span>.</p>
+<p>Für den zweiten Teil erhalten wir
+<span class="math notranslate nohighlight">\(\gamma T = c T^{1-\omega}\xrightarrow{T\to\infty}\infty\)</span>
+falls  <span class="math notranslate nohighlight">\(1-\omega&gt;0\)</span>, also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \omega &lt; 1
+  \end{equation*}\]</div>
+<p>ist.
+Oben eingesetzt folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+  \min_{t=0,\ldots,T-1}(f_t - f_\ast)
+  &amp;\leq \frac{\gamma L_f^2}{2} + \frac{e_0^2}{2\gamma T} \\ 
+  &amp; = 
+  \frac{c L_f^2}{2}\frac{1}{T^\omega} + \frac{e_0^2}{2c} \frac{1}{T^{1-\omega}} \\
+  &amp;= \mathcal{O}\Big(\big(\frac{1}{T}\big)^{\min(\omega,1-\omega)}\Big).
+  \end{align*}\]</div>
+<p>Die obere Schranke</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  g(\gamma) = \frac{\gamma L_f^2}{2} + \frac{e_0^2}{2\gamma T}
+  \end{equation*}\]</div>
+<p>wird wegen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  g'(\gamma) = \frac{ L_f^2}{2} - \frac{e_0^2}{2\gamma^2 T},
+  \quad
+  g''(\gamma) =  \frac{e_0^2}{\gamma^3 T} \geq 0
+  \end{equation*}\]</div>
+<p>minimal für</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \gamma_{\min} = \frac{e_0}{L_f\sqrt{T}}
+  \end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  g_{\min} = g(\gamma_{\min}) = \frac{ L_f e_0}{\sqrt{T}}.
+  \end{equation*}\]</div>
+<p>Damit erhalten wir das folgende Ergebnis.</p>
+<p><strong>Satz:</strong> <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\to \mathbb{R}\)</span>, konvex, <span class="math notranslate nohighlight">\(C^1\)</span>, L-stetig mit Konstante <span class="math notranslate nohighlight">\(L_f\)</span>
+und es existiere <span class="math notranslate nohighlight">\(x_\ast = \mathrm{argmin}_{x\in\mathbb{R}^d}f(x)\)</span>.</p>
+<p>Mit <span class="math notranslate nohighlight">\(\gamma = \frac{c}{T^\omega}\)</span>, <span class="math notranslate nohighlight">\(\omega\in(0,1)\)</span>, gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+\min_{t=0,\ldots,T-1}(f_t - f_\ast)
+&amp;\leq \frac{1}{T} \sum_{t=0}^{T-1} (f_t - f_\ast)\\
+&amp;= \mathcal{O}\Big(\big(\frac{1}{T}\big)^{\min(\omega,1-\omega)}\Big)
+\quad 
+\text{für}
+\quad
+T\to\infty.
+\end{align*}\]</div>
+<p>Die optimale Ordnung ist <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span> bei <span class="math notranslate nohighlight">\(\omega=\frac{1}{2}\)</span>.</p>
+<p>Mit <span class="math notranslate nohighlight">\(e_0 = \|x_0 - x_\ast\|_2\)</span>, <span class="math notranslate nohighlight">\(\gamma = \frac{e_0}{L_f\sqrt{T}}\)</span> gilt außerdem</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\min_{t=0,\ldots,T-1}(f_t - f_\ast)
+\leq \frac{1}{T} \sum_{t=0}^{T-1} (f_t - f_\ast)
+\leq \frac{ L_f e_0}{\sqrt{T}}.
+\end{equation*}\]</div>
+<p><strong>Bemerkung:</strong></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\min_{t=0,\ldots,T-1}(f_t - f_\ast) \leq \varepsilon\)</span> gilt damit sicher, falls</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \frac{ L_f e_0}{\sqrt{T}} \leq \varepsilon
+    \end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    T \geq \big(\frac{e_0}{L_f \varepsilon}\big)^2
+    \end{equation*}\]</div>
+</li>
+<li><p>für <span class="math notranslate nohighlight">\(\min_{t=0,\ldots,T-1}(f_t - f_\ast) \leq \varepsilon\)</span> benötigen
+wir damit höchstens <span class="math notranslate nohighlight">\(\mathcal{O}(\frac{1}{\varepsilon^2})\)</span> Schritte</p></li>
+<li><p>in der Praxis gibt man <span class="math notranslate nohighlight">\(\varepsilon\)</span> vor, bestimmt <span class="math notranslate nohighlight">\(T\)</span> und das zugehörige (feste)</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \gamma = \frac{e_0}{L_f\sqrt{T}}
+    \end{equation*}\]</div>
+</li>
+<li><p>für <span class="math notranslate nohighlight">\(\varepsilon\to 0\)</span> gilt <span class="math notranslate nohighlight">\(T\to\infty\)</span> und</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \gamma = \frac{e_0}{L_f\sqrt{T}} \to 0
+    \end{equation*}\]</div>
+</li>
+</ul>
+</div>
+<div class="section" id="l-glattheit">
+<h2><span class="math notranslate nohighlight">\(L\)</span>-Glattheit<a class="headerlink" href="#l-glattheit" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Ist <span class="math notranslate nohighlight">\(f\)</span> konvex und <span class="math notranslate nohighlight">\(C^1\)</span>, dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+f(y) \geq f(x) + f'(x)(y-x),
+\end{equation*}\]</div>
+<p>d.h. der Graph von <span class="math notranslate nohighlight">\(f\)</span> verläuft oberhalb seiner Tangenten.
+Zur Abschätzung nach oben führen wir den folgenden Begriff ein.</p>
+<p><strong>Definition:</strong>
+<span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \to \mathbb{R}\)</span> (nicht notwendig konvex),
+<span class="math notranslate nohighlight">\(X\subset \mathrm{dom}(f)\)</span>.
+<span class="math notranslate nohighlight">\(f\)</span> heißt <span class="math notranslate nohighlight">\(L\)</span>-glatt auf <span class="math notranslate nohighlight">\(X\)</span> falls ein <span class="math notranslate nohighlight">\(L&gt;0\)</span> existiert, mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+f(y) \leq f(x) + f'(x)(y-x) + \frac{1}{2}L \|y-x\|_2^2
+\quad \forall x,y\in X.
+\end{equation*}\]</div>
+<p><strong>Bemerkung:</strong> Ist <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(L\)</span>-glatt, so verläuft der Graph von <span class="math notranslate nohighlight">\(f\)</span> unterhalb der
+quadratischen Approximation</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+q_{L,x}(y) = f(x) + f'(x)(y-x) + \frac{1}{2}L\|y-x\|_2^2.
+\end{equation*}\]</div>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">fsize</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">f</span>  <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">L</span>  <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">ql</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="n">f1</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="n">L</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ql</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ql</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">f</span>  <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">xmin</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">xmax</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;$f$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ql</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;$q_{L,x}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">tic</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="o">-</span><span class="n">tic</span><span class="p">,</span> <span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span><span class="n">x0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">tic</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)],</span> <span class="s1">&#39;g:&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">xmin</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/10_Gradient_Descent_19_0.png" src="_images/10_Gradient_Descent_19_0.png" />
+</div>
+</div>
+<p><span class="math notranslate nohighlight">\(L\)</span>-Glattheit ist eng verknüpft mit der  Lipschitz-Stetigkeit
+des Gradienten <span class="math notranslate nohighlight">\(f'\)</span>.</p>
+<p><strong>Lemma:</strong>
+<span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \to \mathbb{R}\)</span>
+differenzierbar (nicht notwendig konvex).
+Ist <span class="math notranslate nohighlight">\(f'\)</span>  Lipschitz-stetig, d.h.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\|f'(y) - f'(x)\| \leq L \|y-x\| \quad \forall x,y,
+\end{equation*}\]</div>
+<p>dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\big(f'(y)-f'(x)\big)(y-x) \leq L \|y-x\|^2.
+\end{equation*}\]</div>
+<p><strong>Beweis:</strong>
+Da <span class="math notranslate nohighlight">\(f'(x), f'(y)\)</span> lineare stetige Operatoren sind gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+\big(f'(y)-f'(x)\big)(y-x)
+&amp;\leq \big|\big(f'(y)-f'(x)\big)(y-x) \big|\\
+&amp;\leq \|f'(y)-f'(x)\| \ \|y-x\|\\
+&amp;\leq L \|y-x\|^2
+\end{align*}\]</div>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+<p><strong>Lemma:</strong>
+<span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \to \mathbb{R}\)</span> differenzierbar (nicht notwendig konvex),
+<span class="math notranslate nohighlight">\(\mathrm{dom}(f)\)</span> konvex.
+Dann ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\big(f'(y)-f'(x)\big)(y-x) \leq L \|y-x\|^2
+\quad \forall x,y
+\end{equation*}\]</div>
+<p>äquivalent zu</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+f(y) \leq f(x) + f'(x)(y-x) + \frac{1}{2} L \|y-x\|^2
+\quad \forall x,y.
+\end{equation*}\]</div>
+<p><strong>Beweis:</strong></p>
+<p>„<span class="math notranslate nohighlight">\(\Rightarrow\)</span>“</p>
+<ul>
+<li><p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g(t) = f\big(x+t(y-x)\big)
+    \end{equation*}\]</div>
+<p>folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g'(t) = f'\big(x+t(y-x)\big)(y-x)
+    \end{equation*}\]</div>
+<p>und für <span class="math notranslate nohighlight">\(t&gt;0\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    g'(t) - g'(0)
+    &amp; = \big( f'\big(x+t(y-x)\big) - f'(x) \big) (y-x) \\
+    &amp; = \frac{1}{t} \big( f'\big(x+t(y-x)\big) - f'(x) \big) t(y-x) \\
+    &amp;\leq \frac{1}{t}  L \|t(y-x)\|^2 \\
+    &amp; = tL \|y-x\|^2 
+    \end{align*}\]</div>
+</li>
+<li><p>damit erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    f(y)
+    &amp;= g(1) \\
+    &amp;= g(0) + \int_0^1g'(\tau)\:d\tau\\
+    &amp;\leq f(x)  + \int_0^1 g'(0) + \tau L \|y-x\|^2  \:d\tau\\
+    &amp; = f(x) +  f'(x)(y-x) + \frac{1}{2} L \|y-x\|^2
+    \end{align*}\]</div>
+</li>
+</ul>
+<p>„<span class="math notranslate nohighlight">\(\Leftarrow\)</span>“</p>
+<ul>
+<li><p>nach Voraussetzung ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f(y) \leq f(x) + f'(x)(y-x) + \frac{1}{2} L \|y-x\|^2
+    \end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f(x) \leq f(y) + f'(y)(x-y) + \frac{1}{2} L \|x-y\|^2
+    \end{equation*}\]</div>
+</li>
+<li><p>Addition der beiden Ungleichungen liefert</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f(y) + f(x) \leq f(x) + f(y) + \big(f'(x)-f'(y)\big) (y-x) +  L \|y-x\|^2,
+    \end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \big(f'(y)-f'(x)\big)(y-x) \leq L \|y-x\|^2
+    \end{equation*}\]</div>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+<p><strong>Bemerkung:</strong>
+Ist <span class="math notranslate nohighlight">\(f'\)</span> Lipschitz-stetig, dann ist <span class="math notranslate nohighlight">\(f\)</span>  L-glatt.</p>
+<p>Ist <span class="math notranslate nohighlight">\(f\)</span> konvex, <span class="math notranslate nohighlight">\(\mathrm{dom}(f)=\mathbb{R}^d\)</span> und existiert
+ein <span class="math notranslate nohighlight">\(x_\ast \in \mathrm{dom}(f)\)</span> mit <span class="math notranslate nohighlight">\(f(x_\ast)=\inf_{x}f(x)\)</span>,
+dann gilt auch die Umkehrung.</p>
+<p><strong>Lemma:</strong>
+<span class="math notranslate nohighlight">\(f:\mathbb{R}^d  \to \mathbb{R}\)</span> differenzierbar (nicht notwendig konvex) und
+es existiere <span class="math notranslate nohighlight">\(x_\ast\)</span> mit
+<span class="math notranslate nohighlight">\(f(x_\ast)=\inf_{x\in\mathbb{R}^d}f(x)\)</span>.
+Ist <span class="math notranslate nohighlight">\(f\)</span> L-glatt mit Konstante <span class="math notranslate nohighlight">\(L\)</span>, dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\frac{1}{2L}\|f'(x)\|_2^2 \leq f(x) - f(x_\ast) \leq \frac{L}{2}\|x - x_\ast\|_2^2
+\end{equation*}\]</div>
+<p>und <span class="math notranslate nohighlight">\(f'\)</span> ist Lipschitz-stetig mit Konstante <span class="math notranslate nohighlight">\(L\)</span>.</p>
+<p><strong>Beweis:</strong></p>
+<ul>
+<li><p>Abschätzung nach oben:</p>
+<ul>
+<li><p>da <span class="math notranslate nohighlight">\(x_\ast\)</span> globaler Minimierer ist muss <span class="math notranslate nohighlight">\(f'(x_\ast)=0\)</span> sein und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+      f(x) 
+      &amp;\leq f(x_\ast) + f'(x_\ast)(x-x_\ast) + \frac{1}{2} L \|x-x_\ast\|_2^2\\
+      &amp;= f(x_\ast) + \frac{1}{2} L \|x-x_\ast\|_2^2
+      \end{align*}\]</div>
+</li>
+</ul>
+</li>
+<li><p>Abschätzung nach unten:</p>
+<ul>
+<li><p>wir benutzen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+      f(x_\ast) &amp;= \inf_y f(y) \leq \inf_y u(y),
+      \\
+      u(y) &amp;= f(x) + f'(x)(y-x) + \frac{1}{2} L \|y-x\|_2^2
+      \end{align*}\]</div>
+<p>und minimieren die quadratische Funktion <span class="math notranslate nohighlight">\(u\)</span></p>
+</li>
+<li><p>für die Ableitungen erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      u'(y) = f'(x) + L(y-x),
+      \quad
+      u''(y) = L I
+      \end{equation*}\]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(u\)</span> ist (strikt) konvex mit globalem Minimierer <span class="math notranslate nohighlight">\(y_\ast\)</span> mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      0 = u'(y_\ast) \quad \Leftrightarrow \quad y_\ast - x = -\frac{1}{L}f'(x)
+      \end{equation*}\]</div>
+<p>und Minimum</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+      u_\ast = u(y_\ast) 
+      &amp;=  f(x) + f'(x)(y_\ast-x) + \frac{1}{2} L \|y_\ast-x\|_2^2\\
+      &amp;=  f(x) - \frac{1}{L}\|f'(x)\|_2^2 + \frac{1}{2} L \|\frac{1}{L}f'(x)\|_2^2\\
+      &amp;=  f(x) - \frac{1}{2L} \|f'(x)\|_2^2
+      \end{align*}\]</div>
+</li>
+<li><p>somit folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      f(x_\ast) \leq f(x) - \frac{1}{2L} \|f'(x)\|_2^2
+      \end{equation*}\]</div>
+</li>
+</ul>
+</li>
+<li><p>Lipschitz-Stetigkeit von <span class="math notranslate nohighlight">\(f'\)</span>:</p>
+<ul>
+<li><p>wir betrachten die Funktion</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      g(y) = f(y) - f'(x)y
+      \end{equation*}\]</div>
+</li>
+<li><p>mit <span class="math notranslate nohighlight">\(f\)</span> ist auch <span class="math notranslate nohighlight">\(g\)</span> konvex und differenzierbar mit Ableitung</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      g'(y) = f'(y) - f'(x)
+      \end{equation*}\]</div>
+</li>
+<li><p>damit ist <span class="math notranslate nohighlight">\(g'(x)=0\)</span>, also ist <span class="math notranslate nohighlight">\(y_\ast = x\)</span> globales Minimum von <span class="math notranslate nohighlight">\(g\)</span></p></li>
+<li><p>außerdem folgt aus der <span class="math notranslate nohighlight">\(L\)</span>-Glattheit von <span class="math notranslate nohighlight">\(f\)</span> für beliebiges <span class="math notranslate nohighlight">\(z\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+      g(y) &amp;+ g'(y)(z-y) + \frac{1}{2} L \|z-y\|_2^2 = \\
+      &amp;= f(y) - f'(x)y + \big( f'(y) - f'(x) \big)(z-y) + \frac{1}{2} L \|z-y\|_2^2 \\
+      &amp; = f(y) + f'(y)(z-y) + \frac{1}{2} L \|z-y\|_2^2 
+          - f'(x)y  - f'(x) (z-y) \\
+      &amp; \geq f(z) - f'(x) z \\
+      &amp; = g(z)
+      \end{align*}\]</div>
+<p>so dass auch <span class="math notranslate nohighlight">\(g\)</span> <span class="math notranslate nohighlight">\(L\)</span>-glatt ist</p>
+</li>
+<li><p>somit können wir die Abschätzung nach unten aus dem vorherigen Teil auf <span class="math notranslate nohighlight">\(g\)</span> anwenden
+und erhalten wegen <span class="math notranslate nohighlight">\(y_\ast=x\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+      \frac{1}{2L} \|f'(y) - f'(x)\|_2^2
+      &amp;=  \frac{1}{2L}\|g'(y)\|_2^2 \\
+      &amp;\leq g(y) - g(y_\ast)\\
+      &amp; =   g(y) - g(x)\\
+      &amp;= f(y) - f'(x)y - \big(f(x) - f'(x)x\big)\\
+      &amp;= f(y) - f(x) - f'(x)(y-x),
+      \end{align*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      f(y) - f(x) - f'(x)(y-x) \geq \frac{1}{2L} \|f'(y) - f'(x)\|_2^2
+      \end{equation*}\]</div>
+<p>bzw. durch vertauschen von <span class="math notranslate nohighlight">\(x\)</span> und <span class="math notranslate nohighlight">\(y\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      f(x) - f(y) - f'(y)(x-y) \geq \frac{1}{2L} \|f'(y) - f'(x)\|_2^2
+      \end{equation*}\]</div>
+</li>
+<li><p>durch Addition der beiden Ungleichungen erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      (f'(y) - f'(x))(y-x) \geq \frac{1}{L} \|f'(y) - f'(x)\|_2^2
+      \end{equation*}\]</div>
+<p>und mit Cauchy-Schwartz</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+      \|f'(y) - f'(x)\|_2^2 
+      &amp;\leq L \big(f'(y) - f'(x)\big)(x-y)\\
+      &amp;\leq L \|f'(y) - f'(x)\|_2 \|x-y\|_2,
+      \end{align*}\]</div>
+<p>so dass <span class="math notranslate nohighlight">\(f'\)</span> Lipschitz-stetig mit Konstante <span class="math notranslate nohighlight">\(L\)</span> ist</p>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+</li>
+</ul>
+<p><strong>Bemerkung:</strong>
+Sei <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\to \mathbb{R}\)</span> konvex, <span class="math notranslate nohighlight">\(C^1\)</span> und es existiere <span class="math notranslate nohighlight">\(x_\ast \in \mathrm{dom}(f)\)</span> mit
+<span class="math notranslate nohighlight">\(f(x_\ast)=\inf_{x}f(x)\)</span>.
+Dann ist äquivalent:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f\)</span> ist <span class="math notranslate nohighlight">\(L\)</span>-glatt mit Parameter <span class="math notranslate nohighlight">\(L\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\|f'(y)-f'(x)\|_2 \leq L \|y-x\|_2 \quad \forall x,y\in \mathbb{R}^d\)</span></p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(L\)</span>-Glattheit ist also unter diesen Voraussetzungen äquivalent dazu,
+dass <span class="math notranslate nohighlight">\(f'\)</span> Lipschitz-stetig mit Konstante <span class="math notranslate nohighlight">\(L\)</span> ist.</p>
+<p>Folgende Operation erhalten die <span class="math notranslate nohighlight">\(L\)</span>-Glattheit:</p>
+<ul>
+<li><p>für  <span class="math notranslate nohighlight">\(i=1,\ldots,m\)</span> seien <span class="math notranslate nohighlight">\(f_i:\mathbb{R}^d \supset \mathrm{dom}(f_i) \to \mathbb{R}\)</span>, <span class="math notranslate nohighlight">\(L\)</span>-glatt mit Parameter <span class="math notranslate nohighlight">\(L_i\)</span> und <span class="math notranslate nohighlight">\(\lambda_i \geq 0\)</span>. Dann ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f = \sum_{i=1}^m \lambda_i f_i
+    \end{equation*}\]</div>
+<p><span class="math notranslate nohighlight">\(L\)</span>-glatt mit Konstante</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    L = \sum_{i=1}^m \lambda_i L_i
+    \end{equation*}\]</div>
+<p>über</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \mathrm{dom}(f) = \bigcap_{i=1}^m \mathrm{dom}(f_i)
+    \end{equation*}\]</div>
+</li>
+<li><p>ist <span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \to \mathbb{R}\)</span> <span class="math notranslate nohighlight">\(L\)</span>-glatt mit Konstante <span class="math notranslate nohighlight">\(L\)</span>, <span class="math notranslate nohighlight">\(g:\mathbb{R}^m\to \mathbb{R}^d\)</span> affin linear, d.h.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  g(z) = Az + b,
+  \end{equation*}\]</div>
+<p>dann ist <span class="math notranslate nohighlight">\(f\circ g\)</span> auch <span class="math notranslate nohighlight">\(L\)</span>-glatt mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \tilde{L} = L \, \|A\|_2^2,
+  \quad
+  \mathrm{dom}(f\circ g)
+  =
+  \big\{z \ | z\in\mathbb{R}^m,\ g(z)\in \mathrm{dom}(f)\big\}
+  \end{equation*}\]</div>
+</li>
+</ul>
+<p>Für <span class="math notranslate nohighlight">\(f\)</span> konvex und <span class="math notranslate nohighlight">\(L\)</span>-glatt werden wir nun günstigere Konvergenzresultate für Gradient-Descent erhalten.
+Wir benutzen <span class="math notranslate nohighlight">\(L\)</span>-Glattheit mit <span class="math notranslate nohighlight">\(y=x_{t+1}\)</span>, <span class="math notranslate nohighlight">\(x=x_t\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_{t+1} \leq f_{t}+f_{t}^{\prime}(x_{t+1}-x_{t})+\frac{L}{2}\|x_{t+1}- x_{t}\|_{2}^{2}.
+  \end{equation*}\]</div>
+<p>Mit <span class="math notranslate nohighlight">\(x_{t+1}-x_{t}=-\gamma  f_t\)</span> folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_{t+1} 
+  \leq f_{t}-\gamma\|f_{t}^{\prime}\|_{2}^{2}+\frac{L}{2} \gamma^{2}\|f_{t}^{\prime} \|_{2}^{2}
+  =f_{t}-\underbrace{\gamma\big(1-\frac{L}{2}\gamma\big)}_{=: \beta}\|f_{t}^{\prime}\|_2^{2}.
+  \end{equation*}\]</div>
+<p>Für <span class="math notranslate nohighlight">\(\gamma &gt; 0\)</span> ist <span class="math notranslate nohighlight">\(\beta &gt; 0\)</span> genau dann, wenn</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  1-\frac{L}{2}\gamma &gt; 0,
+  \end{equation*}\]</div>
+<p>also genau dann, wenn</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  0 &lt; \gamma &lt; \frac{2}{L}.
+  \end{equation*}\]</div>
+<p>Damit folgt</p>
+<p><strong>Descent-Lemma:</strong> Ist <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\to \mathbb{R}\)</span> <span class="math notranslate nohighlight">\(L\)</span>-glatt, dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_{t+1} 
+  \leq f_{t}-\beta\|f_{t}^{\prime}\|_2^{2},
+  \quad
+  \beta = \gamma\big(1-\frac{\gamma L}{2}\big)
+  \end{equation*}\]</div>
+<p>und <span class="math notranslate nohighlight">\(\beta &gt; 0\)</span> falls <span class="math notranslate nohighlight">\(0 &lt; \gamma &lt; \frac{2}{L}\)</span>.</p>
+<p><strong>Bemerkung:</strong> Für <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(L\)</span>-glatt und  <span class="math notranslate nohighlight">\(0 &lt; \gamma &lt; \frac{2}{L}\)</span> fällt <span class="math notranslate nohighlight">\(f_t\)</span>
+also <em>monoton</em>.</p>
+<p>Damit verschärfen wir jetzt unser Konvergenzresultat aus dem vorherigen Abschnitt.
+Nach den Vorüberlegungen gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \sum_{t=0}^{T-1} (f_t - f_\ast)
+  \leq  \frac{\gamma}{2} \sum_{t=0}^{T-1} \|f_{t}^{\prime}\|_{2}^{2}
+  + \frac{1}{2 \gamma} \|x_{0}-x_{*}\|_{2}^{2}
+  - \frac{1}{2 \gamma} \|x_{T}-x_{*}\|_{2}^{2}.
+  \end{equation*}\]</div>
+<p>Aus dem Descent-Lemma folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \|f_{t}^{\prime}\|_2^{2} \leq \frac{1}{\beta}(f_{t}-f_{t+1})
+  \end{equation*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+  \sum_{t=0}^{T-1} (f_t - f_\ast)
+  &amp;\leq  \frac{\gamma}{2\beta} \sum_{t=0}^{T-1}(f_{t}-f_{t+1})
+  + \frac{1}{2 \gamma} \big(\|x_{0}-x_{*}\|_{2}^{2} - \|x_{T}-x_{*}\|_{2}^{2}\big)
+  \\
+  &amp;=  \frac{\gamma}{2\beta} (f_{0}-f_{T}) 
+  + \frac{1}{2 \gamma} \big(\|x_{0}-x_{*}\|_{2}^{2} - \|x_{T}-x_{*}\|_{2}^{2}\big).
+  \end{align*}\]</div>
+<p>Für <span class="math notranslate nohighlight">\(\gamma &lt; \frac{2}{L}\)</span> ist <span class="math notranslate nohighlight">\(f_{t+1}\leq f_t\)</span>, so dass</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_{T-1} \leq \frac{1}{T}\sum_{t=0}^{T-1}f_t 
+  \end{equation*}\]</div>
+<p>und damit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+  f_{T-1}-f_\ast 
+  &amp;\leq \frac{1}{T}\sum_{t=0}^{T-1}(f_t -f_\ast)\\
+  &amp;\leq \frac{1}{T}
+  \Big(
+  \frac{\gamma}{2\beta} (f_{0}-f_{T}) 
+  + \frac{1}{2 \gamma} \big(\|x_{0}-x_{*}\|_{2}^{2} - \|x_{T}-x_{*}\|_{2}^{2}\big) 
+  \Big).
+  \end{align*}\]</div>
+<p>Mit <span class="math notranslate nohighlight">\(\|x_{T}-x_{*}\|_{2}\geq 0\)</span> erhalten wir schließlich</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_{T-1}-f_\ast 
+    \leq \frac{1}{T}
+  \Big(
+  \frac{\gamma}{2\beta} (f_{0}-f_{\ast}) 
+  + \frac{1}{2 \gamma} \|x_{0}-x_{*}\|_{2}^{2} 
+  \Big)
+  \end{equation*}\]</div>
+<p><strong>Satz:</strong> <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\to \mathbb{R}\)</span>, konvex, <span class="math notranslate nohighlight">\(L\)</span>-glatt mit Konstante <span class="math notranslate nohighlight">\(L\)</span>
+und es existiere <span class="math notranslate nohighlight">\(x_\ast = \mathrm{argmin}_{x\in\mathbb{R}^d}f(x)\)</span>.
+Für  <span class="math notranslate nohighlight">\(0 &lt; \gamma &lt; \frac{2}{L}\)</span> ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+f_{T}-f_\ast 
+&amp;\leq \frac{1}{T+1}
+\Big(
+\frac{\gamma}{2\beta} (f_{0}-f_{\ast}) 
++ \frac{1}{2 \gamma} \|x_{0}-x_{*}\|_{2}^{2} 
+\Big)
+\\
+&amp;= \mathcal{O}\big( \frac{1}{T} \big)
+\quad \text{für}\quad  T\to\infty.
+\end{align*}\]</div>
+<p><strong>Bemerkung:</strong></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(f_{T} - f_\ast \leq \varepsilon\)</span> gilt damit sicher, falls</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \frac{1}{T+1}
+    \Big(
+    \frac{\gamma}{2\beta} (f_{0}-f_{\ast}) 
+    + \frac{1}{2 \gamma} \|x_{0}-x_{*}\|_{2}^{2} 
+    \Big) \leq \varepsilon
+    \end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    T \geq \frac{1}{\varepsilon}
+    \Big(
+    \frac{\gamma}{2\beta} (f_{0}-f_{\ast}) 
+    + \frac{1}{2 \gamma} \|x_{0}-x_{*}\|_{2}^{2} 
+    \Big) - 1
+    = \mathcal{O}\big(\frac{1}{\varepsilon}\big)
+    \end{equation*}\]</div>
+</li>
+<li><p>da <span class="math notranslate nohighlight">\(\gamma &lt; \frac{2}{L}\)</span> sein muss kann wegen des Terms</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \frac{1}{2 \gamma} \|x_{0}-x_{*}\|_{2}^{2}
+    \end{equation*}\]</div>
+<p>die Asymptotik der oberen Schranke nicht mehr durch
+eine <span class="math notranslate nohighlight">\(T\)</span>-abhängige Wahl von <span class="math notranslate nohighlight">\(\gamma\)</span> verbessert werden</p>
+</li>
+</ul>
+</div>
+<div class="section" id="mu-konvexitat">
+<h2><span class="math notranslate nohighlight">\(\mu\)</span>-Konvexität<a class="headerlink" href="#mu-konvexitat" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Bis jetzt haben wir nur Abschätzungen für <span class="math notranslate nohighlight">\(f_t - f_\ast\)</span> bewiesen.
+Nun werden wir <span class="math notranslate nohighlight">\(\|x_t - x_\ast\|_2\)</span> betrachten.
+Dazu benötigen wir nochmals stärkere Voraussetzungen, nämlich <span class="math notranslate nohighlight">\(\mu\)</span>-Konvexität.
+Damit werden wir zusätzlich auch eine besseres asymptotisches verhalten
+nachweisen können.</p>
+<p><span class="math notranslate nohighlight">\(f\)</span> ist <span class="math notranslate nohighlight">\(\mu\)</span>-konvex falls <span class="math notranslate nohighlight">\(f(x)-\frac{\mu}{2}\|x\|_2^2\)</span> konvex ist.
+Ist <span class="math notranslate nohighlight">\(f\)</span> zusätzlich differenzierbar, so erhalten wir das folgende Ergebnis</p>
+<p><strong>Lemma:</strong> Ist <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(\mu\)</span>-konvex und differenzierbar, dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f(y) \geq f(x) + f'(x)(y-x) + \frac{\mu}{2}\|y-x\|_2^2
+  \quad
+  \forall x,y
+  \end{equation*}\]</div>
+<p>und</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \big(f'(y) - f'(x)\big)(y-x) \geq \mu \|y-x\|_2^2
+  \quad
+  \forall x,y.
+  \end{equation*}\]</div>
+<p><strong>Beweis:</strong></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> ist <span class="math notranslate nohighlight">\(\mu\)</span>-konvex falls <span class="math notranslate nohighlight">\(g(x) = f(x)-\frac{\mu}{2}\|x\|_2^2\)</span> konvex ist</p></li>
+<li><p>mit <span class="math notranslate nohighlight">\(f\)</span> ist auch <span class="math notranslate nohighlight">\(g\)</span> differenzierbar mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g'(x) = f'(x) - \mu x
+    \end{equation*}\]</div>
+</li>
+<li><p>wegen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    g(y) \geq g(x)+g'(x)(y-x)
+    \end{equation*}\]</div>
+<p>ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f(y)-\frac{\mu}{2}\|y\|_{2}^{2} 
+    \geq 
+    f(x)-\frac{\mu}{2}\|x\|_2^{2} + \big(f'(x) - \mu x\big)^T(y-x)
+    \end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f(y) 
+    \geq f(x)+f'(x)(y-x)
+    +\frac{\mu}{2} \big(\underbrace{y^{T} y-x^{T} x-2 x^{T}(y-x)}_{h}\big)
+    \end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+    h 
+    &amp;= y^{T} y - x^{T} x - 2 x^{T}y + 2 x^{T}x
+    \\
+    &amp;= y^{T} y - 2 x^{T}y + x^{T} x
+    \\
+    &amp;= \|y-x\|_2^2,
+    \end{align*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f(y) \geq f(x) + f'(x)(y-x) + \frac{\mu}{2}\|y-x\|_2^2
+    \end{equation*}\]</div>
+<p>da <span class="math notranslate nohighlight">\(g\)</span> konvex und differenzierbar ist, ist <span class="math notranslate nohighlight">\(g'\)</span> monoton,
+also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    0 
+    &amp; \leq \big(g'(y) - g'(x)\big)(y-x) \\
+    &amp;=  \big(f'(y) - \mu y - f'(x) + \mu x\big)(y-x)\\
+    &amp;= \big(f'(y) - f'(x)\big)(y-x) - \mu \|y-x\|_2^2
+    \end{align*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \big(f'(y) - f'(x)\big)(y-x) \geq \mu \|y-x\|_2^2
+    \quad
+    \forall x,y
+    \end{equation*}\]</div>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+<p><strong>Bemerkung:</strong></p>
+<ul>
+<li><p>ist <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(\mu\)</span>-konvex und <span class="math notranslate nohighlight">\(L\)</span>-glatt (und damit differenzierbar), so gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    f(y) &amp;\leq f(x) + f'(x)(y-x) + \frac{L}{2}\|y-x\|_2^2 =: q_{L,x}(y) \\
+    f(y) &amp;\geq f(x) + f'(x)(y-x) + \frac{\mu}{2}\|y-x\|_2^2 =: q_{\mu,x}(y)
+    \end{align*}\]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> kann also zwischen den beiden quadratischen Funktionen <span class="math notranslate nohighlight">\(q_{\mu,x}\)</span>, <span class="math notranslate nohighlight">\(q_{L,x}\)</span>
+„eingesperrt“ werden</p></li>
+<li><p><span class="math notranslate nohighlight">\(q_{\mu,x}\)</span>, <span class="math notranslate nohighlight">\(q_{L,x}\)</span> berühren <span class="math notranslate nohighlight">\(f\)</span> im Punkt <span class="math notranslate nohighlight">\(x\)</span></p></li>
+<li><p>es muss immer <span class="math notranslate nohighlight">\(\mu \leq L\)</span> gelten</p></li>
+<li><p>ist <span class="math notranslate nohighlight">\(\mu&gt;0\)</span> so ist <span class="math notranslate nohighlight">\(f\)</span> strikt konvex und <span class="math notranslate nohighlight">\(x_\ast\)</span> ist damit eindeutig</p></li>
+<li><p>ist <span class="math notranslate nohighlight">\(\mu = L\)</span> dann ist <span class="math notranslate nohighlight">\(f = q_{\mu,x} = q_{L,x}\)</span>, d.h. <span class="math notranslate nohighlight">\(f\)</span> ist ein quadratisches
+Polynom</p></li>
+</ul>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fsize</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">f</span>  <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">m</span>  <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span>
+<span class="n">L</span>  <span class="o">=</span> <span class="mi">3</span><span class="o">/</span><span class="mi">4</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<span class="n">qm</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="n">f1</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="n">m</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ql</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">Lambda</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="n">f1</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span> <span class="o">+</span> <span class="n">L</span><span class="o">*</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">x0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">x1</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">ql</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">qm</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>              
+
+<span class="n">qm</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">qm</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">ql</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ql</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">f</span>  <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">xmin</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">xmax</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;$f$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">qm</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;$q_{\mu,x}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ql</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s1">&#39;$q_{L,x}$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">tic</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="o">-</span><span class="n">tic</span><span class="p">,</span> <span class="s1">&#39;$x_{*}$&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x2</span><span class="p">,</span><span class="n">x2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">tic</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x2</span><span class="p">)],</span> <span class="s1">&#39;g:&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="o">-</span><span class="n">tic</span><span class="p">,</span> <span class="s1">&#39;$x$&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span><span class="n">x0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">tic</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)],</span> <span class="s1">&#39;g:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span><span class="n">x0</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)],</span> <span class="s1">&#39;g:&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">xmin</span><span class="p">,</span><span class="n">x1</span><span class="p">],</span> <span class="p">[</span><span class="n">ql</span><span class="p">(</span><span class="n">x1</span><span class="p">),</span><span class="n">ql</span><span class="p">(</span><span class="n">x1</span><span class="p">)],</span> <span class="s1">&#39;r:&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xmin</span><span class="o">-</span><span class="n">tic</span><span class="p">,</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">+</span><span class="n">f</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span><span class="o">+</span><span class="n">tic</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;guaranteed progress&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span><span class="n">xmax</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)],</span> <span class="s1">&#39;g:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x3</span><span class="p">,</span><span class="n">xmax</span><span class="p">],</span> <span class="p">[</span><span class="n">qm</span><span class="p">(</span><span class="n">x3</span><span class="p">),</span><span class="n">qm</span><span class="p">(</span><span class="n">x3</span><span class="p">)],</span> <span class="s1">&#39;b:&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">xmax</span><span class="p">,</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span><span class="o">+</span><span class="n">qm</span><span class="p">(</span><span class="n">x3</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;maximal</span><span class="se">\n</span><span class="s1"> suboptimality&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">ha</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span> <span class="o">=</span> <span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower center&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">xmin</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/10_Gradient_Descent_38_0.png" src="_images/10_Gradient_Descent_38_0.png" />
+</div>
+</div>
+<p><strong>Lemma:</strong>
+<span class="math notranslate nohighlight">\(f:\mathbb{R}^d  \to \mathbb{R}\)</span> differenzierbar und
+es existiere <span class="math notranslate nohighlight">\(x_\ast\)</span> mit
+<span class="math notranslate nohighlight">\(f(x_\ast)=\inf_{x\in\mathbb{R}^d}f(x)\)</span>.
+Ist <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(\mu\)</span>-konvex mit Konstante <span class="math notranslate nohighlight">\(\mu\)</span>, dann gilt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\frac{\mu}{2}\|y-x\|_2^2\leq f(x) - f(x_\ast) \leq \frac{1}{2\mu} \|f'(x)\|_2^2. 
+\end{equation*}\]</div>
+<p><strong>Beweis:</strong></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> ist <span class="math notranslate nohighlight">\(\mu\)</span>-konvex, d.h.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f(y) \geq f(x) + f'(x)(y-x) + \frac{\mu}{2}\|y-x\|_2^2  \quad \forall x,y
+    \end{equation*}\]</div>
+</li>
+<li><p>Abschätzung nach unten:</p>
+<ul>
+<li><p>da <span class="math notranslate nohighlight">\(x_\ast\)</span> globaler Minimierer ist muss <span class="math notranslate nohighlight">\(f'(x_\ast)=0\)</span> sein und
+aus der <span class="math notranslate nohighlight">\(\mu\)</span>-Konvexität folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+      f(x) 
+      &amp;\geq f(x_\ast) + f'(x_\ast)(x-x_\ast) + \frac{\mu}{2}  \|x-x_\ast\|_2^2\\
+      &amp;   = f(x_\ast) + \frac{\mu}{2} \|x-x_\ast\|_2^2
+      \end{align*}\]</div>
+</li>
+</ul>
+</li>
+<li><p>Abschätzung nach oben:</p>
+<ul>
+<li><p>wir benutzen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*} 
+      f(x_\ast) &amp;= \inf_y f(y) \geq \inf_y u(y),
+      \\
+      u(y) &amp;= f(x) + f'(x)(y-x) + \frac{\mu}{2}  \|y-x\|_2^2
+      \end{align*}\]</div>
+<p>und minimieren die quadratische Funktion <span class="math notranslate nohighlight">\(u\)</span></p>
+</li>
+<li><p>für die Ableitungen erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      u'(y) = f'(x) + \mu (y-x),
+      \quad
+      u''(y) = \mu I
+      \end{equation*}\]</div>
+</li>
+<li><p>für <span class="math notranslate nohighlight">\(\mu&gt;0\)</span> ist <span class="math notranslate nohighlight">\(u\)</span> strikt konvex mit globalem Minimierer <span class="math notranslate nohighlight">\(y_\ast\)</span> mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      0 = u'(y_\ast) \quad \Leftrightarrow \quad y_\ast - x = -\frac{1}{\mu}f'(x)
+      \end{equation*}\]</div>
+<p>und Minimum</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+      u_\ast = u(y_\ast) 
+      &amp;=  f(x) + f'(x)(y_\ast-x) + \frac{1}{2} \mu \|y_\ast-x\|_2^2\\
+      &amp;=  f(x) - \frac{1}{\mu} \|f'(x)\|_2^2 + \frac{1}{2} \mu \|\frac{1}{\mu}f'(x)\|_2^2\\
+      &amp;=  f(x) - \frac{1}{2\mu} \|f'(x)\|_2^2
+      \end{align*}\]</div>
+</li>
+<li><p>somit folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      f(x_\ast) \geq  f(x) - \frac{1}{2\mu} \|f'(x)\|_2^2.
+      \end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+      f(x) - f(x_\ast) \leq \frac{1}{2\mu} \|f'(x)\|_2^2 
+      \end{equation*}\]</div>
+</li>
+</ul>
+</li>
+</ul>
+<p><span class="math notranslate nohighlight">\(\square\)</span></p>
+<p>Aus <span class="math notranslate nohighlight">\(x_{t+1} = x_t - \gamma f'_t\)</span> hatten wir in den Vorüberlegungen</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \|x_{t+1}-x_{*}\|_{2}^{2} 
+  =\|x_{t}-x_{*}\|_{2}^{2}+\gamma^{2}\|f_{t}^{\prime}\|_{2}^{2}-2
+  \gamma f_{t}^{\prime}(x_{t}-x_{*})
+  \end{equation*}\]</div>
+<p>erhalten.
+<span class="math notranslate nohighlight">\(\mu\)</span>-Konvexität liefert mit <span class="math notranslate nohighlight">\(y=x_\ast\)</span>, <span class="math notranslate nohighlight">\(x=x_t\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_\ast \geq f_t + f'_t(x_\ast-x_t) + \frac{\mu}{2} \|x_\ast-x_t\|_2^2
+  \end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  -f'_t(x_t - x_\ast)  \leq  f_\ast - f_t - \frac{\mu}{2} \|x_t - x_\ast\|_2^2.
+  \end{equation*}\]</div>
+<p>Eingesetzt erhalten wir</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+  \|x_{t+1}-x_{*}\|_{2}^{2} 
+  &amp; =\|x_{t}-x_{*}\|_{2}^{2}+\gamma^{2}\|f_{t}^{\prime}\|_{2}^{2}
+     + 2 \gamma \big( f_\ast - f_t - \frac{\mu}{2} \|x_t - x_\ast\|_2^2 \big)\\
+  &amp; \leq
+  (1-\gamma\mu) \|x_{t}-x_{*}\|_{2}^{2}+\gamma^{2}\|f_{t}^{\prime}\|_{2}^{2}
+   + 2 \gamma (f_\ast - f_t).
+  \end{align*}\]</div>
+<p>Das Descent-Lemma aus dem vorherigen Kapitel liefert</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_\ast - f_t 
+  \leq f_{t+1} - f_{t}
+  \leq -\beta\|f_{t}^{\prime}\|_2^{2},
+  \quad
+  \beta = \gamma\big(1-\frac{\gamma L}{2}\big)
+  \end{equation*}\]</div>
+<p>mit <span class="math notranslate nohighlight">\(\beta &gt; 0\)</span> für <span class="math notranslate nohighlight">\(0 &lt; \gamma &lt; \frac{2}{L}\)</span>, so dass</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \|x_{t+1}-x_{\ast}\|_{2}^{2}
+  \leq 
+  (1-\gamma\mu) \ \|x_{t}-x_{*}\|_{2}^{2}
+  +(\gamma^{2} -  2 \gamma \beta)  \ \|f_{t}^{\prime}\|_{2}^{2}
+  \end{equation*}\]</div>
+<p>gilt.</p>
+<p>Für den Vorfaktor des letzten Terms gilt wegen <span class="math notranslate nohighlight">\(\gamma&gt;0\)</span>, <span class="math notranslate nohighlight">\(\beta = \gamma\big(1-\frac{\gamma L}{2}\big)\)</span>,</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+  \gamma (\gamma - 2  \beta) \leq 0
+  &amp; \quad\Leftrightarrow \quad \gamma \leq 2  \beta = \gamma(2 - \gamma L) \\
+  &amp; \quad\Leftrightarrow \quad 1 \leq 2 - \gamma L \\
+  &amp; \quad\Leftrightarrow \quad \gamma \leq \frac{1}{L} .
+  \end{align*}\]</div>
+<p>Somit folgt für <span class="math notranslate nohighlight">\(0&lt;\gamma \leq \frac{1}{L}\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \|x_{t+1}-x_{*}\|_{2}^2 \leq \rho \|x_{t}-x_{*}\|_{2}^2,
+  \quad
+  \rho = 1-\gamma\mu 
+  \end{equation*}\]</div>
+<p>bzw.</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  \|x_{T}-x_{*}\|_{2}^2 \leq \rho^T \|x_{0}-x_{*}\|_{2}^2.
+  \end{equation*}\]</div>
+<p>Wegen <span class="math notranslate nohighlight">\(0&lt;\mu\leq L\)</span> und <span class="math notranslate nohighlight">\(0&lt;\gamma\leq \frac{1}{L}\)</span> ist</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  0&lt;\gamma\mu\leq \gamma L \leq 1
+  \end{equation*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  0 \leq \rho &lt; 1,
+  \end{equation*}\]</div>
+<p>also <span class="math notranslate nohighlight">\(|\rho|&lt; 1\)</span> und wir erhalten Konvergenz für <span class="math notranslate nohighlight">\(x_T\)</span>.</p>
+<p>Für <span class="math notranslate nohighlight">\(f_T\)</span> ergibt sich direkt aus der <span class="math notranslate nohighlight">\(L\)</span>-Glattheit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_T \leq f_\ast + f'_\ast(x_T - x_\ast) + \frac{L}{2} \|x_T - x_\ast\|_2^2,
+  \end{equation*}\]</div>
+<p>und wegen <span class="math notranslate nohighlight">\(f'_\ast=0\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_T - f_\ast  
+  \leq \frac{L}{2} \|x_T - x_\ast\|_2^2
+  \leq \frac{L}{2} \rho^T \|x_{0}-x_{*}\|_{2}^2.
+  \end{equation*}\]</div>
+<p>Insgesamt haben wir damit das folgende Ergebnis bewiesen.</p>
+<p><strong>Satz:</strong> <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\to \mathbb{R}\)</span>, <span class="math notranslate nohighlight">\(\mu\)</span>-konvex mit <span class="math notranslate nohighlight">\(\mu&gt;0\)</span>, <span class="math notranslate nohighlight">\(L\)</span>-glatt mit Konstante <span class="math notranslate nohighlight">\(L\)</span>
+und es existiere <span class="math notranslate nohighlight">\(x_\ast = \mathrm{argmin}_{x\in\mathbb{R}^d}f(x)\)</span>.</p>
+<p>Für  <span class="math notranslate nohighlight">\(0 &lt; \gamma \leq \frac{1}{L}\)</span> folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\|x_{t+1}-x_{*}\|_{2}^2 \leq \rho \|x_{t}-x_{*}\|_{2}^2
+\end{equation*}\]</div>
+<p>und</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+f_T - f_\ast \leq \frac{L}{2} \rho^T \|x_{0}-x_{*}\|_{2}^2
+\end{equation*}\]</div>
+<p>mit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\rho = 1-\gamma\mu \in [0,1).
+\end{equation*}\]</div>
+<p><strong>Bemerkung:</strong></p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(f_{T} - f_\ast \leq \frac{L}{2} \rho^T \|x_{0}-x_{*}\|_{2}^2 \leq\varepsilon\)</span>
+gilt sicher, falls</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \rho^T \leq \frac{2\varepsilon}{L \|x_{0}-x_{*}\|_{2}^2}
+    \end{equation*}\]</div>
+</li>
+<li><p>für <span class="math notranslate nohighlight">\(\rho = 0\)</span> gilt das für alle <span class="math notranslate nohighlight">\(\varepsilon\ge 0\)</span></p></li>
+<li><p>für <span class="math notranslate nohighlight">\(0 &lt; \rho &lt; 1\)</span>  folgt</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    T\log(\rho) \leq \log\big(\frac{2\varepsilon}{L \|x_{0}-x_{*}\|_{2}^2}\big), 
+    \quad \log(\rho)&lt;0
+    \end{equation*}\]</div>
+<p>also</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+    T 
+    &amp;\geq 
+    \frac{1}{ \log(\rho) } \log\big(\frac{2\varepsilon}{L \|x_{0}-x_{*}\|_{2}^2}\big)\\
+    &amp;=
+    \frac{1}{|\log(\rho)|} \log\big(\frac{L \|x_{0}-x_{*}\|_{2}^2}{2\varepsilon}\big)\\
+    &amp;=
+    \frac{1}{|\log(\rho)|}
+    \Big(
+    \log\big(\frac{L}{2} \|x_{0}-x_{*}\|_{2}^2\big)
+    +
+    \log\big(\frac{1}{\varepsilon}\big)
+    \Big)
+    \end{align*}\]</div>
+<p>und somit</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    T = \mathcal{O}\Big( \log\big(\frac{1}{\varepsilon}\big) \Big)
+    \end{equation*}\]</div>
+</li>
+</ul>
+</div>
+<div class="section" id="zusammenfassung">
+<h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Für Gradient-Descent bei <em>nicht restringierten Optimierungsproblemen</em> haben wir folgendes
+Konvergenzverhalten nachgewiesen:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> konvex und Lipschitz-stetig, <span class="math notranslate nohighlight">\(\gamma = \frac{c}{\sqrt{T}}\)</span>, <span class="math notranslate nohighlight">\(c&gt;0\)</span>:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    \min_{t=0,\ldots,T-1}(f_t - f_\ast) \leq \varepsilon
+    \quad \Rightarrow\quad
+    T = \mathcal{O}\big(\frac{1}{\varepsilon^2}\big)
+    \end{equation*}\]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> konvex und <span class="math notranslate nohighlight">\(L\)</span>-glatt, <span class="math notranslate nohighlight">\(0 &lt; \gamma &lt; \frac{2}{L}\)</span>:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f_{T}-f_\ast \leq \varepsilon
+    \quad \Rightarrow\quad
+    T =\mathcal{O}\big( \frac{1}{\varepsilon} \big)
+    \end{equation*}\]</div>
+</li>
+<li><p><span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(\mu\)</span>-konvex mit <span class="math notranslate nohighlight">\(\mu&gt;0\)</span> und <span class="math notranslate nohighlight">\(L\)</span>-glatt, <span class="math notranslate nohighlight">\(0 &lt; \gamma \leq \frac{1}{L}\)</span>:</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+    f_{T}-f_\ast \leq \varepsilon
+    \quad \Rightarrow\quad
+    T = \mathcal{O}\Big( \log\big(\frac{1}{\varepsilon}\big) \Big)
+    \end{equation*}\]</div>
+</li>
+</ul>
+<p>Ist <span class="math notranslate nohighlight">\(f(x)\)</span> eine <span class="math notranslate nohighlight">\(L\)</span>-glatte Funktion, dann ist für alle <span class="math notranslate nohighlight">\(\mu &gt; 0\)</span></p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+  f_R(x) = f(x) + \mu \|x\|_2^2
+  \end{equation*}\]</div>
+<p>auch <span class="math notranslate nohighlight">\(\mu\)</span>-konvex, d.h. Tikhonov(Ridge)-Regularisierung kann die
+Konvergenz von Gradient-Descent beschleunigen.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="09_Konvexitaet.html" title="zurück Seite">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">zurück</p>
+                <p class="prevnext-title">Konvexität</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="11_Projected_Gradient_Descent.html" title="weiter Seite">
+            <div class="prevnext-info">
+                <p class="prevnext-label">weiter</p>
+                <p class="prevnext-title">Projected Gradient-Descent</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          Martin Reißel<br/>
+        
+            2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>
