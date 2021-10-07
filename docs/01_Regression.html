@@ -417,14 +417,14 @@ also <span class="math notranslate nohighlight">\(m \ge n\)</span></p></li>
 <p>gemessen, z.B.</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
-  l_i(w) = \frac{1}{2}\|g(x_i, w) - y_i\|
+  l_i(w) = d\big(g(x_i, w) , y_i\big)
   \end{equation*}\]</div>
-<p>mit einer geeigneten Norm <span class="math notranslate nohighlight">\(\|\cdot\|\)</span></p>
+<p>mit einer geeigneten Metrik <span class="math notranslate nohighlight">\(d\)</span></p>
 </li>
 <li><p>Ziel ist es, <span class="math notranslate nohighlight">\(w\)</span> so zu bestimmen, dass</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}  
-  l(w) = \frac{1}{2m}\sum_{i=1}^m l_i(w) 
+  l(w) = \frac{1}{m}\sum_{i=1}^m l_i(w) 
   \end{equation*}\]</div>
 <p>möglichst klein wird</p>
 </li>
@@ -437,7 +437,7 @@ w^* = \text{argmin}_{w\in\mathbb{R}^n} l(w).
 <p>Benutzt man als Loss</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*} 
-l_i(x) 
+l_i(w) 
 &amp;= \frac{1}{2} \|g(x_i,w) - y_i\|_2^2\\
 &amp;= \frac{1}{2} \big( g(x_i,w) - y_i, g(x_i,w) - y_i \big)_2
 \end{align*}\]</div>
@@ -797,7 +797,7 @@ l'(w) = \frac{1}{m}X^T(X w - y).
 
     
 <span class="n">w0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">w</span> <span class="o">=</span> <span class="n">GD</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">l1</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">GD</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">nit</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">eval2d</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1002,7 +1002,7 @@ w\\
 \[\begin{equation*} 
 \tilde{A}w = \tilde{R}^T \tilde{R} w = X^Ty
 \end{equation*}\]</div>
-<p>und <span class="math notranslate nohighlight">\(\tilde{R}^T \tilde{R}\)</span> ist eine Cholesky-Zerlegung von <span class="math notranslate nohighlight">\(\tilde{A}w\)</span>,
+<p>und <span class="math notranslate nohighlight">\(\tilde{R}^T \tilde{R}\)</span> ist eine Cholesky-Zerlegung von <span class="math notranslate nohighlight">\(\tilde{A}\)</span>,
 so dass <span class="math notranslate nohighlight">\(w\)</span> jetzt wieder einfach durch Vorwärts- bzw. Rückwärtseinsetzen
 berechnet werden kann.</p>
 <p>Alternativ kann man die QR-Zerlegung auch wie folgt einsetzen.
@@ -1227,7 +1227,14 @@ in <span class="math notranslate nohighlight">\(V_k\)</span> indem wir es zunäc
 \end{equation*}\]</div>
 <p>umwandeln
 und dann <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span> durch <span class="math notranslate nohighlight">\(V_k\)</span> ersetzen, d.h.
-statt <span class="math notranslate nohighlight">\(w,v\)</span> haben wir dann</p>
+wir lösen dann</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{equation*} 
+\text{finde } w^{(k)} \in V_k \text{ mit}
+\quad
+(Aw^{(k)}, v^{(k)})_2 = (b,v^{(k)})_2 \quad \forall v^{(k)} \in  V_k.
+\end{equation*}\]</div>
+<p>Mit</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
 w^{(k)} = Q_k \tilde{w},
@@ -1236,7 +1243,7 @@ v^{(k)} = Q_k \tilde{v},
 \quad
 \tilde{w}, \tilde{v} \in  \mathbb{R}^{n_k}.
 \end{equation*}\]</div>
-<p>also</p>
+<p>erhalten wir</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
 \text{finde } \tilde{w} \in \mathbb{R}^{n_k} \text{ mit}
