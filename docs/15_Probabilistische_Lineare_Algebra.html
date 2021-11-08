@@ -507,7 +507,7 @@ In unserem Set-Up bedeutet das:</p>
 <p>Wir müssen also überlegen, wie wir „billiger“ an <span class="math notranslate nohighlight">\(Q\)</span> kommen können.
 Dazu betrachten wir für <span class="math notranslate nohighlight">\(A\in \mathbb{R}^{m \times n}\)</span> zwei Fälle:</p>
 <ul>
-<li><p>fixed-presicion:
+<li><p>fixed-precision:
 gegeben <span class="math notranslate nohighlight">\(\varepsilon &gt; 0\)</span>,
 suche <span class="math notranslate nohighlight">\(Q\)</span> orthonormal mit
 <span class="math notranslate nohighlight">\(\mathrm{rang}(Q)\leq k(\varepsilon)\)</span>,<br />
@@ -570,7 +570,7 @@ und berechne</p>
 <p>Jetzt sei <span class="math notranslate nohighlight">\(A = A_0 + E\)</span>, <span class="math notranslate nohighlight">\(\mathrm{rang}(A_0)=k\)</span>, wobei <span class="math notranslate nohighlight">\(E\)</span> sei eine „kleine“ Störung ist.</p>
 <ul>
 <li><p>wir suchen einen Unterraum in <span class="math notranslate nohighlight">\(R(A)\)</span>, der einen möglichst „großen Teil“ von
-<span class="math notranslate nohighlight">\(R(A_0)\)</span> abdeckt, aber nicht unedbingt die kleinstmögliche Dimension <span class="math notranslate nohighlight">\(k\)</span> hat
+<span class="math notranslate nohighlight">\(R(A_0)\)</span> abdeckt, aber nicht unbedingt die kleinstmögliche Dimension <span class="math notranslate nohighlight">\(k\)</span> hat
 sondern Dimension <span class="math notranslate nohighlight">\(k+p\)</span></p></li>
 <li><p>wir betrachten wieder</p>
 <div class="amsmath math notranslate nohighlight">
@@ -607,7 +607,7 @@ hoch, dass wir „wichtige Teile“ von <span class="math notranslate nohighligh
 <li><p>wie orthonormalisiert man <span class="math notranslate nohighlight">\(Y\)</span>, das in der Regel schlechte Kondition hat
 (Spalten sind „fast“ linear abhängig)?</p></li>
 <li><p>wie ist der Aufwand, die Genauigkeit?</p></li>
-<li><p>wie geht fixed-prescision?</p></li>
+<li><p>wie geht fixed-precision?</p></li>
 </ul>
 <p><strong>Satz:</strong> <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{m \times n}\)</span>, <span class="math notranslate nohighlight">\(k\geq 2\)</span>, <span class="math notranslate nohighlight">\(p\geq 2\)</span>, <span class="math notranslate nohighlight">\(k+p \leq \min(m,n)\)</span>,</p>
 <div class="amsmath math notranslate nohighlight">
@@ -738,7 +738,7 @@ Wir ersetzen oben <span class="math notranslate nohighlight">\(\Sigma\)</span> d
 \end{equation*}\]</div>
 <p>d.h. wir benutzen
 eine TSVD von <span class="math notranslate nohighlight">\(C\)</span> in Schritt 2.
-In diesem Fall ändert sich die Fehleranschätzung des letzten Satzes geringfügig.</p>
+In diesem Fall ändert sich die Fehlerabschätzung des letzten Satzes geringfügig.</p>
 <p><strong>Satz:</strong> <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{m \times n}\)</span>, <span class="math notranslate nohighlight">\(q\in\mathbb{N}_0\)</span>,
 <span class="math notranslate nohighlight">\(2 \leq k \leq \frac{1}{2}\min(m,n)\)</span>, dann gilt für <span class="math notranslate nohighlight">\(U,\Sigma_k,V\)</span> aus der RSVD
 mit <span class="math notranslate nohighlight">\(p=k\)</span></p>
@@ -847,7 +847,7 @@ kann dabei auch wieder die Power-Methode benutzt werden.</p>
 <div class="section" id="zusammenfassung">
 <h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Wir haben probabilistische Methoden für approximative Berechnung von TSVD
-betrachtet und Algortihmen für fixed-rank und fixed-precision Aufgabenstellungen
+betrachtet und Algorithmen für fixed-rank und fixed-precision Aufgabenstellungen
 vorgestellt.</p>
 </div>
 </div>

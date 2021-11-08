@@ -321,7 +321,7 @@
 <h2>Grundlagen<a class="headerlink" href="#grundlagen" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Wir betrachten eine Menge von Texten und stellen diese zunächst in Form einer Matrix <span class="math notranslate nohighlight">\(V\)</span> dar. Für jeden Text legen wir eine Spalte an, für jedes Wort eine Zeile und <span class="math notranslate nohighlight">\(v_{ij}\)</span>
 enthält dann die (skalierte) Häufigkeit, wie oft das <span class="math notranslate nohighlight">\(i\)</span>-te Wort im <span class="math notranslate nohighlight">\(j\)</span>-ten Text auftaucht.</p>
-<p>Um wiederkehrende Strukturen (Cluster) in den Texten zu identifizeren kann man nun versuchen, die Matrix <span class="math notranslate nohighlight">\(V \in \mathbb{R}^{m \times n}\)</span> zu zerlegen in</p>
+<p>Um wiederkehrende Strukturen (Cluster) in den Texten zu identifizieren kann man nun versuchen, die Matrix <span class="math notranslate nohighlight">\(V \in \mathbb{R}^{m \times n}\)</span> zu zerlegen in</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
 V = WH,
@@ -732,7 +732,7 @@ nicht dünn besetzt</p>
 l(W,H) = \|V-WH\|_\text{Fro}^2
 \end{equation*}\]</div>
 <p>und benutzen für die Einhaltung der Nebenbedingung
-die Projektion (bezüglich der Forbenius-Norm) auf die nichtnegativen Matrizen</p>
+die Projektion (bezüglich der Frobenius-Norm) auf die nichtnegativen Matrizen</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
 \Pi(A) = \big( \tilde{a}_{ij} \big)_{ij},

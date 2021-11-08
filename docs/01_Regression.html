@@ -525,7 +525,7 @@ y_1 - c(x_1) \\
 y_m - c(x_m)
 \end{pmatrix}
 \end{equation*}\]</div>
-<p>und somit ein lineares Ausgleichproblem.</p>
+<p>und somit ein lineares Ausgleichsproblem.</p>
 <p>Wir lösen</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -728,7 +728,7 @@ eine <strong>Liniensuche</strong> (Armijo, Wolfe etc.) bestimmt wird.</p>
 \[\begin{equation*} 
 l'(w) = \frac{1}{m}X^T(X w - y).
 \end{equation*}\]</div>
-<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die fogenden Ergebnisse</p>
+<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die folgenden Ergebnisse</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>
@@ -840,7 +840,7 @@ l'(w) = \frac{1}{m}(X^TX w - X^T y)
 \[\begin{equation*} 
 l''(w) = \frac{1}{m}X^TX.
 \end{equation*}\]</div>
-<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die fogenden Ergebnisse</p>
+<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die folgenden Ergebnisse</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l2</span> <span class="o">=</span> <span class="n">jacobian</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
@@ -902,7 +902,7 @@ identisch mit der Zielfunktion und ein Schritt mit Newton liefert bereits das ge
 </div>
 <div class="section" id="loser-fur-das-normalgleichungssystem">
 <h3>Löser für das Normalgleichungssystem<a class="headerlink" href="#loser-fur-das-normalgleichungssystem" title="Link zu dieser Überschrift">¶</a></h3>
-<p>Das Normalgleichungssysstem für unser Beispiel hat die Form</p>
+<p>Das Normalgleichungssystem für unser Beispiel hat die Form</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}  
 X^T X w = X^T y
@@ -980,7 +980,7 @@ R \in\mathbb{R}^{m\times n},
 \tilde{R} \in\mathbb{R}^{n\times n},
 \end{equation*}\]</div>
 <p>wobei <span class="math notranslate nohighlight">\(Q\)</span> orthonormal und <span class="math notranslate nohighlight">\(\tilde{R}\)</span> eine quadratische obere Dreiecksmatrix ist.</p>
-<p>Setzen wir diese Zerlegung in das Normalgleichungsystem ein, so erhalten wir</p>
+<p>Setzen wir diese Zerlegung in das Normalgleichungssystem ein, so erhalten wir</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{align*} 
 X^T X w
@@ -1068,7 +1068,7 @@ s^{(k+1)} &amp;= s^{(k)} - \gamma^{(k)} X p^{(k)} &amp; \gamma^{(k)} &amp;= \fra
 r^{(k+1)} &amp;= X^Ts^{(k+1)} \\
 p^{(k+1)} &amp;= r^{(k+1)} + \beta^{(k)} p^{(k)} &amp; \beta^{(k)} &amp;= \frac{(r^{(k+1)}, r^{(k+1)})_2}{(r^{(k)}, r^{(k)})_2}
 \end{align*}\]</div>
-<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die fogenden Ergebnisse</p>
+<p>Die Anwendung des Verfahrens auf unser Modellproblem liefert die folgenden Ergebnisse</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">CGLS</span><span class="p">(</span><span class="n">w0</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">nit</span> <span class="o">=</span> <span class="mi">20</span><span class="p">):</span>
@@ -1526,7 +1526,7 @@ p_ttest   = 1.000000
 <h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">¶</a></h2>
 <ul class="simple">
 <li><p>Regressionsaufgaben führen zu nichtlinearen Optimierungsproblemen</p></li>
-<li><p>typische Optimierungsverfahren bei differenzierbrarer Zielfunktion
+<li><p>typische Optimierungsverfahren bei differenzierbarer Zielfunktion
 sind Abstiegs-Verfahren (Gradient-Descent, Newton-artige)</p></li>
 <li><p>ist die Zielfunktion <span class="math notranslate nohighlight">\(l\)</span> quadratisch und konvex, dann kann die
 Optimierungsaufgabe auch mit Methoden der Numerischen Linearen
