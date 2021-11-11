@@ -616,14 +616,14 @@ Strecke <span class="math notranslate nohighlight">\((w_1,w_3) = (0,-1)\)</span>
 über den Parameter <code class="docutils literal notranslate"><span class="pre">random_state</span></code> beeinflusst werden</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlp</span> <span class="o">=</span> <span class="n">neural_network</span><span class="o">.</span><span class="n">MLPRegressor</span><span class="p">(</span><span class="n">hidden_layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">nn</span><span class="p">],</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">123</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mlp</span> <span class="o">=</span> <span class="n">neural_network</span><span class="o">.</span><span class="n">MLPRegressor</span><span class="p">(</span><span class="n">hidden_layer_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="n">nn</span><span class="p">],</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span> <span class="n">random_state</span> <span class="o">=</span> <span class="mi">234</span><span class="p">)</span>
 <span class="n">mlp</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xtrain</span><span class="p">,</span> <span class="n">ytrain</span><span class="o">.</span><span class="n">flat</span><span class="p">)</span>
 <span class="n">ev</span><span class="p">(</span><span class="n">mlp</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>solver = adam, score = -0.19949628496033456
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>solver = adam, score = -0.5531367823099405
 </pre></div>
 </div>
 <img alt="_images/06_Neuronale_Netze_20_1.png" src="_images/06_Neuronale_Netze_20_1.png" />
@@ -638,7 +638,7 @@ Strecke <span class="math notranslate nohighlight">\((w_1,w_3) = (0,-1)\)</span>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>solver = adam, score = 0.8664752096370867
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>solver = adam, score = 0.866475209637087
 </pre></div>
 </div>
 <img alt="_images/06_Neuronale_Netze_21_1.png" src="_images/06_Neuronale_Netze_21_1.png" />
@@ -703,11 +703,11 @@ _________________________________________________________________
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 243ms/step - loss: 0.2661 - accuracy: 0.0909
-loss = 0.2661170959472656
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1/1 [==============================] - 0s 235ms/step - loss: 0.1085 - accuracy: 0.0909
+loss = 0.10846421867609024
 </pre></div>
 </div>
-<img alt="_images/06_Neuronale_Netze_25_2.png" src="_images/06_Neuronale_Netze_25_2.png" />
+<img alt="_images/06_Neuronale_Netze_25_1.png" src="_images/06_Neuronale_Netze_25_1.png" />
 </div>
 </div>
 </div>
@@ -785,7 +785,7 @@ loss = 0.2661170959472656
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss:  tensor(0.2705, grad_fn=&lt;MseLossBackward&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training loss:  tensor(1.3062, grad_fn=&lt;MseLossBackward&gt;)
 </pre></div>
 </div>
 <img alt="_images/06_Neuronale_Netze_28_1.png" src="_images/06_Neuronale_Netze_28_1.png" />
