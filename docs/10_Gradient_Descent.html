@@ -22,8 +22,8 @@
       
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -33,7 +33,7 @@
     
   <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -41,12 +41,12 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script src="_static/translations.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
+    <script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
@@ -307,7 +307,7 @@
         
               <div>
                 
-  <div class="section" id="gradient-descent">
+  <div class="tex2jax_ignore mathjax_ignore section" id="gradient-descent">
 <h1>Gradient Descent<a class="headerlink" href="#gradient-descent" title="Link zu dieser Überschrift">¶</a></h1>
 <div class="section" id="uberblick">
 <h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">¶</a></h2>
@@ -721,7 +721,7 @@ q_{L,x}(y) = f(x) + f'(x)(y-x) + \frac{1}{2}L\|y-x\|_2^2.
 des Gradienten <span class="math notranslate nohighlight">\(f'\)</span>.</p>
 <p><strong>Lemma:</strong>
 <span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \to \mathbb{R}\)</span>
-differenzierbar (nicht notwendig konvex).
+sei differenzierbar (nicht notwendig konvex).
 Ist <span class="math notranslate nohighlight">\(f'\)</span>  Lipschitz-stetig, d.h.</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -743,7 +743,8 @@ Da <span class="math notranslate nohighlight">\(f'(x), f'(y)\)</span> lineare st
 \end{align*}\]</div>
 <p><span class="math notranslate nohighlight">\(\square\)</span></p>
 <p><strong>Lemma:</strong>
-<span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \to \mathbb{R}\)</span> differenzierbar (nicht notwendig konvex),
+<span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \to \mathbb{R}\)</span>
+sei differenzierbar (nicht notwendig konvex),
 <span class="math notranslate nohighlight">\(\mathrm{dom}(f)\)</span> konvex.
 Dann ist</p>
 <div class="amsmath math notranslate nohighlight">
@@ -823,7 +824,7 @@ Ist <span class="math notranslate nohighlight">\(f'\)</span> Lipschitz-stetig, d
 ein <span class="math notranslate nohighlight">\(x_\ast \in \mathrm{dom}(f)\)</span> mit <span class="math notranslate nohighlight">\(f(x_\ast)=\inf_{x}f(x)\)</span>,
 dann gilt auch die Umkehrung.</p>
 <p><strong>Lemma:</strong>
-<span class="math notranslate nohighlight">\(f:\mathbb{R}^d  \to \mathbb{R}\)</span> differenzierbar und konvex und
+<span class="math notranslate nohighlight">\(f:\mathbb{R}^d  \to \mathbb{R}\)</span> sei differenzierbar (nicht notwendig konvex) und
 es existiere <span class="math notranslate nohighlight">\(x_\ast\)</span> mit
 <span class="math notranslate nohighlight">\(f(x_\ast)=\inf_{x\in\mathbb{R}^d}f(x)\)</span>.
 Ist <span class="math notranslate nohighlight">\(f\)</span> L-glatt mit Konstante <span class="math notranslate nohighlight">\(L\)</span>, dann gilt</p>
@@ -1081,7 +1082,7 @@ Nach den Vorüberlegungen gilt</p>
   \Big(
   \frac{\gamma}{2\beta} (f_{0}-f_{\ast}) 
   + \frac{1}{2 \gamma} \|x_{0}-x_{*}\|_{2}^{2} 
-  \Big)
+  \Big).
   \end{equation*}\]</div>
 <p><strong>Satz:</strong> <span class="math notranslate nohighlight">\(f:\mathbb{R}^d\to \mathbb{R}\)</span>, konvex, <span class="math notranslate nohighlight">\(L\)</span>-glatt mit Konstante <span class="math notranslate nohighlight">\(L\)</span>
 und es existiere <span class="math notranslate nohighlight">\(x_\ast = \mathrm{argmin}_{x\in\mathbb{R}^d}f(x)\)</span>.
@@ -1135,10 +1136,10 @@ eine <span class="math notranslate nohighlight">\(T\)</span>-abhängige Wahl von
 <p>Bis jetzt haben wir nur Abschätzungen für <span class="math notranslate nohighlight">\(f_t - f_\ast\)</span> bewiesen.
 Nun werden wir <span class="math notranslate nohighlight">\(\|x_t - x_\ast\|_2\)</span> betrachten.
 Dazu benötigen wir nochmals stärkere Voraussetzungen, nämlich <span class="math notranslate nohighlight">\(\mu\)</span>-Konvexität.
-Damit werden wir zusätzlich auch eine besseres asymptotisches verhalten
+Damit werden wir zusätzlich auch eine besseres asymptotisches Verhalten
 nachweisen können.</p>
 <p><span class="math notranslate nohighlight">\(f\)</span> ist <span class="math notranslate nohighlight">\(\mu\)</span>-konvex falls <span class="math notranslate nohighlight">\(f(x)-\frac{\mu}{2}\|x\|_2^2\)</span> konvex ist.
-Ist <span class="math notranslate nohighlight">\(f\)</span> zusätzlich differenzierbar, so erhalten wir das folgende Ergebnis</p>
+Ist <span class="math notranslate nohighlight">\(f\)</span> zusätzlich differenzierbar, so erhalten wir das folgende Ergebnis.</p>
 <p><strong>Lemma:</strong> Ist <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(\mu\)</span>-konvex und differenzierbar, dann gilt</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -1238,6 +1239,8 @@ Polynom</p></li>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
 <span class="n">fsize</span> <span class="o">=</span> <span class="mi">12</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">sy</span><span class="o">.</span><span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
@@ -1300,7 +1303,7 @@ Polynom</p></li>
 <span class="math notranslate nohighlight">\(f:\mathbb{R}^d  \to \mathbb{R}\)</span> differenzierbar und
 es existiere <span class="math notranslate nohighlight">\(x_\ast\)</span> mit
 <span class="math notranslate nohighlight">\(f(x_\ast)=\inf_{x\in\mathbb{R}^d}f(x)\)</span>.
-Ist <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(\mu\)</span>-konvex mit Konstante <span class="math notranslate nohighlight">\(\mu\)</span>, dann gilt</p>
+Ist <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(\mu\)</span>-konvex dann gilt</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
 \frac{\mu}{2}\|y-x\|_2^2\leq f(x) - f(x_\ast) \leq \frac{1}{2\mu} \|f'(x)\|_2^2. 
@@ -1454,7 +1457,7 @@ aus der <span class="math notranslate nohighlight">\(\mu\)</span>-Konvexität fo
 <p>Für <span class="math notranslate nohighlight">\(f_T\)</span> ergibt sich direkt aus der <span class="math notranslate nohighlight">\(L\)</span>-Glattheit</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
-  f_T \leq f_\ast + f'_\ast(x_T - x_\ast) + \frac{L}{2} \|x_T - x_\ast\|_2^2,
+  f_T \leq f_\ast + f'_\ast(x_T - x_\ast) + \frac{L}{2} \|x_T - x_\ast\|_2^2
   \end{equation*}\]</div>
 <p>und wegen <span class="math notranslate nohighlight">\(f'_\ast=0\)</span></p>
 <div class="amsmath math notranslate nohighlight">

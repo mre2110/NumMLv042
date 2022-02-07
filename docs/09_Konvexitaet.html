@@ -22,8 +22,8 @@
       
 
     
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
@@ -33,7 +33,7 @@
     
   <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
 
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -41,12 +41,12 @@
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
     <script src="_static/translations.js"></script>
-    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script >
+    <script>
         const thebe_selector = ".thebe"
         const thebe_selector_input = "pre"
         const thebe_selector_output = ".output"
@@ -301,7 +301,7 @@
         
               <div>
                 
-  <div class="section" id="konvexitat">
+  <div class="tex2jax_ignore mathjax_ignore section" id="konvexitat">
 <h1>Konvexität<a class="headerlink" href="#konvexitat" title="Link zu dieser Überschrift">¶</a></h1>
 <div class="section" id="uberblick">
 <h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">¶</a></h2>
@@ -325,8 +325,8 @@ hergeleitet</p></li>
   \quad 
   \forall \lambda \in [ 0,1]
   \end{equation*}\]</div>
-<p>gilt</p>
-<p>Sind <span class="math notranslate nohighlight">\(X_i\)</span>, <span class="math notranslate nohighlight">\(i\in I\)</span> konvex, dann ist auch <span class="math notranslate nohighlight">\(\bigcap_{i \in I}X_i\)</span> konvex</p>
+<p>gilt.</p>
+<p>Sind <span class="math notranslate nohighlight">\(X_i\)</span>, <span class="math notranslate nohighlight">\(i\in I\)</span> konvex, dann ist auch <span class="math notranslate nohighlight">\(\bigcap_{i \in I}X_i\)</span> konvex.</p>
 <p>Um Konvexität von Funktionen zu untersuchen, führen wir einige Begriffe ein.
 Wir betrachten <span class="math notranslate nohighlight">\(f:\mathrm{dom}(f) \rightarrow \mathbb{R}\)</span>, wobei
 <span class="math notranslate nohighlight">\(\mathrm{dom}(f) \subset \mathbb{R} ^{d}\)</span> der Definitionsbereich von <span class="math notranslate nohighlight">\(f\)</span> ist.</p>
@@ -395,7 +395,7 @@ ist <span class="math notranslate nohighlight">\(\mu\)</span> konvex für <span 
 </div>
 <div class="section" id="eigenschaften-konvexer-funktionen">
 <h2>Eigenschaften konvexer Funktionen<a class="headerlink" href="#eigenschaften-konvexer-funktionen" title="Link zu dieser Überschrift">¶</a></h2>
-<p><strong>Satz:</strong> Ist <span class="math notranslate nohighlight">\(f\)</span> konvex, dann sind lokale Minima immer globale Minima</p>
+<p><strong>Satz:</strong> Ist <span class="math notranslate nohighlight">\(f\)</span> konvex, dann sind lokale Minima immer globale Minima.</p>
 <p><strong>Beweis:</strong></p>
 <ul>
 <li><p>sei <span class="math notranslate nohighlight">\(x\)</span> ein lokales Minimum, d.h.</p>
@@ -436,8 +436,8 @@ so erhalten wir einen
 Widerspruch dazu, dass <span class="math notranslate nohighlight">\(x\)</span> ein lokales Minimum ist</p></li>
 </ul>
 <p><span class="math notranslate nohighlight">\(\square\)</span></p>
-<p><strong>Bemerkung:</strong> Konvexe Funktionen müssen keine lokalen oder globalen Minima besitzen, z.B. <span class="math notranslate nohighlight">\(f(x)=e^x\)</span></p>
-<p><strong>Satz:</strong> Ist <span class="math notranslate nohighlight">\(f\)</span> strikt konvex, dann gibt es höchstens ein Minimum</p>
+<p><strong>Bemerkung:</strong> Konvexe Funktionen müssen keine lokalen oder globalen Minima besitzen, z.B. <span class="math notranslate nohighlight">\(f(x)=e^x\)</span>.</p>
+<p><strong>Satz:</strong> Ist <span class="math notranslate nohighlight">\(f\)</span> strikt konvex, dann gibt es höchstens ein Minimum.</p>
 <p><strong>Beweis:</strong></p>
 <ul>
 <li><p>es seien <span class="math notranslate nohighlight">\(x\neq y\)</span> Minima, d.h.</p>
@@ -541,7 +541,7 @@ und <span class="math notranslate nohighlight">\(f\)</span> beschränkt auf <spa
 </ul>
 <p><span class="math notranslate nohighlight">\(\square\)</span></p>
 <p>Ist <span class="math notranslate nohighlight">\(f\)</span> also konvex und beschränkt, dann ist es immer lokal Lipschitz-stetig.</p>
-<p>Ist <span class="math notranslate nohighlight">\(X\)</span> ein endlichdimensionaler normierter Raum, so kann man zeigen, dass jede konvexe Funktion <span class="math notranslate nohighlight">\(f:X \supset \mathrm{dom}(f) \rightarrow \mathbb{R}\)</span> auf jeder Kugel <span class="math notranslate nohighlight">\(\bar{B}_\delta(x) \subset \mathrm{dom}(f)\)</span> beschränkt ist, so dass wir in diesem Fall auf die zusätzliche Voraussetzung der Beschränktheit verzichten können</p>
+<p>Ist <span class="math notranslate nohighlight">\(X\)</span> ein endlichdimensionaler normierter Raum, so kann man zeigen, dass jede konvexe Funktion <span class="math notranslate nohighlight">\(f:X \supset \mathrm{dom}(f) \rightarrow \mathbb{R}\)</span> auf jeder Kugel <span class="math notranslate nohighlight">\(\bar{B}_\delta(x) \subset \mathrm{dom}(f)\)</span> beschränkt ist, so dass wir in diesem Fall auf die zusätzliche Voraussetzung der Beschränktheit verzichten können.</p>
 <p>Wie sieht es mit der Differenzierbarkeit konvexer Funktionen aus?</p>
 <p><strong>Lemma:</strong> <span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \rightarrow \mathbb{R}\)</span> konvex,
 <span class="math notranslate nohighlight">\(\mathrm{dom}(f)\)</span> konvex, offen, ist fast überall differenzierbar, d.h.</p>
@@ -553,19 +553,19 @@ und <span class="math notranslate nohighlight">\(f\)</span> beschränkt auf <spa
 \quad\text{mit}
 \left\| \tilde{x}-x\right\| &lt;\varepsilon
 \end{equation*}\]</div>
-<p>und <span class="math notranslate nohighlight">\(f\)</span> ist differenzierbar in <span class="math notranslate nohighlight">\(\tilde{x}\)</span></p>
+<p>und <span class="math notranslate nohighlight">\(f\)</span> ist differenzierbar in <span class="math notranslate nohighlight">\(\tilde{x}\)</span>.</p>
 <p>Es gibt stetige Funktionen, die nirgends differenzierbar sind.
-Die Konvexität sorgt also für ein gewisses Maß an Regularität</p>
+Die Konvexität sorgt also für ein gewisses Maß an Regularität.</p>
 </div>
 <div class="section" id="differenzierbare-konvexe-funktionen">
 <h2>Differenzierbare konvexe Funktionen<a class="headerlink" href="#differenzierbare-konvexe-funktionen" title="Link zu dieser Überschrift">¶</a></h2>
-<p>Bei differenzierbarem <span class="math notranslate nohighlight">\(f\)</span> besteht ein enger Zusammenhang zwischen der Konvexität und den Eigenschaften der Ableitungen</p>
+<p>Bei differenzierbarem <span class="math notranslate nohighlight">\(f\)</span> besteht ein enger Zusammenhang zwischen der Konvexität und den Eigenschaften der Ableitungen.</p>
 <p><strong>Lemma:</strong>
 <span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \rightarrow \mathbb{R}\)</span> sei differenzierbar.
 <span class="math notranslate nohighlight">\(f\)</span> ist konvex genau dann wenn <span class="math notranslate nohighlight">\(\mathrm{dom}(f)\)</span> konvex ist und</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
-f(y) \geq f(x) + f'(x)(y-x) \quad \forall x,y \in \mathrm{dom}(f)
+f(y) \geq f(x) + f'(x)(y-x) \quad \forall x,y \in \mathrm{dom}(f).
 \end{equation*}\]</div>
 <p><strong>Beweis:</strong></p>
 <p>„<span class="math notranslate nohighlight">\(\Rightarrow\)</span>“</p>
@@ -642,7 +642,7 @@ f(y) \geq f(x) + f'(x)(y-x) \quad \forall x,y \in \mathrm{dom}(f)
 </ul>
 <p><span class="math notranslate nohighlight">\(\square\)</span></p>
 <p><strong>Bemerkung:</strong>
-<span class="math notranslate nohighlight">\(f(y) \geq f(x) +f'(x) (y-x) =: t_{x}(y)\)</span>, d.h. der Graph von <span class="math notranslate nohighlight">\(f\)</span> liegt immer oberhalb der Tangenten <span class="math notranslate nohighlight">\(t_{x}\)</span></p>
+<span class="math notranslate nohighlight">\(f(y) \geq f(x) +f'(x) (y-x) =: t_{x}(y)\)</span>, d.h. der Graph von <span class="math notranslate nohighlight">\(f\)</span> liegt immer oberhalb der Tangenten <span class="math notranslate nohighlight">\(t_{x}\)</span>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sy</span>
@@ -692,7 +692,7 @@ f(y) \geq f(x) + f'(x)(y-x) \quad \forall x,y \in \mathrm{dom}(f)
 <span class="math notranslate nohighlight">\(f\)</span> ist konvex genau dann wenn <span class="math notranslate nohighlight">\(\mathrm{dom}(f)\)</span> konvex ist und</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
-\big(f'(y) - f'(x)\big)(y-x) \geq 0 \quad \forall x,y \in \mathrm{dom}(f),
+\big(f'(y) - f'(x)\big)(y-x) \geq 0 \quad \forall x,y \in \mathrm{dom}(f).
 \end{equation*}\]</div>
 <p><strong>Beweis:</strong></p>
 <p>„<span class="math notranslate nohighlight">\(\Rightarrow\)</span>“</p>
@@ -795,7 +795,7 @@ wegen <span class="math notranslate nohighlight">\(\lambda\in(0,1)\)</span></p>
 </ul>
 <p><span class="math notranslate nohighlight">\(\square\)</span></p>
 <p><strong>Bemerkung:</strong>
-<span class="math notranslate nohighlight">\(\big(f'(y) - f'(x)\big)(y-x) \geq 0\)</span> bedeutet, das <span class="math notranslate nohighlight">\(f'\)</span> monoton wachsend ist</p>
+<span class="math notranslate nohighlight">\(\big(f'(y) - f'(x)\big)(y-x) \geq 0\)</span> bedeutet, das <span class="math notranslate nohighlight">\(f'\)</span> monoton wachsend ist.</p>
 <p>Oben haben wir gesehen, dass bei konvexem <span class="math notranslate nohighlight">\(f\)</span> lokale Minima <em>immer</em> globale Minima sind.</p>
 <p><strong>Lemma:</strong> <span class="math notranslate nohighlight">\(f:\mathbb{R}^d \supset \mathrm{dom}(f) \rightarrow \mathbb{R}\)</span> konvex, differenzierbar, <span class="math notranslate nohighlight">\(\mathrm{dom}(f)\)</span> offen. <span class="math notranslate nohighlight">\(x\in\mathrm{dom}(f)\)</span> ist globales Minimum von <span class="math notranslate nohighlight">\(f\)</span> genau dann wenn <span class="math notranslate nohighlight">\(f'(x)=0\)</span></p>
 <p><strong>Beweis:</strong></p>
@@ -816,7 +816,7 @@ lokales Minimum und somit gilt <span class="math notranslate nohighlight">\(f'(x
 \[\begin{equation*} 
   f''(x) \succeq 0 \quad \forall x \in \mathrm{dom}(f)
   \end{equation*}\]</div>
-<p>gilt (<span class="math notranslate nohighlight">\(f''(x) \succeq 0\)</span> bedeutet <span class="math notranslate nohighlight">\(f''(x)\)</span> ist positiv semidefinit)</p>
+<p>gilt (<span class="math notranslate nohighlight">\(f''(x) \succeq 0\)</span> bedeutet <span class="math notranslate nohighlight">\(f''(x)\)</span> ist positiv semidefinit).</p>
 <p><strong>Beweis:</strong></p>
 <p>„<span class="math notranslate nohighlight">\(\Rightarrow\)</span>“</p>
 <ul>
@@ -965,7 +965,7 @@ so dass <span class="math notranslate nohighlight">\(x_\ast\)</span> kein Minimi
 </ul>
 <p><span class="math notranslate nohighlight">\(\square\)</span></p>
 <p><strong>Bemerkung:</strong>
-<span class="math notranslate nohighlight">\(f'(x_\ast)(x-x_\ast)\)</span> sind alle „zulässigen“ Richtungsableitungen, d.h. solche die „nicht aus <span class="math notranslate nohighlight">\(X\)</span> hinaus gehen“</p>
+<span class="math notranslate nohighlight">\(f'(x_\ast)(x-x_\ast)\)</span> sind alle „zulässigen“ Richtungsableitungen, d.h. solche die „nicht aus <span class="math notranslate nohighlight">\(X\)</span> hinaus gehen“.</p>
 <p>Wann existiert nun ein Minimierer <span class="math notranslate nohighlight">\(x_\ast\)</span>?
 Ist <span class="math notranslate nohighlight">\(X\)</span> kompakt, dann folgt aus der Stetigkeit von <span class="math notranslate nohighlight">\(f\)</span> die Existenz.
 Ist <span class="math notranslate nohighlight">\(X\)</span> nicht kompakt, dann kann <span class="math notranslate nohighlight">\(\inf_{x\in X}f(x) &gt; -\infty\)</span> sein, es muss aber kein <span class="math notranslate nohighlight">\(x_\ast\)</span> existieren, wie. z.B. bei <span class="math notranslate nohighlight">\(f(x) = e^x\)</span> auf <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>.</p>
@@ -982,10 +982,10 @@ f(x_\varepsilon) - f(x_\ast) \leq \varepsilon
 f^{\leq\alpha} =
 \{x \ |\ x\in\mathbb{R}^d ,\ f(x)\leq\alpha\}
 \end{equation*}\]</div>
-<p><span class="math notranslate nohighlight">\(\alpha\)</span><em>-Sublevel-Menge</em> von <span class="math notranslate nohighlight">\(f\)</span></p>
+<p><span class="math notranslate nohighlight">\(\alpha\)</span><em>-Sublevel-Menge</em> von <span class="math notranslate nohighlight">\(f\)</span>.</p>
 <p><strong>Satz:</strong> Ist <span class="math notranslate nohighlight">\(f:\mathbb{R}^d \rightarrow \mathbb{R}\)</span> konvex und existiert ein
 <span class="math notranslate nohighlight">\(\alpha\in\mathbb{R}\)</span> so dass <span class="math notranslate nohighlight">\(f^{\leq\alpha}\)</span> nichtleer und beschränkt ist, dann besitzt
-<span class="math notranslate nohighlight">\(f\)</span> einen globalen Minimierer <span class="math notranslate nohighlight">\(x_\ast\)</span></p>
+<span class="math notranslate nohighlight">\(f\)</span> einen globalen Minimierer <span class="math notranslate nohighlight">\(x_\ast\)</span>.</p>
 <p><strong>Beweis:</strong></p>
 <ul>
 <li><p><span class="math notranslate nohighlight">\(f\)</span> ist stetig und <span class="math notranslate nohighlight">\(f^{\leq\alpha}\)</span> ist das Urbild von <span class="math notranslate nohighlight">\((-\infty,\alpha]\subset\mathbb{R}\)</span></p></li>
@@ -1027,7 +1027,7 @@ der Hesse-Matrix <span class="math notranslate nohighlight">\(f''\)</span></p></
 dafür, dass <span class="math notranslate nohighlight">\(x_\ast\)</span> globales Minimum ist</p>
 </li>
 <li><p>bei restringierter Optimierung konvexer, differenzierbarer Funktionen <span class="math notranslate nohighlight">\(f\)</span>
-über konvexe Mengen <span class="math notranslate nohighlight">\(X\)</span> ist</p>
+über konvexen Mengen <span class="math notranslate nohighlight">\(X\)</span> ist</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
   f'(x_\ast)(x-x_\ast)\geq 0 \quad\forall x\in X
