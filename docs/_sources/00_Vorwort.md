@@ -1,4 +1,4 @@
-# Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
+# Numerische Algorithmen für Maschinelles Lernen (Version 0.422)
 
 Dieses Skript enthält den Stoff der Vorlesung 
 "Numerische Algorithmen für Maschinelles Lernen",
