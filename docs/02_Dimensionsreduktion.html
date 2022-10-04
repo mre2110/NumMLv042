@@ -4,13 +4,11 @@
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dimensionsreduktion &#8212; Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</title>
     
-  <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -20,16 +18,20 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
+    
+      
+
+    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -37,14 +39,13 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script src="_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/design-tabs.js"></script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -64,21 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
-
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -87,10 +74,9 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -100,18 +86,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Dieses Buch durchsuchen ..." aria-label="Dieses Buch durchsuchen ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="00_Vorwort.html">
-                    Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
-                </a>
-            </li>
-        </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_Vorwort.html">
+   Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Regression.html">
    Regression
@@ -195,17 +180,12 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
-    </div>
-    <div id="rtd-footer-container"></div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -213,146 +193,78 @@ const thebe_selector_output = ".output, .cell_output"
 
 
           
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="header-article row sticky-top noprint">
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Navigation umschalten" aria-controls="site-navigation"
+                title="Navigation umschalten" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Laden Sie diese Seite herunter"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
         
-
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/mre2110/NumMLv042/master?urlpath=tree/02_Dimensionsreduktion.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
->
-  
-
-<span class="headerbtn__icon-container">
-  
-    <img src="_static/images/logo_binder.svg">
-  </span>
-<span class="headerbtn__text-container">Binder</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/02_Dimensionsreduktion.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
-
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/02_Dimensionsreduktion.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Quelldatei herunterladen" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="In PDF drucken"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Vollbildmodus"
+        title="Vollbildmodus"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/mre2110/NumMLv042/master?urlpath=tree/02_Dimensionsreduktion.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Starten Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
     </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Inhalt
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#uberblick">
    Überblick
@@ -441,11 +353,12 @@ title="Print to PDF"
  </li>
 </ul>
 
-    </nav>
-</div>
+            </nav>
+        </div>
     </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Dimensionsreduktion</h1>
@@ -454,7 +367,7 @@ title="Print to PDF"
                     <div id="jb-print-toc">
                         
                         <div>
-                            <h2> Contents </h2>
+                            <h2> Inhalt </h2>
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
@@ -550,14 +463,13 @@ title="Print to PDF"
                     </div>
                 </div>
             </div>
-            <main id="main-content" role="main">
-                
+            
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="dimensionsreduktion">
-<h1>Dimensionsreduktion<a class="headerlink" href="#dimensionsreduktion" title="Link zu dieser Überschrift">#</a></h1>
-<section id="uberblick">
-<h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">#</a></h2>
+  <div class="tex2jax_ignore mathjax_ignore section" id="dimensionsreduktion">
+<h1>Dimensionsreduktion<a class="headerlink" href="#dimensionsreduktion" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="section" id="uberblick">
+<h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Wir betrachten Methoden, um lineare Modelle bei Regressionsproblemen zu vereinfachen
 bzw. bei hochdimensionalen Datensätzen Dimensionsreduktionen durchzuführen.
 Das wesentliche Werkzeug dazu ist die <strong>Singulärwertzerlegung</strong></p>
@@ -610,11 +522,11 @@ f(v_k) = \sigma_{k}^2.
 wir damit die Möglichkeit, Algorithmen aus beiden Bereichen anzuwenden.
 Welche Verfahren dabei effizienter sind, hängt stark von der konkreten Aufgabenstellung
 ab.</p>
-</section>
-<section id="modellvereinfachung">
-<h2>Modellvereinfachung<a class="headerlink" href="#modellvereinfachung" title="Link zu dieser Überschrift">#</a></h2>
-<section id="regressionsproblem">
-<h3>Regressionsproblem<a class="headerlink" href="#regressionsproblem" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="modellvereinfachung">
+<h2>Modellvereinfachung<a class="headerlink" href="#modellvereinfachung" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="section" id="regressionsproblem">
+<h3>Regressionsproblem<a class="headerlink" href="#regressionsproblem" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Wir betrachten wieder das lineares Regressionsproblem aus dem letzten Abschnitt</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -710,9 +622,9 @@ l''(w) = \frac{1}{m}X^T X.
 \end{equation*}\]</div>
 <p>Unsere Zielfunktion ist also nach wie vor quadratisch und konvex.</p>
 <p>Wir wenden jetzt nacheinander die Algorithmen aus dem letzten Abschnitt an.</p>
-</section>
-<section id="gd">
-<h3>GD<a class="headerlink" href="#gd" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="gd">
+<h3>GD<a class="headerlink" href="#gd" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Direkte Anwendung von GD liefert folgende Ergebnisse.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -792,9 +704,9 @@ einen anderen Parametersatz <span class="math notranslate nohighlight">\(w\)</sp
 </div>
 </div>
 <p>GD zeigt dabei unverändertes Konvergenzverhalten.</p>
-</section>
-<section id="newton">
-<h3>Newton<a class="headerlink" href="#newton" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="newton">
+<h3>Newton<a class="headerlink" href="#newton" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Die Iterationsvorschrift für das einfache Newton-Verfahren lautet</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -886,9 +798,9 @@ w = [-0.6817 -2.8653 -1.1836], l(w) = 0.055920
 </div>
 <p>Die Ergebnisse sind vergleichbar mit denen von GD, allerdings ist
 die Anzahl der Iterationen (und damit der Aufwand) deutlich geringer.</p>
-</section>
-<section id="normalgleichungen">
-<h3>Normalgleichungen<a class="headerlink" href="#normalgleichungen" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="normalgleichungen">
+<h3>Normalgleichungen<a class="headerlink" href="#normalgleichungen" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Wir betrachten jetzt das Normalgleichungssystem</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -963,9 +875,9 @@ und erhalten für zwei unterschiedliche Startwerte die folgenden Ergebnisse.</p>
 </div>
 </div>
 <p>CGLS erreicht bereits im zweiten Schritt wieder (eine) exakte Lösung der Normalgleichungen. Je nach Startwert erhält man unterschiedliche Parameter <span class="math notranslate nohighlight">\(w\)</span>, die aber die selbe Modellfunktion parametrieren.</p>
-</section>
-<section id="pseudoinverse-und-singularwertzerlegung-svd">
-<h3>Pseudoinverse und Singulärwertzerlegung (SVD)<a class="headerlink" href="#pseudoinverse-und-singularwertzerlegung-svd" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="pseudoinverse-und-singularwertzerlegung-svd">
+<h3>Pseudoinverse und Singulärwertzerlegung (SVD)<a class="headerlink" href="#pseudoinverse-und-singularwertzerlegung-svd" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Um diese Mehrdeutigkeiten zu beseitigen suchen wir jetzt eine Lösung <span class="math notranslate nohighlight">\(w^+\)</span> der Normalgleichungen, die selbst möglichst kleine Norm <span class="math notranslate nohighlight">\(\|w\|_2\)</span> hat, also</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -1163,9 +1075,9 @@ Singulärwerte (Wurzel der Eigenwerte von <span class="math notranslate nohighli
 <img alt="_images/02_Dimensionsreduktion_36_1.png" src="_images/02_Dimensionsreduktion_36_1.png" />
 </div>
 </div>
-</section>
-<section id="abgeschnittene-singularwertzerlegung-tsvd">
-<h3>Abgeschnittene Singulärwertzerlegung (TSVD)<a class="headerlink" href="#abgeschnittene-singularwertzerlegung-tsvd" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="abgeschnittene-singularwertzerlegung-tsvd">
+<h3>Abgeschnittene Singulärwertzerlegung (TSVD)<a class="headerlink" href="#abgeschnittene-singularwertzerlegung-tsvd" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Jede Matrix <span class="math notranslate nohighlight">\(X\in\mathbb{R}^{m\times n}\)</span> kann
 in</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1359,12 +1271,12 @@ g(x,w) = w_1 + w_2 \, x + w_3 \, x^2 + w_4 \, x^3
 <img alt="_images/02_Dimensionsreduktion_52_1.png" src="_images/02_Dimensionsreduktion_52_1.png" />
 </div>
 </div>
-</section>
-</section>
-<section id="dimensionsreduktion-uber-principle-component-analysis-pca">
-<h2>Dimensionsreduktion über Principle Component Analysis (PCA)<a class="headerlink" href="#dimensionsreduktion-uber-principle-component-analysis-pca" title="Link zu dieser Überschrift">#</a></h2>
-<section id="motivation">
-<h3>Motivation<a class="headerlink" href="#motivation" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+</div>
+<div class="section" id="dimensionsreduktion-uber-principle-component-analysis-pca">
+<h2>Dimensionsreduktion über Principle Component Analysis (PCA)<a class="headerlink" href="#dimensionsreduktion-uber-principle-component-analysis-pca" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="section" id="motivation">
+<h3>Motivation<a class="headerlink" href="#motivation" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Oft sind die Daten in Form hochdimensionaler Vektoren
 <span class="math notranslate nohighlight">\(x_j\in \mathbb{R}^m\)</span>, <span class="math notranslate nohighlight">\(j=1,\ldots,n\)</span>, also</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1439,9 +1351,9 @@ wir den Datensatz. Den allgemeinen Fall behandeln wir im Anschluss.</p>
 <img alt="_images/02_Dimensionsreduktion_58_0.png" src="_images/02_Dimensionsreduktion_58_0.png" />
 </div>
 </div>
-</section>
-<section id="mathematische-formulierung">
-<h3>Mathematische Formulierung<a class="headerlink" href="#mathematische-formulierung" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="mathematische-formulierung">
+<h3>Mathematische Formulierung<a class="headerlink" href="#mathematische-formulierung" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Gegeben ist also ein zentrierter Datensatz</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -1676,9 +1588,9 @@ sind die Projektionen auf die Geraden</p>
 \hat{g}_j = \bar{X} + s \, u_j,
 \end{equation*}\]</div>
 <p>d.h. man projiziert auf affine Unterräume.</p>
-</section>
-<section id="beispiel">
-<h3>Beispiel<a class="headerlink" href="#beispiel" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="beispiel">
+<h3>Beispiel<a class="headerlink" href="#beispiel" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Wir betrachten den folgenden Datensatz.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -1797,9 +1709,9 @@ sind die Projektionen auf die Geraden</p>
 </div>
 </div>
 </div>
-</section>
-<section id="pca-bei-klassifikation-von-ziffern">
-<h3>PCA bei Klassifikation von Ziffern<a class="headerlink" href="#pca-bei-klassifikation-von-ziffern" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="pca-bei-klassifikation-von-ziffern">
+<h3>PCA bei Klassifikation von Ziffern<a class="headerlink" href="#pca-bei-klassifikation-von-ziffern" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Wir wenden die oben erklärten Methoden auf die Klassifikation
 von handschriftlichen Ziffern an.</p>
 <p>In Scikit-Learn gibt es einen entsprechenden Datensatz mit
@@ -1866,9 +1778,9 @@ von handschriftlichen Ziffern an.</p>
 </div>
 </div>
 </div>
-</section>
-<section id="klassifikation-mit-k-means-clustering-ohne-pca">
-<h3>Klassifikation mit k-Means-Clustering ohne PCA<a class="headerlink" href="#klassifikation-mit-k-means-clustering-ohne-pca" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="klassifikation-mit-k-means-clustering-ohne-pca">
+<h3>Klassifikation mit k-Means-Clustering ohne PCA<a class="headerlink" href="#klassifikation-mit-k-means-clustering-ohne-pca" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Wir lassen den Datensatz jetzt direkt mit k-Means-Clustering in 10 Klassen einteilen. Die einzelnen Daten <span class="math notranslate nohighlight">\(x_j\)</span> haben Dimension 64.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
@@ -1952,8 +1864,8 @@ weighted avg       0.81      0.79      0.79      1797
 </div>
 </div>
 </div>
-<section id="klassifikation-mit-pca-und-k-means-clustering">
-<h4>Klassifikation mit PCA und k-Means-Clustering<a class="headerlink" href="#klassifikation-mit-pca-und-k-means-clustering" title="Link zu dieser Überschrift">#</a></h4>
+<div class="section" id="klassifikation-mit-pca-und-k-means-clustering">
+<h4>Klassifikation mit PCA und k-Means-Clustering<a class="headerlink" href="#klassifikation-mit-pca-und-k-means-clustering" title="Link zu dieser Überschrift">¶</a></h4>
 <p>Wir führen zunächst eine (partielle) PCA durch und schauen uns die Varianzen der
 Hauptrichtungen an</p>
 <div class="cell tag_hide-input docutils container">
@@ -2094,18 +2006,18 @@ reduzierte Dimension</p>
 </div>
 </div>
 </div>
-</section>
-</section>
-</section>
-<section id="zusammenfassung">
-<h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">#</a></h2>
+</div>
+</div>
+</div>
+<div class="section" id="zusammenfassung">
+<h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">¶</a></h2>
 <ul class="simple">
 <li><p>mit SVD können lineare Modelle bzw. hochdimensionale Daten vereinfacht werden</p></li>
 <li><p>die Berechnung von Singulärwerten und -vektoren kann mit Methoden der linearen Algebra
 oder der konvexen, restringierten Optimierung erfolgen</p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -2129,11 +2041,9 @@ oder der konvexen, restringierten Optimierung erfolgen</p></li>
 
               </div>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="01_Regression.html" title="zurück Seite">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -2149,28 +2059,24 @@ oder der konvexen, restringierten Optimierung erfolgen</p></li>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            </footer>
+            
         </div>
     </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
-  
-    By Martin Reißel<br/>
-  
-      &copy; Copyright 2021.<br/>
-</p>
-        </footer>
-    </div>
+    <footer class="footer">
+  <p>
     
-</div>
+      Durch Martin Reißel<br/>
+    
+        &copy; Urheberrechte © 2021.<br/>
+  </p>
+</footer>
+</main>
 
 
       </div>
     </div>
   
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
   </body>
 </html>

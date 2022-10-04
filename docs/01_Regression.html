@@ -4,13 +4,11 @@
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Regression &#8212; Numerische Algorithmen für Maschinelles Lernen WS21/22 (Version 0.42)</title>
     
-  <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
-<link href="_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -20,16 +18,20 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
+    
+      
+
+    
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
 
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
@@ -37,14 +39,13 @@
     <script src="_static/doctools.js"></script>
     <script src="_static/clipboard.min.js"></script>
     <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="_static/togglebutton.js"></script>
     <script src="_static/translations.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="_static/design-tabs.js"></script>
+    <script src="_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
 const thebe_selector = ".thebe,.cell"
 const thebe_selector_input = "pre"
@@ -64,21 +65,7 @@ const thebe_selector_output = ".output, .cell_output"
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
-<!-- Checkboxes to toggle the left sidebar -->
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
-<label class="overlay overlay-navbar" for="__navigation">
-    <div class="visually-hidden">Toggle navigation sidebar</div>
-</label>
-<!-- Checkboxes to toggle the in-page toc -->
-<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
-<label class="overlay overlay-pagetoc" for="__page-toc">
-    <div class="visually-hidden">Toggle in-page Table of Contents</div>
-</label>
-<!-- Headers at the top -->
-<div class="announcement header-item noprint"></div>
-<div class="header header-item noprint"></div>
-
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
     
     <div class="container-fluid" id="banner"></div>
 
@@ -87,10 +74,9 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="container-xl">
       <div class="row">
           
-<!-- Sidebar -->
-<div class="bd-sidebar noprint" id="site-navigation">
-    <div class="bd-sidebar__content">
-        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="index.html">
       
       
@@ -100,18 +86,17 @@ const thebe_selector_output = ".output, .cell_output"
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
   <i class="icon fas fa-search"></i>
-  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Dieses Buch durchsuchen ..." aria-label="Dieses Buch durchsuchen ..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="00_Vorwort.html">
-                    Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
-                </a>
-            </li>
-        </ul>
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_Vorwort.html">
+   Numerische Algorithmen für Maschinelles Lernen (Version 0.42)
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Regression
@@ -195,17 +180,12 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 
     </div>
-</nav></div>
-        <div class="bd-sidebar__bottom">
-             <!-- To handle the deprecated key -->
-            
-            <div class="navbar_extra_footer">
-            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-            </div>
-            
-        </div>
-    </div>
-    <div id="rtd-footer-container"></div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
 </div>
 
 
@@ -213,146 +193,78 @@ const thebe_selector_output = ".output, .cell_output"
 
 
           
-<!-- A tiny helper pixel to detect if we've scrolled -->
-<div class="sbt-scroll-pixel-helper"></div>
-<!-- Main content -->
-<div class="col py-0 content-container">
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
     
-    <div class="header-article row sticky-top noprint">
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Navigation umschalten" aria-controls="site-navigation"
+                title="Navigation umschalten" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Laden Sie diese Seite herunter"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
         
-
-
-
-<div class="col py-1 d-flex header-article-main">
-    <div class="header-article__left">
-        
-        <label for="__navigation"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="right"
-title="Toggle navigation"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-bars"></i>
-  </span>
-
-</label>
-
-        
-    </div>
-    <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/mre2110/NumMLv042/master?urlpath=tree/01_Regression.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
->
-  
-
-<span class="headerbtn__icon-container">
-  
-    <img src="_static/images/logo_binder.svg">
-  </span>
-<span class="headerbtn__text-container">Binder</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
-<button onclick="toggleFullScreen()"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="bottom"
-title="Fullscreen mode"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-<div class="menu-dropdown menu-dropdown-download-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Download this page">
-      <i class="fas fa-download"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="_sources/01_Regression.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Download source file"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="headerbtn__text-container">.ipynb</span>
-</a>
-
-      </li>
-      
-      <li>
-        
-<button onclick="printPdf(this)"
-  class="headerbtn"
-  data-toggle="tooltip"
-data-placement="left"
-title="Print to PDF"
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="headerbtn__text-container">.pdf</span>
-</button>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
-
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/01_Regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Quelldatei herunterladen" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="In PDF drucken"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
     </div>
 </div>
 
-<!-- Table of contents -->
-<div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Vollbildmodus"
+        title="Vollbildmodus"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/mre2110/NumMLv042/master?urlpath=tree/01_Regression.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Starten Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
     </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Inhalt
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#uberblick">
    Überblick
@@ -460,11 +372,12 @@ title="Print to PDF"
  </li>
 </ul>
 
-    </nav>
-</div>
+            </nav>
+        </div>
     </div>
-    <div class="article row">
-        <div class="col pl-md-3 pl-lg-5 content-container">
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
                 <h1>Regression</h1>
@@ -473,7 +386,7 @@ title="Print to PDF"
                     <div id="jb-print-toc">
                         
                         <div>
-                            <h2> Contents </h2>
+                            <h2> Inhalt </h2>
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
@@ -588,23 +501,22 @@ title="Print to PDF"
                     </div>
                 </div>
             </div>
-            <main id="main-content" role="main">
-                
+            
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="regression">
-<h1>Regression<a class="headerlink" href="#regression" title="Link zu dieser Überschrift">#</a></h1>
-<section id="uberblick">
-<h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">#</a></h2>
+  <div class="tex2jax_ignore mathjax_ignore section" id="regression">
+<h1>Regression<a class="headerlink" href="#regression" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="section" id="uberblick">
+<h2>Überblick<a class="headerlink" href="#uberblick" title="Link zu dieser Überschrift">¶</a></h2>
 <p>In diesem Abschnitt werden einfache Regressionsprobleme vorgestellt.
 Für lineare Modellfunktionen führt dies auf nicht restringierte
 konvexe quadratische Optimierungsprobleme, die mit verschiedenen
 numerischen Verfahren gelöst werden können.
 Die wichtigsten Algorithmen werden kurz erläutert und verschiedene
 Interpretationsmöglichkeiten ihrer Arbeitsweisen erklärt.</p>
-</section>
-<section id="grundlagen">
-<h2>Grundlagen<a class="headerlink" href="#grundlagen" title="Link zu dieser Überschrift">#</a></h2>
+</div>
+<div class="section" id="grundlagen">
+<h2>Grundlagen<a class="headerlink" href="#grundlagen" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Viele Anwendungen im Data-Science Bereich führen zur folgenden Aufgabenstellung:</p>
 <ul>
 <li><p>gegeben sind Daten-Paare</p>
@@ -681,9 +593,9 @@ g(x_m,w) - y_m
 w^* = \text{argmin}_{w\in\mathbb{R}^n} l(w)
 \end{equation*}\]</div>
 <p>ein (nichtlineares) Least-Square Problem.</p>
-</section>
-<section id="lineare-regression">
-<h2>Lineare Regression<a class="headerlink" href="#lineare-regression" title="Link zu dieser Überschrift">#</a></h2>
+</div>
+<div class="section" id="lineare-regression">
+<h2>Lineare Regression<a class="headerlink" href="#lineare-regression" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Ist die Modellfunktion <span class="math notranslate nohighlight">\(g\)</span> linear affin in <span class="math notranslate nohighlight">\(w\)</span>, d.h.</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -834,11 +746,11 @@ numerisch zu behandeln:</p>
 <li><p>durch numerische Optimierungsverfahren, die auf <span class="math notranslate nohighlight">\(l(w)\)</span> angewandt werden</p></li>
 <li><p>durch Verfahren der numerischen linearen Algebra, die <span class="math notranslate nohighlight">\(A^TA w = A^Tb\)</span> lösen</p></li>
 </ul>
-</section>
-<section id="numerische-verfahren">
-<h2>Numerische Verfahren<a class="headerlink" href="#numerische-verfahren" title="Link zu dieser Überschrift">#</a></h2>
-<section id="testproblem">
-<h3>Testproblem<a class="headerlink" href="#testproblem" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="numerische-verfahren">
+<h2>Numerische Verfahren<a class="headerlink" href="#numerische-verfahren" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="section" id="testproblem">
+<h3>Testproblem<a class="headerlink" href="#testproblem" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Für <span class="math notranslate nohighlight">\(x_i, y_i \in \mathbb{R}\)</span> betrachten wir nun eine einfache lineare Regression, d.h. die Modellfunktion ist</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -920,13 +832,13 @@ y_m
 <img alt="_images/01_Regression_15_0.png" src="_images/01_Regression_15_0.png" />
 </div>
 </div>
-</section>
-<section id="optimierungsverfahren">
-<h3>Optimierungsverfahren<a class="headerlink" href="#optimierungsverfahren" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+<div class="section" id="optimierungsverfahren">
+<h3>Optimierungsverfahren<a class="headerlink" href="#optimierungsverfahren" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Numerische Standardverfahren zum Lösen nicht restringierter, konvexer Optimierungsprobleme sind Abstiegs-Verfahren
 wie z.B. das Gradienten- und das Newton-Verfahren.</p>
-<section id="gradientenverfahren-gradient-descent-gd">
-<h4>Gradientenverfahren (Gradient-Descent, GD)<a class="headerlink" href="#gradientenverfahren-gradient-descent-gd" title="Link zu dieser Überschrift">#</a></h4>
+<div class="section" id="gradientenverfahren-gradient-descent-gd">
+<h4>Gradientenverfahren (Gradient-Descent, GD)<a class="headerlink" href="#gradientenverfahren-gradient-descent-gd" title="Link zu dieser Überschrift">¶</a></h4>
 <p>Das Gradientenverfahren (Gradient Descent, GD) ist das einfachste Abstiegs-Verfahren für differenzierbare Zielfunktionen <span class="math notranslate nohighlight">\(l(w)\)</span>.
 Die Iterationsvorschrift lautet</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1032,9 +944,9 @@ nur langsam vorwärts (siehe Konturplot: man kommt relativ schnell ins Flache, d
 aber sehr klein)</p></li>
 <li><p>mit der vorgegebenen Anzahl an Iterationsschritten wird das (globale) Minimum noch nicht erreicht</p></li>
 </ul>
-</section>
-<section id="newton-verfahren">
-<h4>Newton-Verfahren<a class="headerlink" href="#newton-verfahren" title="Link zu dieser Überschrift">#</a></h4>
+</div>
+<div class="section" id="newton-verfahren">
+<h4>Newton-Verfahren<a class="headerlink" href="#newton-verfahren" title="Link zu dieser Überschrift">¶</a></h4>
 <p>Um <span class="math notranslate nohighlight">\(l\)</span> zu minimieren, suchen wir mit dem Newton-Verfahren Nullstellen des Gradienten <span class="math notranslate nohighlight">\(l'\)</span>. Das ist zunächst nur
 eine hinreichende Bedingung (wir könnten statt eines Minimums auch ein Maximum, einen Sattelpunkt etc. gefunden
 haben).
@@ -1114,10 +1026,10 @@ Da in unserem Beispiel die Zielfunktion selbst quadratisch ist, ist die quadrati
 identisch mit der Zielfunktion und ein Schritt mit Newton liefert bereits das gesuchte Minimum.</p>
 </li>
 </ul>
-</section>
-</section>
-<section id="loser-fur-das-normalgleichungssystem">
-<h3>Löser für das Normalgleichungssystem<a class="headerlink" href="#loser-fur-das-normalgleichungssystem" title="Link zu dieser Überschrift">#</a></h3>
+</div>
+</div>
+<div class="section" id="loser-fur-das-normalgleichungssystem">
+<h3>Löser für das Normalgleichungssystem<a class="headerlink" href="#loser-fur-das-normalgleichungssystem" title="Link zu dieser Überschrift">¶</a></h3>
 <p>Das Normalgleichungssystem für unser Beispiel hat die Form</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*}  
@@ -1148,10 +1060,10 @@ y_m
 \end{equation*}\]</div>
 <p>Ist <span class="math notranslate nohighlight">\(m \ge 2\)</span> und sind die <span class="math notranslate nohighlight">\(x_i\)</span> nicht alle identisch, so ist die Matrix <span class="math notranslate nohighlight">\(X^TX\)</span> spd, so dass
 wir genau eine Lösung des Gleichungssystems erhalten.</p>
-<section id="direkte-loser">
-<h4>Direkte Löser<a class="headerlink" href="#direkte-loser" title="Link zu dieser Überschrift">#</a></h4>
-<section id="cholesky">
-<h5>Cholesky<a class="headerlink" href="#cholesky" title="Link zu dieser Überschrift">#</a></h5>
+<div class="section" id="direkte-loser">
+<h4>Direkte Löser<a class="headerlink" href="#direkte-loser" title="Link zu dieser Überschrift">¶</a></h4>
+<div class="section" id="cholesky">
+<h5>Cholesky<a class="headerlink" href="#cholesky" title="Link zu dieser Überschrift">¶</a></h5>
 <p>Die Matrix <span class="math notranslate nohighlight">\(A\)</span> des Normalgleichungssystem</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -1176,9 +1088,9 @@ Lösung <span class="math notranslate nohighlight">\(w\)</span> führen</p></li>
 <li><p>wenn <span class="math notranslate nohighlight">\(A\)</span> sparse ist, so entstehen in der Regel beim Zerlegen von <span class="math notranslate nohighlight">\(A\)</span>
 sehr viele Fill-Ins, so dass <span class="math notranslate nohighlight">\(L\)</span> sehr viel dichter besetzt ist als <span class="math notranslate nohighlight">\(A\)</span> bzw. <span class="math notranslate nohighlight">\(X\)</span></p></li>
 </ul>
-</section>
-<section id="qr-zerlegung">
-<h5>QR-Zerlegung<a class="headerlink" href="#qr-zerlegung" title="Link zu dieser Überschrift">#</a></h5>
+</div>
+<div class="section" id="qr-zerlegung">
+<h5>QR-Zerlegung<a class="headerlink" href="#qr-zerlegung" title="Link zu dieser Überschrift">¶</a></h5>
 <p>Wir können jede Matrix <span class="math notranslate nohighlight">\(X\in\mathbb{R}^{m\times n}\)</span>, <span class="math notranslate nohighlight">\(m\ge n\)</span>, (z.B. mit Householder oder Givens) zerlegen in</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -1269,12 +1181,12 @@ c \\ d
 <span class="math notranslate nohighlight">\(\mathcal{O}(mn^2)\)</span></p></li>
 <li><p>ungünstig bei  <span class="math notranslate nohighlight">\(X\)</span> sparse (Fill-In)</p></li>
 </ul>
-</section>
-</section>
-<section id="iterative-loser">
-<h4>Iterative Löser<a class="headerlink" href="#iterative-loser" title="Link zu dieser Überschrift">#</a></h4>
-<section id="cg-cgls">
-<h5>CG, CGLS<a class="headerlink" href="#cg-cgls" title="Link zu dieser Überschrift">#</a></h5>
+</div>
+</div>
+<div class="section" id="iterative-loser">
+<h4>Iterative Löser<a class="headerlink" href="#iterative-loser" title="Link zu dieser Überschrift">¶</a></h4>
+<div class="section" id="cg-cgls">
+<h5>CG, CGLS<a class="headerlink" href="#cg-cgls" title="Link zu dieser Überschrift">¶</a></h5>
 <p>Ein geeignetes iteratives Verfahren zum Lösen der Normalgleichungen ist CGLS.
 Für <span class="math notranslate nohighlight">\(w^{(0)}\)</span> gegeben,  <span class="math notranslate nohighlight">\(s^{(0)}=y-Xw^{(0)}\)</span>, <span class="math notranslate nohighlight">\(p^{(0)} = r^{(0)} = X^Ts^{(0)}\)</span>, lautet die Iterationsvorschrift</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1341,9 +1253,9 @@ r^{(k+1)} &amp;= r^{(k)} - \gamma^{(k)} Ap^{(k)} &amp;  \gamma^{(k)} &amp;= \fra
 p^{(k+1)} &amp;= r^{(k+1)} + \beta^{(k)} p^{(k)} &amp; \beta^{(k)} &amp;= \frac{(r^{(k+1)}, r^{(k+1)})_2}{(r^{(k)}, r^{(k)})_2}\\
 \end{align*}\]</div>
 <p>Das Verfahren kann man auf zwei unterschiedlichen Wegen herleiten.</p>
-</section>
-<section id="herleitung-uber-gradienten-verfahren">
-<h5>Herleitung über Gradienten-Verfahren<a class="headerlink" href="#herleitung-uber-gradienten-verfahren" title="Link zu dieser Überschrift">#</a></h5>
+</div>
+<div class="section" id="herleitung-uber-gradienten-verfahren">
+<h5>Herleitung über Gradienten-Verfahren<a class="headerlink" href="#herleitung-uber-gradienten-verfahren" title="Link zu dieser Überschrift">¶</a></h5>
 <p>Wir betrachten für <span class="math notranslate nohighlight">\(A\)</span> spd die quadratische Zielfunktion</p>
 <div class="amsmath math notranslate nohighlight">
 \[\begin{equation*} 
@@ -1416,9 +1328,9 @@ optimiert werden muss.</p>
 <p>Das Optimierungsproblem
 wird wieder exakt gelöst, was implizit in der Rekursionsvorschrift steckt (deshalb auch
 zwei Koeffizienten <span class="math notranslate nohighlight">\(\gamma^{(k)},\beta^{(k)}\)</span> und Dreiterm-Rekursionen).</p>
-</section>
-<section id="herleitung-als-projektionsverfahren">
-<h5>Herleitung als Projektionsverfahren<a class="headerlink" href="#herleitung-als-projektionsverfahren" title="Link zu dieser Überschrift">#</a></h5>
+</div>
+<div class="section" id="herleitung-als-projektionsverfahren">
+<h5>Herleitung als Projektionsverfahren<a class="headerlink" href="#herleitung-als-projektionsverfahren" title="Link zu dieser Überschrift">¶</a></h5>
 <p>Wir wollen Näherungen für die Lösung eines spd Systems <span class="math notranslate nohighlight">\(Aw=b\)</span>, <span class="math notranslate nohighlight">\(A \in \mathbb{R}^{n \times n}\)</span>, berechnen.
 Dazu betrachten wir einen Unterraum</p>
 <div class="amsmath math notranslate nohighlight">
@@ -1510,9 +1422,9 @@ dann ist die Lösung
 <p>Wegen <span class="math notranslate nohighlight">\(k \leq n\)</span> erhalten wir nach spätestens <span class="math notranslate nohighlight">\(n\)</span> Schritten die exakte Lösung.
 Oft ist aber <span class="math notranslate nohighlight">\(k \ll n\)</span>.</p>
 <p>Das CG-Verfahren führt genau diese Berechnungen Schritt für Schritt durch.</p>
-</section>
-<section id="interpretation">
-<h5>Interpretation<a class="headerlink" href="#interpretation" title="Link zu dieser Überschrift">#</a></h5>
+</div>
+<div class="section" id="interpretation">
+<h5>Interpretation<a class="headerlink" href="#interpretation" title="Link zu dieser Überschrift">¶</a></h5>
 <p>CG als verbessertes Gradienten-Verfahren:</p>
 <ul>
 <li><p>CG wird auf jeden Fall nicht langsamer
@@ -1531,12 +1443,12 @@ als das Gradienten-Verfahren sein</p></li>
 <li><p>wir ersetzen das Originalsystem <span class="math notranslate nohighlight">\(Aw=b\)</span> durch eine Folge kleinerer Systeme, die wir dann exakt lösen</p></li>
 <li><p>wir wenden also sukzessive Modellvereinfachung bzw. Dimensionsreduktion an</p></li>
 </ul>
-</section>
-</section>
-</section>
-</section>
-<section id="scikit-learn">
-<h2>Scikit-Learn<a class="headerlink" href="#scikit-learn" title="Link zu dieser Überschrift">#</a></h2>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="scikit-learn">
+<h2>Scikit-Learn<a class="headerlink" href="#scikit-learn" title="Link zu dieser Überschrift">¶</a></h2>
 <p>In diesem Abschnitt betrachten wir noch einmal unser einfaches Testproblem und bearbeiten es mit den Werkzeugen aus <a class="reference external" href="https://scikit-learn.org/stable/">Scikit-Learn</a>.</p>
 <p>Lineare Modelle findet man im Subpackage
 <code class="docutils literal notranslate"><span class="pre">linear_model</span></code>. Zunächst erstellt man ein Objekt der gewünschten Modellklasse und passt dann mit der <code class="docutils literal notranslate"><span class="pre">fit</span></code>-Methode die Modellparameter
@@ -1737,9 +1649,9 @@ p_ttest   = 1.000000
 </div>
 </div>
 <p>Die p-Werte bei beiden Test sind groß, das Modell kann akzeptiert werden.</p>
-</section>
-<section id="zusammenfassung">
-<h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">#</a></h2>
+</div>
+<div class="section" id="zusammenfassung">
+<h2>Zusammenfassung<a class="headerlink" href="#zusammenfassung" title="Link zu dieser Überschrift">¶</a></h2>
 <ul class="simple">
 <li><p>Regressionsaufgaben führen zu nichtlinearen Optimierungsproblemen</p></li>
 <li><p>typische Optimierungsverfahren bei differenzierbarer Zielfunktion
@@ -1750,8 +1662,8 @@ Algebra gelöst werden</p></li>
 <li><p>in diesem Fall bestehen zahlreiche Interpretationsmöglichkeiten
 für die Arbeitsweise der Algorithmen</p></li>
 </ul>
-</section>
-</section>
+</div>
+</div>
 
     <script type="text/x-thebe-config">
     {
@@ -1775,11 +1687,9 @@ für die Arbeitsweise der Algorithmen</p></li>
 
               </div>
               
-            </main>
-            <footer class="footer-article noprint">
-                
-    <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
     <a class='left-prev' id="prev-link" href="00_Vorwort.html" title="zurück Seite">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -1795,28 +1705,24 @@ für die Arbeitsweise der Algorithmen</p></li>
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-            </footer>
+            
         </div>
     </div>
-    <div class="footer-content row">
-        <footer class="col footer"><p>
-  
-    By Martin Reißel<br/>
-  
-      &copy; Copyright 2021.<br/>
-</p>
-        </footer>
-    </div>
+    <footer class="footer">
+  <p>
     
-</div>
+      Durch Martin Reißel<br/>
+    
+        &copy; Urheberrechte © 2021.<br/>
+  </p>
+</footer>
+</main>
 
 
       </div>
     </div>
   
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
-
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
 
   </body>
 </html>
